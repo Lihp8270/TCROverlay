@@ -1,37 +1,42 @@
 package com.Overlay;
 
 import javax.swing.JFrame;
-import java.awt.*;
+import javax.swing.JLabel;
 
-public class OverlayFrame {
-    JFrame frame;
+public class OverlayFrame extends InitFrame {
+    private JLabel testLabel;
 
-    public OverlayFrame(String title) {
-        frame = new JFrame();
+    public OverlayFrame(String title, Boolean visibility) {
+        super(title, visibility);
 
-        this.frame.setTitle(title);
+        testLabel = new JLabel("Test Label");
+        testLabel.setBounds(50,100,100,30);
+
         this.frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        this.frame.setLocationRelativeTo(null);
         this.frame.setLayout(null);
-        this.frame.setResizable(false);
-        show();
+
+        this.frame.setUndecorated(true);
+        this.frame.setOpacity(0.55f);
+        // TODO Remove test code
+        this.frame.add(testLabel);
+        testLabel.setLayout(null);
+        testLabel.setVisible(true);
+        this.frame.setUndecorated(true);
+        // End of test code
     }
 
     /**
-     * Set size of frame
-     * @param width in pixels
-     * @param height in pixels
+     * Toggle overlay visibility
      */
-    public void setSize(int width, int height) {
-        this.frame.setSize(width, height);
+    public void toggleVisibility(int screen) {
+        if (visible) {
+            this.frame.setVisible(false);
+            gDev[screen].setFullScreenWindow(null);
+            visible = false;
+        } else {
+            gDev[screen].setFullScreenWindow(this.frame);
+            this.frame.setVisible(true);
+            visible = true;
+        }
     }
-
-    public void show() {
-        this.frame.setVisible(true);
-    }
-
-    public void hide() {
-        this.frame.setVisible(false);
-    }
-
 }

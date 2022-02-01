@@ -1,24 +1,21 @@
 package com.Engine;
 
+import com.Overlay.InitFrame;
 import com.Overlay.OverlayFrame;
 import com.Overlay.MenuFrame;
 
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 
 public class OverlayEngine {
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
+        SwingUtilities.invokeLater(() -> {
+            OverlayFrame overlayFrame = new OverlayFrame("Overlay", false);
+            MenuFrame menuFrame = new MenuFrame("TCR Overlay Menu", overlayFrame, true);
 
-            @Override
-            public void run() {
-                OverlayFrame overlayFrame = new OverlayFrame("Overlay");
-                MenuFrame menuFrame = new MenuFrame("TCR Overlay Menu", overlayFrame);
+            overlayFrame.setSize(800, 600);
+            menuFrame.setSize(800,600);
 
-                overlayFrame.setSize(800, 600);
-                menuFrame.setSize(800,600);
-
-            }
         });
     }
 }

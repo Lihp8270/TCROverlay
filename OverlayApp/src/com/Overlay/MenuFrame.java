@@ -1,42 +1,56 @@
 package com.Overlay;
 
+import javax.swing.JFrame;
 import javax.swing.JButton;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import com.Engine.ButtonEngine;
 
-public class MenuFrame extends OverlayFrame {
+// TODO remove the extends this is now too different compared to the overlay frame
+public class MenuFrame extends InitFrame {
     private ButtonEngine buttonController;
     private OverlayFrame overlayFrame;
     private ArrayList<JButton> buttons;
 
-    public MenuFrame(String title, OverlayFrame overlayFrame) {
-        super(title);
-        this.overlayFrame = overlayFrame;
+    public MenuFrame(String title, OverlayFrame overlayFrame, Boolean visibility) {
+        super(title, visibility);
         buttonController = new ButtonEngine();
-        buttons = new ArrayList<JButton>();
-        // TODO Move to add buttons method
-        addButtons("Hide Overlay", 50, 100, 95, 30);
-        addButtons("Show Overlay", 50, 150, 95, 30);
+        buttons = new ArrayList<>();
+
+        initialiseFrame(overlayFrame);
+
+        createButtons();
+        showButtons();
+    }
+
+    private void initialiseFrame(OverlayFrame overlayFrame) {
+        this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.frame.setLayout(null);
+        this.overlayFrame = overlayFrame;
+    }
+
+    /**
+     * Create button objects
+     */
+    private void createButtons() {
+        final String[] toggleLabel = {"Show Overlay"};
+        addButtons(toggleLabel[0], 50, 100, 95, 30);
 
         buttons.get(0).addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                buttonController.hide(overlayFrame);
+                buttonController.toggleShow(overlayFrame);
+                if (overlayFrame.getVisibility()) {
+                    toggleLabel[0] = "Hide Overlay";
+                    buttons.get(0).setText(toggleLabel[0]);
+                } else {
+                    toggleLabel[0] = "Show Overlay";
+                    buttons.get(0).setText(toggleLabel[0]);
+                }
             }
         });
-
-        buttons.get(1).addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                buttonController.show(overlayFrame);
-            }
-        });
-
-        showButtons();
     }
 
     /**
@@ -52,7 +66,6 @@ public class MenuFrame extends OverlayFrame {
         button.setBounds(x, y, width, height);
         button.setText(label);
 
-
         buttons.add(button);
     }
 
@@ -60,8 +73,8 @@ public class MenuFrame extends OverlayFrame {
      * Show buttons
      */
     private void showButtons() {
-        for (int i = 0; i < buttons.size(); i++) {
-            this.frame.add(buttons.get(i));
+        for (JButton button : buttons) {
+            this.frame.add(button);
         }
     }
 

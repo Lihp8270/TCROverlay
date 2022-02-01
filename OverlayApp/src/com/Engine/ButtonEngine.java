@@ -7,18 +7,8 @@ public class ButtonEngine {
 
     }
 
-     /**
-     * Show frame
-     */
-    public void show(OverlayFrame frame) {
-        frame.show();
+    public void toggleShow(OverlayFrame frame) {
+        frame.toggleVisibility(0);
     }
 
-    /**
-     * Hide frame
-     * @param frame
-     */
-    public void hide(OverlayFrame frame) {
-        frame.hide();
-    }
 }
