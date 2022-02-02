@@ -1,14 +1,14 @@
 package com.Overlay;
 
+import com.Engine.ButtonEngine;
+
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import com.Engine.ButtonEngine;
 
-// TODO remove the extends this is now too different compared to the overlay frame
 public class MenuFrame extends InitFrame {
     private ButtonEngine buttonController;
     private OverlayFrame overlayFrame;
@@ -26,6 +26,7 @@ public class MenuFrame extends InitFrame {
     }
 
     private void initialiseFrame(OverlayFrame overlayFrame) {
+        this.frame.setSize(800,600);
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.frame.setLayout(null);
         this.overlayFrame = overlayFrame;

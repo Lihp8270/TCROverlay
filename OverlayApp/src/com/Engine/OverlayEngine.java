@@ -13,9 +13,6 @@ public class OverlayEngine {
             OverlayFrame overlayFrame = new OverlayFrame("Overlay", false);
             MenuFrame menuFrame = new MenuFrame("TCR Overlay Menu", overlayFrame, true);
 
-            overlayFrame.setSize(800, 600);
-            menuFrame.setSize(800,600);
-
         });
     }
 }
