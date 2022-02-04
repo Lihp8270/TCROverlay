@@ -1,12 +1,11 @@
 package com.Engine;
 
-import com.Overlay.InitFrame;
 import com.Overlay.OverlayFrame;
 import com.Overlay.MenuFrame;
 
 import javax.swing.*;
 
-public class OverlayEngine {
+public class MainEngine {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {

@@ -1,11 +1,11 @@
 package com.Overlay;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
+import com.Model.Driver;
+
+import javax.swing.*;
 import java.awt.*;
 
 public class OverlayFrame extends InitFrame {
-    private JLabel testLabel;
     private final Dimension dim;
 
     public OverlayFrame(String title, Boolean visibility) {
@@ -15,26 +15,38 @@ public class OverlayFrame extends InitFrame {
     }
 
     private void initialiseFrame() {
+
         // TODO Set location needs to be done via menu page
         this.frame.setLocation(0,-dim.height);
+//        this.frame.setLocation(0,0);
         this.frame.setSize(dim);
         this.frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        this.frame.setLayout(null);
+        this.frame.setLayout(new BorderLayout());
         this.frame.setUndecorated(true);
         this.frame.setBackground(new Color(0,255,0,0));
+        this.frame.setAlwaysOnTop(true);
 
         this.frame.setContentPane(new ContentPane());
         this.frame.getContentPane().setBackground(Color.BLACK);
         this.frame.setLayout(new BorderLayout());
 
-        testLabel = new JLabel("Test Label");
-        testLabel.setBounds(50, 100, 100, 30);
-
         // TODO Remove test code
-        this.frame.add(testLabel);
-        testLabel.setLayout(null);
-        testLabel.setForeground(Color.WHITE);
-        testLabel.setVisible(true);
+        InitPanel advertPanel = new InitPanel();
+
+        JLabel testLabel2 = new JLabel();
+        ImageIcon testLogo = new ImageIcon("assets/HostedOnSimracing.png");
+        testLabel2.setIcon(testLogo);
+        advertPanel.getPanel().add(testLabel2);
+
+        DriversPanel drivers = new DriversPanel();
+        drivers.addDriver(new Driver(1, "Tom").getJLabel());
+        drivers.addDriver(new Driver(2, "Mark").getJLabel());
+        drivers.addDriver(new Driver(3, "Emma").getJLabel());
+        drivers.addDriver(new Driver(4, "Missy").getJLabel());
+
+        this.frame.add(drivers.getPanel(), BorderLayout.WEST);
+        this.frame.add(advertPanel.getPanel(), BorderLayout.SOUTH);
+        testLabel2.setVisible(true);
         // End of test code
     }
 
