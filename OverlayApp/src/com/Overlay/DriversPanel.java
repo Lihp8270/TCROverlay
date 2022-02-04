@@ -1,29 +1,40 @@
 package com.Overlay;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.util.ArrayList;
 
 public class DriversPanel extends InitPanel {
-    ArrayList<JLabel> drivers;
+    ArrayList<Box> driversTest;
 
     public DriversPanel() {
         super();
-        drivers = new ArrayList<>();
+        driversTest = new ArrayList<>();
         this.panel.setLayout(new BoxLayout(this.panel, BoxLayout.Y_AXIS));
+        this.panel.setBorder(new EmptyBorder(0, 15,0,0));
     }
 
+    /**
+     * Build and return drivers panel
+     * @return Returns completed Drivers panel
+     */
     @Override
     public JPanel getPanel() {
-        panel.add(Box.createVerticalGlue());
-        for (JLabel driver : drivers) {
-            panel.add(driver);
+        this.panel.add(Box.createVerticalGlue());
+        for (Box driver : driversTest) {
+            this.panel.add(driver);
         }
-        panel.add(Box.createVerticalGlue());
+        this.panel.add(Box.createVerticalGlue());
+        this.panel.add(Box.createVerticalGlue());
 
-        return panel;
+        return this.panel;
     }
 
-    public void addDriver(JLabel driver) {
-        drivers.add(driver);
+    /**
+     * Add driver to the driver list
+     * @param driver completed driver box containing position, name bar and position change labelss
+     */
+    public void addDriver(Box driver) {
+        driversTest.add(driver);
     }
 }

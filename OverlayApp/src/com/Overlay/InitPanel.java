@@ -11,6 +11,10 @@ public class InitPanel {
         this.panel.setOpaque(false);
     }
 
+    /**
+     * Returns JPanel object
+     * @return JPanel
+     */
     public JPanel getPanel() {
         return panel;
     }

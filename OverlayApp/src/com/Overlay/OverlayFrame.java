@@ -8,6 +8,11 @@ import java.awt.*;
 public class OverlayFrame extends InitFrame {
     private final Dimension dim;
 
+    /**
+     * Constructor for overlay frame
+     * @param title Titlle of frame
+     * @param visibility default visibility of frame
+     */
     public OverlayFrame(String title, Boolean visibility) {
         super(title, visibility);
         dim = Toolkit.getDefaultToolkit().getScreenSize();
@@ -15,7 +20,6 @@ public class OverlayFrame extends InitFrame {
     }
 
     private void initialiseFrame() {
-
         // TODO Set location needs to be done via menu page
         this.frame.setLocation(0,-dim.height);
 //        this.frame.setLocation(0,0);
@@ -39,10 +43,10 @@ public class OverlayFrame extends InitFrame {
         advertPanel.getPanel().add(testLabel2);
 
         DriversPanel drivers = new DriversPanel();
-        drivers.addDriver(new Driver(1, "Tom").getJLabel());
-        drivers.addDriver(new Driver(2, "Mark").getJLabel());
-        drivers.addDriver(new Driver(3, "Emma").getJLabel());
-        drivers.addDriver(new Driver(4, "Missy").getJLabel());
+        drivers.addDriver(new Driver(1, "Tom").getBox());
+        drivers.addDriver(new Driver(2, "Mark").getBox());
+        drivers.addDriver(new Driver(3, "Emma").getBox());
+        drivers.addDriver(new Driver(4, "Missy").getBox());
 
         this.frame.add(drivers.getPanel(), BorderLayout.WEST);
         this.frame.add(advertPanel.getPanel(), BorderLayout.SOUTH);
