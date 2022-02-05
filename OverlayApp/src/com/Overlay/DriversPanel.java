@@ -1,11 +1,13 @@
 package com.Overlay;
 
+import com.Model.Driver;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.util.ArrayList;
 
 public class DriversPanel extends InitPanel {
-    ArrayList<Box> driversTest;
+    ArrayList<Driver> driversTest;
 
     public DriversPanel() {
         super();
@@ -21,8 +23,8 @@ public class DriversPanel extends InitPanel {
     @Override
     public JPanel getPanel() {
         this.panel.add(Box.createVerticalGlue());
-        for (Box driver : driversTest) {
-            this.panel.add(driver);
+        for (Driver driver : driversTest) {
+            this.panel.add(driver.getBox());
         }
         this.panel.add(Box.createVerticalGlue());
         this.panel.add(Box.createVerticalGlue());
@@ -34,7 +36,7 @@ public class DriversPanel extends InitPanel {
      * Add driver to the driver list
      * @param driver completed driver box containing position, name bar and position change labelss
      */
-    public void addDriver(Box driver) {
+    public void addDriver(Driver driver) {
         driversTest.add(driver);
     }
 }

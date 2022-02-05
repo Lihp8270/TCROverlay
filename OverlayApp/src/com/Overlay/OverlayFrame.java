@@ -7,6 +7,7 @@ import java.awt.*;
 
 public class OverlayFrame extends InitFrame {
     private final Dimension dim;
+    public DriversPanel drivers = new DriversPanel();
 
     /**
      * Constructor for overlay frame
@@ -19,6 +20,7 @@ public class OverlayFrame extends InitFrame {
         initialiseFrame();
     }
 
+    // TODO Overlay Controller is required to build Overlay Frame, store data, update data, etc
     private void initialiseFrame() {
         // TODO Set location needs to be done via menu page
         this.frame.setLocation(0,-dim.height);
@@ -36,17 +38,15 @@ public class OverlayFrame extends InitFrame {
 
         // TODO Remove test code
         InitPanel advertPanel = new InitPanel();
-
         JLabel testLabel2 = new JLabel();
         ImageIcon testLogo = new ImageIcon("assets/HostedOnSimracing.png");
         testLabel2.setIcon(testLogo);
         advertPanel.getPanel().add(testLabel2);
 
-        DriversPanel drivers = new DriversPanel();
-        drivers.addDriver(new Driver(1, "Tom").getBox());
-        drivers.addDriver(new Driver(2, "Mark").getBox());
-        drivers.addDriver(new Driver(3, "Emma").getBox());
-        drivers.addDriver(new Driver(4, "Missy").getBox());
+        drivers.addDriver(new Driver(1, "Tom"));
+        drivers.addDriver(new Driver(2, "Mark"));
+        drivers.addDriver(new Driver(3, "Emma"));
+        drivers.addDriver(new Driver(4, "Missy"));
 
         this.frame.add(drivers.getPanel(), BorderLayout.WEST);
         this.frame.add(advertPanel.getPanel(), BorderLayout.SOUTH);
@@ -57,7 +57,7 @@ public class OverlayFrame extends InitFrame {
     /**
      * Toggle overlay visibility
      */
-    public void toggleVisibility(int screen){
+    public void toggleVisibility(int screen) {
         if (visible) {
             this.frame.setVisible(false);
 //            gDev[screen].setFullScreenWindow(null);
@@ -67,5 +67,9 @@ public class OverlayFrame extends InitFrame {
             this.frame.setVisible(true);
             visible = true;
         }
+    }
+
+    public void update() {
+
     }
 }

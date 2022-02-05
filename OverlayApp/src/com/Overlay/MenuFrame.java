@@ -38,6 +38,7 @@ public class MenuFrame extends InitFrame {
     private void createButtons() {
         final String[] toggleLabel = {"Show Overlay"};
         addButtons(toggleLabel[0], 50, 100, 150, 30);
+        addButtons("Update", 50, 150, 150, 30);
 
         buttons.get(0).addActionListener(new ActionListener() {
             @Override
