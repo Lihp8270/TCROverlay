@@ -12,7 +12,7 @@ public class ButtonEngine {
      * @param frame Overlay Frame to toggle on and off
      */
     public void toggleShow(OverlayFrame frame) {
-        frame.toggleVisibility(0);
+        frame.toggleVisibility();
     }
 
 }

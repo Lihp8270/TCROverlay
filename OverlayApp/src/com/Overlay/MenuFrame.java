@@ -1,6 +1,7 @@
 package com.Overlay;
 
 import com.Engine.ButtonEngine;
+import com.Engine.OverlayController;
 
 import javax.swing.JFrame;
 import javax.swing.JButton;
@@ -13,14 +14,15 @@ public class MenuFrame extends InitFrame {
     private ButtonEngine buttonController;
     private OverlayFrame overlayFrame;
     private ArrayList<JButton> buttons;
+    private OverlayController overlayController;
 
-    public MenuFrame(String title, OverlayFrame overlayFrame, Boolean visibility) {
+    public MenuFrame(String title, Boolean visibility) {
         super(title, visibility);
         buttonController = new ButtonEngine();
         buttons = new ArrayList<>();
+        overlayController = new OverlayController();
 
-        initialiseFrame(overlayFrame);
-
+        initialiseFrame(overlayController.getOverlayFrame());
         createButtons();
         showButtons();
     }
@@ -43,7 +45,7 @@ public class MenuFrame extends InitFrame {
         buttons.get(0).addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                buttonController.toggleShow(overlayFrame);
+                buttonController.toggleShow(overlayController.getOverlayFrame());
                 if (overlayFrame.getVisibility()) {
                     toggleLabel[0] = "Hide Overlay";
                     buttons.get(0).setText(toggleLabel[0]);
@@ -51,6 +53,13 @@ public class MenuFrame extends InitFrame {
                     toggleLabel[0] = "Show Overlay";
                     buttons.get(0).setText(toggleLabel[0]);
                 }
+            }
+        });
+
+        buttons.get(1).addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                overlayController.updateDrivers();
             }
         });
     }
