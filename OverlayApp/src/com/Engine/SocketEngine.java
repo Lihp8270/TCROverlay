@@ -18,12 +18,22 @@ public class SocketEngine {
         this.port = port;
     }
 
+    /**
+     * Start connection to AC Server
+     * @throws IOException
+     */
     public void startConnection() throws IOException {
         clientSocket = new Socket(ip, port);
         out = new PrintWriter(clientSocket.getOutputStream(), true);
         in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
     }
 
+    /**
+     * Send message to server
+     * @param msg Send Data
+     * @return returns result as String ID; Name; Position; lap; total laps:
+     * @throws IOException
+     */
     public String sendMessage(String msg) throws IOException {
         out.println(msg);
 
@@ -38,6 +48,10 @@ public class SocketEngine {
         return "Cannot read line";
     }
 
+    /**
+     * Close connection to AC Server
+     * @throws IOException
+     */
     public void stopConnection() throws IOException {
         in.close();
         out.close();

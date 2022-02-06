@@ -5,13 +5,15 @@ import com.Model.Driver;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class DriversPanel extends InitPanel {
-    ArrayList<Driver> driversTest;
+    ArrayList<Driver> drivers;
 
     public DriversPanel() {
         super();
-        driversTest = new ArrayList<>();
+        drivers = new ArrayList<>();
         this.panel.setLayout(new BoxLayout(this.panel, BoxLayout.Y_AXIS));
         this.panel.setBorder(new EmptyBorder(0, 15,0,0));
     }
@@ -22,8 +24,11 @@ public class DriversPanel extends InitPanel {
      */
     @Override
     public JPanel getPanel() {
+
+        Collections.sort(drivers, Driver.Comparators.currentPos);
+
         this.panel.add(Box.createVerticalGlue());
-        for (Driver driver : driversTest) {
+        for (Driver driver : drivers) {
             this.panel.add(driver.getBox());
         }
         this.panel.add(Box.createVerticalGlue());
@@ -37,7 +42,7 @@ public class DriversPanel extends InitPanel {
      * @param driver completed driver box containing position, name bar and position change labelss
      */
     public void addDriver(Driver driver) {
-        driversTest.add(driver);
+        drivers.add(driver);
     }
 
 }

@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JButton;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -16,7 +17,7 @@ public class MenuFrame extends InitFrame {
     private ArrayList<JButton> buttons;
     private OverlayController overlayController;
 
-    public MenuFrame(String title, Boolean visibility) {
+    public MenuFrame(String title, Boolean visibility) throws IOException {
         super(title, visibility);
         buttonController = new ButtonEngine();
         buttons = new ArrayList<>();
@@ -38,9 +39,32 @@ public class MenuFrame extends InitFrame {
      * Create button objects
      */
     private void createButtons() {
-        final String[] toggleLabel = {"Show Overlay"};
-        addButtons(toggleLabel[0], 50, 100, 150, 30);
+        addButtons("Show Overlay", 50, 100, 150, 30);
         addButtons("Update", 50, 150, 150, 30);
+        addButtons("Connect to AC", 50,200,150,30);
+        addButtons("Disconnect from AC", 50, 250, 150, 30);
+
+        createButtonActions();
+    }
+
+    /**
+     * Create button
+     * @param label Button label
+     * @param x pixels
+     * @param y pixels
+     * @param width pixels
+     * @param height pixels
+     */
+    private void addButtons(String label, int x, int y, int width, int height) {
+        JButton button = new JButton();
+        button.setBounds(x, y, width, height);
+        button.setText(label);
+
+        buttons.add(button);
+    }
+
+    private void createButtonActions() {
+        final String[] toggleLabel = {"Show Overlay"};
 
         buttons.get(0).addActionListener(new ActionListener() {
             @Override
@@ -59,25 +83,40 @@ public class MenuFrame extends InitFrame {
         buttons.get(1).addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                overlayController.updateDrivers();
+                try {
+                    overlayController.updateDrivers();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                try {
+                    overlayController.getUpdate();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
             }
         });
-    }
 
-    /**
-     * Create button
-     * @param label Button label
-     * @param x pixels
-     * @param y pixels
-     * @param width pixels
-     * @param height pixels
-     */
-    private void addButtons(String label, int x, int y, int width, int height) {
-        JButton button = new JButton();
-        button.setBounds(x, y, width, height);
-        button.setText(label);
+        buttons.get(2).addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    overlayController.connectAC();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
 
-        buttons.add(button);
+        buttons.get(3).addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    overlayController.disconnectAC();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
     }
 
     /**

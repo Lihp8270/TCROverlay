@@ -4,8 +4,9 @@ import com.Overlay.DriverLabel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Comparator;
 
-public class Driver {
+public class Driver implements Comparable<Driver> {
     private String name;
     private final int driverID;
     private int currentPos;
@@ -16,7 +17,6 @@ public class Driver {
     private String fastestLap;
     private String car;
 
-    private final ImageIcon nameBanner = new ImageIcon("assets/NameBannerName.png");
     private final ImageIcon posBanner = new ImageIcon("assets/NameBannerPos.png");
 
     /**
@@ -199,5 +199,19 @@ public class Driver {
         posDiff = Math.abs(startingPos - currentPos);
 
         return posDiff;
+    }
+
+    @Override
+    public int compareTo(Driver o) {
+        return 0;
+    }
+
+    public static class Comparators {
+        public static Comparator<Driver> currentPos = new Comparator<Driver>() {
+            @Override
+            public int compare(Driver o1, Driver o2) {
+                return o1.getCurrentPos() - o2.getCurrentPos();
+            }
+        };
     }
 }

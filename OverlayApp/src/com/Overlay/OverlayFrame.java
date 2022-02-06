@@ -26,6 +26,7 @@ public class OverlayFrame extends InitFrame {
     private void initialiseFrame() {
         // TODO Set location needs to be done via menu page
         this.frame.setLocation(0,-dim.height);
+//        this.frame.setLocation(0,0);
         this.frame.setSize(dim);
         this.frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.frame.setLayout(new BorderLayout());
