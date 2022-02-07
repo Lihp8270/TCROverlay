@@ -40,7 +40,7 @@ public class MenuFrame extends InitFrame {
      */
     private void createButtons() {
         addButtons("Show Overlay", 50, 100, 150, 30);
-        addButtons("Update", 50, 150, 150, 30);
+        addButtons("Start Overlay", 50, 150, 150, 30);
         addButtons("Connect to AC", 50,200,150,30);
         addButtons("Disconnect from AC", 50, 250, 150, 30);
 
@@ -81,17 +81,25 @@ public class MenuFrame extends InitFrame {
         });
 
         buttons.get(1).addActionListener(new ActionListener() {
+            final String[] toggleLabel = {"Start Overlay"};
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
-                    overlayController.updateDrivers();
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-                try {
-                    overlayController.getUpdate();
-                } catch (IOException ex) {
-                    ex.printStackTrace();
+                if (overlayController.getRunning()) {
+                    toggleLabel[0] = "Start Running";
+                    buttons.get(1).setText(toggleLabel[0]);
+                    try {
+                        overlayController.stop();
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                } else {
+                    toggleLabel[0] = "Stop Overlay";
+                    buttons.get(1).setText(toggleLabel[0]);
+                    try {
+                        overlayController.run();
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
                 }
             }
         });
@@ -104,6 +112,7 @@ public class MenuFrame extends InitFrame {
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
+
             }
         });
 

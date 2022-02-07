@@ -70,5 +70,4 @@ public class OverlayFrame extends InitFrame {
         this.frame.repaint();
         this.frame.revalidate();
     }
-
 }

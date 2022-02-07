@@ -15,7 +15,7 @@ class ParserTest {
         Parser driverParser = new Parser();
         ArrayList<Driver> recvDrivers;
 
-        recvDrivers = driverParser.parseDriverData("1;Sausage:2;Bacon:3;Missy");
+        recvDrivers = driverParser.parseDriverData("1;Sausage;3:2;Bacon;2:3;Missy;3");
 
         assertEquals(1, recvDrivers.get(0).getDriverID());
         assertEquals("Sausage", recvDrivers.get(0).getName());
@@ -24,5 +24,6 @@ class ParserTest {
         assertEquals(3, recvDrivers.get(2).getDriverID());
         assertEquals("Missy", recvDrivers.get(2).getName());
         assertEquals(3, recvDrivers.size());
+
     }
 }

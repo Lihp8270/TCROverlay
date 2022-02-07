@@ -6,7 +6,6 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 
 public class DriversPanel extends InitPanel {
     ArrayList<Driver> drivers;
@@ -43,6 +42,14 @@ public class DriversPanel extends InitPanel {
      */
     public void addDriver(Driver driver) {
         drivers.add(driver);
+    }
+
+    /**
+     * Accessor for driver array list
+     * @return ArrayList of Driver objects
+     */
+    public ArrayList<Driver> getDrivers() {
+        return drivers;
     }
 
 }
