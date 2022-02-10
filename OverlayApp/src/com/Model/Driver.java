@@ -17,7 +17,8 @@ public class Driver implements Comparable<Driver> {
     private String fastestLap;
     private String car;
     private final ImageIcon posBanner;
-    private Config config;
+    private final Config config;
+    private String changeDir;
 
     /**
      * Constructor
@@ -36,6 +37,7 @@ public class Driver implements Comparable<Driver> {
         this.qualPos = 0;
         this.config = config;
         this.posBanner = new ImageIcon(this.config.getPositionIcon());
+        this.changeDir = "";
     }
 
     /**
@@ -195,11 +197,40 @@ public class Driver implements Comparable<Driver> {
     }
 
     /**
+     * Calculate Position difference
+     */
+    public void setPosDiff() {
+        posDiff = Math.abs(startingPos - currentPos);
+    }
+
+    /**
+     * Set change direction
+     */
+    public void setChangeDir() {
+        if(getCurrentPos() < getStartingPos()) {
+            changeDir = "+";
+        } else if(getCurrentPos() > getStartingPos()) {
+            changeDir = "-";
+        } else {
+            changeDir = "";
+        }
+    }
+
+    /**
+     * + = Improving
+     * - = Falling back
+     * "" = Steady
+     * @return + - or empty
+     */
+    public String getChangeDir() {
+        return changeDir;
+    }
+
+    /**
      * Get position difference
+     * @return position difference
      */
     public int getPosDiff() {
-        posDiff = Math.abs(startingPos - currentPos);
-
         return posDiff;
     }
 

@@ -5,9 +5,11 @@ import java.awt.*;
 
 public class DriverLabel extends JLabel {
     private final ImageIcon icon;
+
     /**
-     * Formatted driver labe
+     * Formatted driver label
      * @param name String
+     * @param image String of name banner
      */
     public DriverLabel(String name, String image) {
         icon = new ImageIcon(image);

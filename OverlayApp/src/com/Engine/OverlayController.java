@@ -14,21 +14,19 @@ import java.util.ArrayList;
 
 public class OverlayController {
     protected Config config;
-    private JSONParser jsonParser;
-    private OverlayFrame overlayFrame;
-    private DriversPanel drivers;
-    private AdvertPanel advert;
-    private SocketEngine acConnector;
-    private ACParser driverACParser;
+    private final OverlayFrame overlayFrame;
+    private final DriversPanel drivers;
+    private final SocketEngine acConnector;
+    private final ACParser driverACParser;
     private SwingWorker backgroundWorker;
-    private Boolean running;
-    private Boolean connected;
+    private boolean running;
+    private boolean connected;
 
     public OverlayController(String configFile) throws IOException {
-        jsonParser = new JSONParser();
+        JSONParser jsonParser = new JSONParser();
         config = jsonParser.readConfig(configFile);
         drivers = new DriversPanel(config);
-        advert = new AdvertPanel(config);
+        AdvertPanel advert = new AdvertPanel(config);
         driverACParser = new ACParser(config);
         acConnector = new SocketEngine(config.getListenPort());
         connected = false;
@@ -50,7 +48,7 @@ public class OverlayController {
      */
     public void updateDrivers() throws IOException {
         ArrayList<Driver> updatedDrivers;
-        Boolean driverFound = false;
+        boolean driverFound = false;
         int driverFoundIndex = 0;
 
         updatedDrivers = getUpdate();
@@ -67,6 +65,8 @@ public class OverlayController {
 
             if(driverFound) {
                 drivers.getDrivers().get(driverFoundIndex).setCurrentPos(driver.getCurrentPos());
+                drivers.getDrivers().get(driverFoundIndex).setPosDiff();
+                drivers.getDrivers().get(driverFoundIndex).setChangeDir();
                 driverFound = false;
                 driverFoundIndex = 0;
             } else {
@@ -79,7 +79,6 @@ public class OverlayController {
 
     /**
      * Connect to AC Server
-     * @throws IOException
      */
     public void connectAC() throws IOException {
         if(!connected) {
@@ -90,7 +89,6 @@ public class OverlayController {
 
     /**
      * Disconnect from server
-     * @throws IOException
      */
     public void disconnectAC() throws IOException {
         acConnector.stopConnection();
@@ -102,7 +100,6 @@ public class OverlayController {
     /**
      * Get updated driver info from server
      * @return Returns updated ArrayList of Drivers
-     * @throws IOException
      */
     private ArrayList<Driver> getUpdate() throws IOException {
         if (!connected) {
@@ -126,7 +123,6 @@ public class OverlayController {
 
     /**
      * Start overlay updating
-     * @throws IOException
      */
     public void run() throws IOException {
         if(connected) {
@@ -150,7 +146,6 @@ public class OverlayController {
 
     /**
      * Stop overlay updating
-     * @throws IOException
      */
     public void stop() throws IOException {
         if(connected) {

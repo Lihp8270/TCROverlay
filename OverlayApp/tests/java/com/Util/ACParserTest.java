@@ -1,6 +1,5 @@
 package com.Util;
 
-import com.Model.Config;
 import com.Model.Driver;
 import org.junit.jupiter.api.Test;
 

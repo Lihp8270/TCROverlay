@@ -33,13 +33,14 @@ public class DriversPanel extends InitPanel {
         }
         this.panel.add(Box.createVerticalGlue());
         this.panel.add(Box.createVerticalGlue());
+        this.panel.add(Box.createVerticalGlue());
 
         return this.panel;
     }
 
     /**
      * Add driver to the driver list
-     * @param driver completed driver box containing position, name bar and position change labelss
+     * @param driver completed driver box containing position, name bar and position change labels
      */
     public void addDriver(Driver driver) {
         drivers.add(driver);
