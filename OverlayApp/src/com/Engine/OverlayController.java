@@ -10,7 +10,7 @@ import javax.swing.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class OverlayController<drivers> {
+public class OverlayController {
     private OverlayFrame overlayFrame;
     private DriversPanel drivers;
     private AdvertPanel advert;
@@ -29,9 +29,7 @@ public class OverlayController<drivers> {
         connected = false;
         running = false;
         overlayFrame = new OverlayFrame("Overlay", false, drivers, advert);
-
         backgroundWorker = null;
-
     }
 
     /**
@@ -79,7 +77,7 @@ public class OverlayController<drivers> {
      * @throws IOException
      */
     public void connectAC() throws IOException {
-        if (!connected) {
+        if(!connected) {
             acConnector.startConnection();
             connected = true;
         }
@@ -92,11 +90,13 @@ public class OverlayController<drivers> {
     public void disconnectAC() throws IOException {
         acConnector.stopConnection();
         connected = false;
+
+        System.out.println("disconnected");
     }
 
     /**
      * Get updated driver info from server
-     * @return Retunrs updated ArrayList of Drivers
+     * @return Returns updated ArrayList of Drivers
      * @throws IOException
      */
     private ArrayList<Driver> getUpdate() throws IOException {
@@ -105,8 +105,8 @@ public class OverlayController<drivers> {
         }
         ArrayList<Driver> updatedDriverList;
 
-        String resp = acConnector.sendMessage("Send Data");
-        updatedDriverList = driverParser.parseDriverData(resp);
+        String UDPStream = acConnector.retrieveFromClient();
+        updatedDriverList = driverParser.parseDriverData(UDPStream);
 
         return updatedDriverList;
     }
