@@ -1,15 +1,18 @@
 package com.Overlay;
 
 
+import com.Model.Config;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 public class AdvertPanel extends InitPanel {
-    private final ImageIcon logo = new ImageIcon("assets/HostedOnSimracing.png");
+    private final ImageIcon logo;
 
-    public AdvertPanel() {
+    public AdvertPanel(Config config) {
         super();
-        this.panel.setBorder(new EmptyBorder(0, 0,10,0));
+        logo = new ImageIcon(config.getBottomAdvert());
+        this.panel.setBorder(new EmptyBorder(0, 0, config.getBottomAdvertPadding(), 0));
     }
 
     /**

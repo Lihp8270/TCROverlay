@@ -1,5 +1,7 @@
 package com.Overlay;
 
+import com.Model.Config;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -9,24 +11,24 @@ public class OverlayFrame extends InitFrame {
     private JPanel advertPanel;
     private DriversPanel drivers;
     private AdvertPanel advert;
+    private final Config config;
 
     /**
      * Constructor for overlay frame
-     * @param title Titlle of frame
+     * @param title Title of frame
      * @param visibility default visibility of frame
      */
-    public OverlayFrame(String title, Boolean visibility, DriversPanel drivers, AdvertPanel advert) {
+    public OverlayFrame(String title, Boolean visibility, DriversPanel drivers, AdvertPanel advert, Config config) {
         super(title, visibility);
         dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.drivers = drivers;
         this.advert = advert;
+        this.config = config;
         initialiseFrame();
     }
 
     private void initialiseFrame() {
-        // TODO Set location needs to be done via menu page
-//        this.frame.setLocation(0,-dim.height);
-        this.frame.setLocation(0,0);
+        this.frame.setLocation(config.getOverlayXOffset(),config.getOverlayYOffset());
         this.frame.setSize(dim);
         this.frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.frame.setLayout(new BorderLayout());
@@ -43,7 +45,6 @@ public class OverlayFrame extends InitFrame {
 
         this.frame.add(driverPanel, BorderLayout.WEST);
         this.frame.add(advertPanel, BorderLayout.SOUTH);
-
     }
 
     /**

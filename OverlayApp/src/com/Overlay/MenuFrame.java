@@ -21,7 +21,7 @@ public class MenuFrame extends InitFrame {
         super(title, visibility);
         buttonController = new ButtonEngine();
         buttons = new ArrayList<>();
-        overlayController = new OverlayController();
+        overlayController = new OverlayController("config/config.json");
 
         initialiseFrame(overlayController.getOverlayFrame());
         createButtons();

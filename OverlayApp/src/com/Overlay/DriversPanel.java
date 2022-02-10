@@ -1,5 +1,6 @@
 package com.Overlay;
 
+import com.Model.Config;
 import com.Model.Driver;
 
 import javax.swing.*;
@@ -10,11 +11,11 @@ import java.util.Collections;
 public class DriversPanel extends InitPanel {
     ArrayList<Driver> drivers;
 
-    public DriversPanel() {
+    public DriversPanel(Config config) {
         super();
         drivers = new ArrayList<>();
         this.panel.setLayout(new BoxLayout(this.panel, BoxLayout.Y_AXIS));
-        this.panel.setBorder(new EmptyBorder(0, 15,0,0));
+        this.panel.setBorder(new EmptyBorder(0, config.getDriverListLeftPadding(),0,0));
     }
 
     /**

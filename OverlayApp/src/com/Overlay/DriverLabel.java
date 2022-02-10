@@ -4,13 +4,13 @@ import javax.swing.*;
 import java.awt.*;
 
 public class DriverLabel extends JLabel {
-    private final ImageIcon icon = new ImageIcon("assets/NameBannerName.png");
+    private final ImageIcon icon;
     /**
      * Formatted driver labe
      * @param name String
      */
-    public DriverLabel(String name) {
-
+    public DriverLabel(String name, String image) {
+        icon = new ImageIcon(image);
         Dimension imageDims = new Dimension(icon.getIconWidth(), icon.getIconHeight());
         this.setText(name);
         this.setMinimumSize(imageDims);

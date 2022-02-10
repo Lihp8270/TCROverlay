@@ -1,5 +1,6 @@
 package com.Model;
 
+import com.Util.JSONParser;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -8,7 +9,7 @@ class DriverTest {
 
     @Test
     void getPosDiff() {
-        Driver testDriver = new Driver(1, "test");
+        Driver testDriver = new Driver(1, "test", new JSONParser().readConfig("config/config.json"));
         testDriver.setCurrentPos(3);
         testDriver.setStartingPos(2);
         assertEquals(1, testDriver.getPosDiff());

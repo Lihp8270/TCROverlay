@@ -1,5 +1,6 @@
 package com.Util;
 
+import com.Model.Config;
 import com.Model.Driver;
 import org.junit.jupiter.api.Test;
 
@@ -8,14 +9,14 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
-class ParserTest {
+class ACParserTest {
 
     @Test
     void parseDriverData() {
-        Parser driverParser = new Parser();
+        ACParser driverACParser = new ACParser(new JSONParser().readConfig("assets/config.json"));
         ArrayList<Driver> recvDrivers;
 
-        recvDrivers = driverParser.parseDriverData("1;Sausage;3:2;Bacon;2:3;Missy;3");
+        recvDrivers = driverACParser.parseDriverData("1;Sausage;3:2;Bacon;2:3;Missy;3");
 
         assertEquals(1, recvDrivers.get(0).getDriverID());
         assertEquals("Sausage", recvDrivers.get(0).getName());

@@ -1,34 +1,39 @@
 package com.Engine;
 
+import com.Model.Config;
 import com.Model.Driver;
 import com.Overlay.AdvertPanel;
 import com.Overlay.DriversPanel;
 import com.Overlay.OverlayFrame;
-import com.Util.Parser;
+import com.Util.ACParser;
+import com.Util.JSONParser;
 
 import javax.swing.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class OverlayController {
+    protected Config config;
+    private JSONParser jsonParser;
     private OverlayFrame overlayFrame;
     private DriversPanel drivers;
     private AdvertPanel advert;
     private SocketEngine acConnector;
-    private Parser driverParser;
+    private ACParser driverACParser;
     private SwingWorker backgroundWorker;
     private Boolean running;
-
     private Boolean connected;
 
-    public OverlayController() throws IOException {
-        drivers = new DriversPanel();
-        advert = new AdvertPanel();
-        driverParser = new Parser();
-        acConnector = new SocketEngine("127.0.0.1", 9090);
+    public OverlayController(String configFile) throws IOException {
+        jsonParser = new JSONParser();
+        config = jsonParser.readConfig(configFile);
+        drivers = new DriversPanel(config);
+        advert = new AdvertPanel(config);
+        driverACParser = new ACParser(config);
+        acConnector = new SocketEngine(config.getListenPort());
         connected = false;
         running = false;
-        overlayFrame = new OverlayFrame("Overlay", false, drivers, advert);
+        overlayFrame = new OverlayFrame("Overlay", false, drivers, advert, config);
         backgroundWorker = null;
     }
 
@@ -106,7 +111,7 @@ public class OverlayController {
         ArrayList<Driver> updatedDriverList;
 
         String UDPStream = acConnector.retrieveFromClient();
-        updatedDriverList = driverParser.parseDriverData(UDPStream);
+        updatedDriverList = driverACParser.parseDriverData(UDPStream);
 
         return updatedDriverList;
     }

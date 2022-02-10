@@ -6,13 +6,9 @@ import java.net.DatagramSocket;
 
 public class SocketEngine {
     private DatagramSocket serverSocket;
-    private PrintWriter out;
-    private BufferedReader in;
-    private final String ip;
     private final int port;
 
-    public SocketEngine(String ip, int port) throws IOException {
-        this.ip = ip;
+    public SocketEngine(int port) throws IOException {
         this.port = port;
     }
 
@@ -21,7 +17,7 @@ public class SocketEngine {
      * @throws IOException
      */
     public void startConnection() throws IOException {
-        serverSocket = new DatagramSocket(9090);
+        serverSocket = new DatagramSocket(port);
     }
 
     /**
@@ -37,7 +33,6 @@ public class SocketEngine {
 
         return UDPStream;
     }
-
     /**
      * Close connection to AC Server
      * @throws IOException

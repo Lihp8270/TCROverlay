@@ -16,15 +16,15 @@ public class Driver implements Comparable<Driver> {
     private String qualTime;
     private String fastestLap;
     private String car;
-
-    private final ImageIcon posBanner = new ImageIcon("assets/NameBannerPos.png");
+    private final ImageIcon posBanner;
+    private Config config;
 
     /**
      * Constructor
      * @param driverID Driver ID from AC
      * @param name Driver name from AC
      */
-    public Driver(int driverID, String name) {
+    public Driver(int driverID, String name, Config config) {
         this.driverID = driverID;
         this.name = name;
         this.currentPos = 0;
@@ -34,6 +34,8 @@ public class Driver implements Comparable<Driver> {
         this.fastestLap = "";
         this.car = "";
         this.qualPos = 0;
+        this.config = config;
+        this.posBanner = new ImageIcon(this.config.getPositionIcon());
     }
 
     /**
@@ -161,7 +163,7 @@ public class Driver implements Comparable<Driver> {
      * @return JLabel
      */
     private JLabel getDriverLabel() {
-        DriverLabel driverLabel = new DriverLabel(name);
+        DriverLabel driverLabel = new DriverLabel(name, config.getNameBannerIcon());
 
         return driverLabel;
     }
