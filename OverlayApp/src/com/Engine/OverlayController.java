@@ -80,7 +80,7 @@ public class OverlayController {
     /**
      * Connect to AC Server
      */
-    public void connectAC() throws IOException {
+    private void connectAC() throws IOException {
         if(!connected) {
             acConnector.startConnection();
             connected = true;
@@ -90,11 +90,9 @@ public class OverlayController {
     /**
      * Disconnect from server
      */
-    public void disconnectAC() throws IOException {
+    private void disconnectAC() throws IOException {
         acConnector.stopConnection();
         connected = false;
-
-        System.out.println("disconnected");
     }
 
     /**
@@ -125,6 +123,8 @@ public class OverlayController {
      * Start overlay updating
      */
     public void run() throws IOException {
+        connectAC();
+
         if(connected) {
             running = true;
 
@@ -152,7 +152,14 @@ public class OverlayController {
             this.backgroundWorker.cancel(true);
             running = false;
             this.backgroundWorker = null;
+            disconnectAC();
         }
     }
 
+    /**
+     * Reset panel
+     */
+    public void reset() {
+        drivers.clearPanel();
+    }
 }

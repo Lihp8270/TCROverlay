@@ -54,4 +54,11 @@ public class DriversPanel extends InitPanel {
         return drivers;
     }
 
+    /**
+     * Clear driver list
+     */
+    public void clearPanel() {
+        drivers.clear();
+    }
+
 }

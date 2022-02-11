@@ -3,8 +3,7 @@ package com.Overlay;
 import com.Engine.ButtonEngine;
 import com.Engine.OverlayController;
 
-import javax.swing.JFrame;
-import javax.swing.JButton;
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -41,8 +40,6 @@ public class MenuFrame extends InitFrame {
     private void createButtons() {
         addButtons("Show Overlay", 50, 100, 150, 30);
         addButtons("Start Overlay", 50, 150, 150, 30);
-        addButtons("Connect to AC", 50,200,150,30);
-        addButtons("Disconnect from AC", 50, 250, 150, 30);
 
         createButtonActions();
     }
@@ -85,7 +82,7 @@ public class MenuFrame extends InitFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (overlayController.getRunning()) {
-                    toggleLabel[0] = "Start Running";
+                    toggleLabel[0] = "Start Overlay";
                     buttons.get(1).setText(toggleLabel[0]);
                     try {
                         overlayController.stop();
@@ -104,28 +101,7 @@ public class MenuFrame extends InitFrame {
             }
         });
 
-        buttons.get(2).addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    overlayController.connectAC();
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
 
-            }
-        });
-
-        buttons.get(3).addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    overlayController.disconnectAC();
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-            }
-        });
     }
 
     /**

@@ -8,7 +8,12 @@ public class Config {
     private int bottomAdvertPadding;
     private int driverListLeftPadding;
     private String positionIcon;
-    private String nameBannerIcon;
+    private String nameBannerIconUp;
+    private String posChangeIconUp;
+    private String nameBannerIconDown;
+    private String posChangeIconDown;
+    private String nameBannerIconSteady;
+    private String posChangeIconSteady;
 
     public Config() {
 
@@ -42,7 +47,27 @@ public class Config {
         return positionIcon;
     }
 
-    public String getNameBannerIcon() {
-        return nameBannerIcon;
+    public String getNameBannerIconUp() {
+        return nameBannerIconUp;
+    }
+
+    public String getPosChangeIconUp() {
+        return posChangeIconUp;
+    }
+
+    public String getNameBannerIconDown() {
+        return nameBannerIconDown;
+    }
+
+    public String getPosChangeIconDown() {
+        return posChangeIconDown;
+    }
+
+    public String getNameBannerIconSteady() {
+        return nameBannerIconSteady;
+    }
+
+    public String getPosChangeIconSteady() {
+        return posChangeIconSteady;
     }
 }

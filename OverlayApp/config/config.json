@@ -4,7 +4,12 @@
   "overlayYOffset": 0,
   "bottomAdvert": "assets/HostedOnSimracing.png",
   "positionIcon": "assets/NameBannerPos.png",
-  "nameBannerIcon": "assets/NameBannerName.png",
+  "nameBannerIconUp": "assets/NameBannerNameUp.png",
+  "posChangeIconUp": "assets/NameBannerChangeUp.png",
+  "nameBannerIconDown": "assets/NameBannerNameDown.png",
+  "posChangeIconDown": "assets/NameBannerChangeDown.png",
+  "nameBannerIconSteady": "assets/NameBannerNameSteady.png",
+  "posChangeIconSteady": "assets/NameBannerChangeSteady.png",
   "bottomAdvertPadding": 10,
   "driverListLeftPadding": 15
 }

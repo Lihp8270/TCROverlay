@@ -13,8 +13,12 @@ public class Driver implements Comparable<Driver> {
     private int startingPos;
     private int posDiff;
     private int qualPos;
-    private String qualTime;
-    private String fastestLap;
+    private int qualTime;
+    private int fastestLap;
+    private int currentLap;
+    private String qualTimeString;
+    private String currentLapString;
+    private String fastestLapString;
     private String car;
     private final ImageIcon posBanner;
     private final Config config;
@@ -31,13 +35,14 @@ public class Driver implements Comparable<Driver> {
         this.currentPos = 0;
         this.startingPos = 0;
         this.posDiff = 0;
-        this.qualTime = "";
-        this.fastestLap = "";
+        this.qualTime = 0;
+        this.fastestLap = 0;
         this.car = "";
         this.qualPos = 0;
         this.config = config;
         this.posBanner = new ImageIcon(this.config.getPositionIcon());
         this.changeDir = "";
+        this.currentLap = 0;
     }
 
     /**
@@ -114,25 +119,25 @@ public class Driver implements Comparable<Driver> {
 
     /**
      * Get drivers qualifying time
-     * @return String
+     * @return int
      */
-    public String getQualTime() {
+    public int getQualTime() {
         return qualTime;
     }
 
     /**
      * Set drivers qualifying time
-     * @param qualTime String
+     * @param qualTime Integer
      */
-    public void setQualTime(String qualTime) {
+    public void setQualTime(int qualTime) {
         this.qualTime = qualTime;
     }
 
     /**
      * Get drivers fastest Lap
-     * @return String
+     * @return Int
      */
-    public String getFastestLap() {
+    public int getFastestLap() {
         return fastestLap;
     }
 
@@ -140,7 +145,7 @@ public class Driver implements Comparable<Driver> {
      * Set drivers fastest Lap
      * @param fastestLap String
      */
-    public void setFastestLap(String fastestLap) {
+    public void setFastestLap(int fastestLap) {
         this.fastestLap = fastestLap;
     }
 
@@ -165,7 +170,17 @@ public class Driver implements Comparable<Driver> {
      * @return JLabel
      */
     private JLabel getDriverLabel() {
-        DriverLabel driverLabel = new DriverLabel(name, config.getNameBannerIcon());
+        String banner;
+
+        if (changeDir.equals("+")) {
+            banner = config.getNameBannerIconUp();
+        } else if (changeDir.equals("-")) {
+            banner = config.getNameBannerIconDown();
+        } else {
+            banner = config.getNameBannerIconSteady();
+        }
+
+        DriverLabel driverLabel = new DriverLabel(name, banner);
 
         return driverLabel;
     }
@@ -185,6 +200,35 @@ public class Driver implements Comparable<Driver> {
     }
 
     /**
+     * Get position change label
+     * @return JLabel
+     */
+    private JLabel getPosChangeLabel() {
+        String change;
+        String banner;
+
+        if (changeDir.equals("+")) {
+            change = String.valueOf(posDiff);
+            banner = config.getPosChangeIconUp();
+        } else if (changeDir.equals("-")) {
+            change = String.valueOf(posDiff);
+            banner = config.getPosChangeIconDown();
+        } else {
+            change = "";
+            banner = config.getPosChangeIconSteady();
+        }
+
+        JLabel posChangeLabel = new JLabel(change);
+        ImageIcon icon = new ImageIcon(banner);
+        posChangeLabel.setForeground(Color.WHITE);
+        posChangeLabel.setIcon(icon);
+        posChangeLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        posChangeLabel.setHorizontalTextPosition(SwingConstants.CENTER);
+
+        return posChangeLabel;
+    }
+
+    /**
      * Get completed box for overlay panel
      * @return Box
      */
@@ -192,6 +236,7 @@ public class Driver implements Comparable<Driver> {
         Box driverBox = Box.createHorizontalBox();
         driverBox.add(getPositionLabel());
         driverBox.add(getDriverLabel());
+        driverBox.add(getPosChangeLabel());
 
         return driverBox;
     }
@@ -232,6 +277,47 @@ public class Driver implements Comparable<Driver> {
      */
     public int getPosDiff() {
         return posDiff;
+    }
+
+    /**
+     * Get current lap as integer
+     * @return lap ms
+     */
+    public int getCurrentLap() {
+        return currentLap;
+    }
+
+    /**
+     * Set lap time integer
+     * @param currentLap ms
+     */
+    public void setCurrentLap(int currentLap) {
+        this.currentLap = currentLap;
+    }
+
+    /**
+     * Get qualifying time as a string
+     * @return x:xx.xxx
+     */
+    public String getQualTimeString() {
+        return qualTimeString;
+    }
+
+
+    /**
+     * Get current Lap as String
+     * @return x:xx.xxx
+     */
+    public String getCurrentLapString() {
+        return currentLapString;
+    }
+
+    /**
+     * Get fastest lap as a string
+     * @return x:xx.xxx
+     */
+    public String getFastestLapString() {
+        return fastestLapString;
     }
 
     @Override
