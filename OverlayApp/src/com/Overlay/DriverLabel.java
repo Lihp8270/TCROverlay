@@ -9,12 +9,12 @@ public class DriverLabel extends JLabel {
     /**
      * Formatted driver label
      * @param name String
-     * @param image String of name banner
+     * @param icon Image Icon of driver banner
      */
-    public DriverLabel(String name, String image) {
-        icon = new ImageIcon(image);
+    public DriverLabel(String name, ImageIcon icon) {
+        this.icon = icon;
         Dimension imageDims = new Dimension(icon.getIconWidth(), icon.getIconHeight());
-        this.setText(name);
+        this.setText("  " + name);
         this.setMinimumSize(imageDims);
         this.setMaximumSize(imageDims);
         this.setPreferredSize(imageDims);

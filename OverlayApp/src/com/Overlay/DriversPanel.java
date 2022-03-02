@@ -5,6 +5,7 @@ import com.Model.Driver;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -30,6 +31,7 @@ public class DriversPanel extends InitPanel {
         this.panel.add(Box.createVerticalGlue());
         for (Driver driver : drivers) {
             this.panel.add(driver.getBox());
+            this.panel.add(Box.createRigidArea(new Dimension(0,3)));
         }
         this.panel.add(Box.createVerticalGlue());
         this.panel.add(Box.createVerticalGlue());

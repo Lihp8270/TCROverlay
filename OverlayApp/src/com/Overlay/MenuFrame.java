@@ -28,7 +28,7 @@ public class MenuFrame extends InitFrame {
     }
 
     private void initialiseFrame(OverlayFrame overlayFrame) {
-        this.frame.setSize(800,600);
+        this.frame.setSize(250,170);
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.frame.setLayout(null);
         this.overlayFrame = overlayFrame;
@@ -38,8 +38,8 @@ public class MenuFrame extends InitFrame {
      * Create button objects
      */
     private void createButtons() {
-        addButtons("Show Overlay", 50, 100, 150, 30);
-        addButtons("Start Overlay", 50, 150, 150, 30);
+        addButtons("Show Overlay", 40, 30, 150, 30);
+        addButtons("Start Overlay", 40, 70, 150, 30);
 
         createButtonActions();
     }

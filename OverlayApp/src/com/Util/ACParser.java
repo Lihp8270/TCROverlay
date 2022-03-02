@@ -21,8 +21,9 @@ public class ACParser {
             String[] driverData = driverString.split(";");
 
             newDrivers.add(new Driver(Integer.valueOf(driverData[0]), driverData[1], config));
-            newDrivers.get(newDrivers.size() - 1).setCurrentPos(Integer.valueOf(driverData[2]));
-            newDrivers.get(newDrivers.size() - 1).setStartingPos(Integer.valueOf(driverData[2]));
+            newDrivers.get(newDrivers.size() - 1).setCompletedLaps(Integer.valueOf(driverData[2]));
+            newDrivers.get(newDrivers.size() - 1).setCurrentPos(Integer.valueOf(driverData[3]));
+            newDrivers.get(newDrivers.size() - 1).setStartingPos(Integer.valueOf(driverData[3]));
         }
 
         return newDrivers;

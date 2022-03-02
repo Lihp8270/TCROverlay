@@ -67,6 +67,7 @@ public class OverlayController {
                 drivers.getDrivers().get(driverFoundIndex).setCurrentPos(driver.getCurrentPos());
                 drivers.getDrivers().get(driverFoundIndex).setPosDiff();
                 drivers.getDrivers().get(driverFoundIndex).setChangeDir();
+                drivers.getDrivers().get(driverFoundIndex).setCompletedLaps(driver.getCompletedLaps());
                 driverFound = false;
                 driverFoundIndex = 0;
             } else {
