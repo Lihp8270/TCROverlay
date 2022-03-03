@@ -23,7 +23,7 @@ public class DriversPanel extends InitPanel {
         timingTreeHeader.setVisible(true);
         headerBox.add(timingTreeHeader);
         this.panel.setLayout(new BoxLayout(this.panel, BoxLayout.Y_AXIS));
-        this.panel.setBorder(new EmptyBorder(0, config.getDriverListLeftPadding(),0,0));
+        this.panel.setBorder(new EmptyBorder(config.getDriverListTopPadding(), config.getDriverListLeftPadding(),0,0));
     }
 
     /**
@@ -35,16 +35,12 @@ public class DriversPanel extends InitPanel {
 
         Collections.sort(drivers, Driver.Comparators.currentPos);
 
-        this.panel.add(Box.createVerticalGlue());
         this.panel.add(headerBox);
         this.panel.add(Box.createRigidArea(new Dimension(0,3)));
         for (Driver driver : drivers) {
             this.panel.add(driver.getBox());
             this.panel.add(Box.createRigidArea(new Dimension(0,3)));
         }
-        this.panel.add(Box.createVerticalGlue());
-        this.panel.add(Box.createVerticalGlue());
-        this.panel.add(Box.createVerticalGlue());
 
         return this.panel;
     }

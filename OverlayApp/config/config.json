@@ -13,7 +13,13 @@
   "broadcastLogo": "assets/official/BroadcastLogo.png",
   "largeNameBanner": "assets/official/largeNameBanner.png",
   "largeNameBannerIcon": "assets/official/largeNameBannerIcon.png",
+  "lapIcon": "assets/official/lapIcon.png",
   "rightBroadcastLogoPadding": -5,
-  "topBroadcastLogoPadding": 10,
-  "driverListLeftPadding": 15
+  "topBroadcastLogoPadding": 13,
+  "driverListLeftPadding": 15,
+  "driverListTopPadding": 30,
+  "lapIconTopPadding": 30,
+  "lapIconLeftPadding": 432,
+  "driverNameLeftPadding": 1385,
+  "driverNameBottomPadding": 30
 }

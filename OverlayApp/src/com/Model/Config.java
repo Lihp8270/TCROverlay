@@ -7,6 +7,11 @@ public class Config {
     private int rightBroadcastLogoPadding;
     private int topBroadcastLogoPadding;
     private int driverListLeftPadding;
+    private int driverListTopPadding;
+    private int lapIconTopPadding;
+    private int lapIconLeftPadding;
+    private int driverNameLeftPadding;
+    private int driverNameBottomPadding;
     private String positionIcon;
     private String nameBannerName;
     private String nameBannerLaps;
@@ -17,6 +22,7 @@ public class Config {
     private String broadcastLogo;
     private String largeNameBanner;
     private String largeNameBannerIcon;
+    private String lapIcon;
 
     public Config() {
 
@@ -44,6 +50,26 @@ public class Config {
 
     public int getDriverListLeftPadding() {
         return driverListLeftPadding;
+    }
+
+    public int getDriverListTopPadding() {
+        return driverListTopPadding;
+    }
+
+    public int getLapIconTopPadding() {
+        return lapIconTopPadding;
+    }
+
+    public int getLapIconLeftPadding() {
+        return lapIconLeftPadding;
+    }
+
+    public int getDriverNameLeftPadding() {
+        return driverNameLeftPadding;
+    }
+
+    public int getDriverNameBottomPadding() {
+        return driverNameBottomPadding;
     }
 
     public String getPositionIcon() {
@@ -84,6 +110,10 @@ public class Config {
 
     public String getLargeNameBannerIcon() {
         return largeNameBannerIcon;
+    }
+
+    public String getLapIcon() {
+        return lapIcon;
     }
 
 }

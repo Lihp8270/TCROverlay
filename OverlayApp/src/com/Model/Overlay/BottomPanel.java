@@ -8,7 +8,6 @@ import java.awt.*;
 
 public class BottomPanel extends  InitPanel {
     private Box driverNameBox;
-    private String driverName;
     private JLabel bannerIcon;
     private JLabel driverNameBannerLabel;
     private Font font;
@@ -17,11 +16,10 @@ public class BottomPanel extends  InitPanel {
 
     public BottomPanel(Config config) {
         super();
-        this.driverName = driverName;
         icon = new ImageIcon(config.getLargeNameBannerIcon());
         driverNameBanner = new ImageIcon(config.getLargeNameBanner());
         this.panel.setLayout(new BoxLayout(this.panel, BoxLayout.X_AXIS));
-        this.panel.setBorder(new EmptyBorder(0,1385,110,0));
+        this.panel.setBorder(new EmptyBorder(0,config.getDriverNameLeftPadding(),config.getDriverNameBottomPadding(),0));
         font = new Font("Brother 1816", Font.BOLD, 25);
 
         createLogoLabel();
@@ -46,7 +44,6 @@ public class BottomPanel extends  InitPanel {
     public void createLogoLabel() {
         bannerIcon = new JLabel();
         bannerIcon.setIcon(icon);
-        bannerIcon.setVisible(true);
     }
 
     public void createDriverLabel() {

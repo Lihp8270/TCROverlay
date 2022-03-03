@@ -10,25 +10,30 @@ public class OverlayFrame extends InitFrame {
     private JPanel driverPanel;
     private JPanel advertPanel;
     private JPanel driverNamePanel;
+    private JPanel lapPanel;
     private DriversPanel drivers;
     private AdvertPanel advert;
     private BottomPanel bottomPanel;
+    private TopPanel topPanel;
     private final Config config;
     private String currentFocussedDriver;
+    private int lastLapDisplayed;
 
     /**
      * Constructor for overlay frame
      * @param title Title of frame
      * @param visibility default visibility of frame
      */
-    public OverlayFrame(String title, Boolean visibility, DriversPanel drivers, AdvertPanel advert, BottomPanel bottomPanel, Config config) {
+    public OverlayFrame(String title, Boolean visibility, DriversPanel drivers, AdvertPanel advert, BottomPanel bottomPanel, TopPanel topPanel, Config config) {
         super(title, visibility);
         dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.drivers = drivers;
         this.advert = advert;
         this.config = config;
         this.bottomPanel = bottomPanel;
+        this.topPanel = topPanel;
         this.currentFocussedDriver = "";
+        this.lastLapDisplayed = 0;
         initialiseFrame();
     }
 
@@ -48,10 +53,12 @@ public class OverlayFrame extends InitFrame {
         driverPanel = drivers.getPanel();
         advertPanel = advert.getPanel();
         driverNamePanel = bottomPanel.getPanel();
+        lapPanel = topPanel.getPanel();
 
         this.frame.add(driverPanel, BorderLayout.WEST);
         this.frame.add(advertPanel, BorderLayout.EAST);
         this.frame.add(driverNamePanel, BorderLayout.SOUTH);
+        this.frame.add(lapPanel, BorderLayout.CENTER);
     }
 
     /**
@@ -66,6 +73,7 @@ public class OverlayFrame extends InitFrame {
             visible = true;
         }
     }
+
 
     /**
      * Update Drivers panel
@@ -90,5 +98,23 @@ public class OverlayFrame extends InitFrame {
 
             currentFocussedDriver = driverName;
         }
+    }
+
+    public void updateLapGraphic() {
+        if(!(lastLapDisplayed == drivers.getDrivers().get(0).getCompletedLaps() + 1)) {
+            this.lapPanel.removeAll();
+            topPanel.setLaps(String.valueOf(drivers.getDrivers().get(0).getCompletedLaps() + 1));
+            this.lapPanel = topPanel.getPanel();
+            this.frame.add(lapPanel, BorderLayout.CENTER);
+            this.frame.repaint();
+            this.frame.revalidate();
+            lastLapDisplayed = drivers.getDrivers().get(0).getCompletedLaps() + 1;
+        }
+
+
+    }
+
+    public void setMaxLaps(String maxLaps) {
+        topPanel.setMaxLaps(maxLaps);
     }
 }

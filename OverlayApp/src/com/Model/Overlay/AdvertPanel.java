@@ -12,6 +12,7 @@ public class AdvertPanel extends InitPanel {
     public AdvertPanel(Config config) {
         super();
         logo = new ImageIcon(config.getBroadcastLogo());
+        this.panel.setLayout(new BoxLayout(this.panel, BoxLayout.Y_AXIS));
         this.panel.setBorder(new EmptyBorder(config.getTopBroadcastLogoPadding(), 0, 0, config.getRightBroadcastLogoPadding()));
     }
 

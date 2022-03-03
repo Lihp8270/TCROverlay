@@ -14,5 +14,4 @@ public class ButtonEngine {
     public void toggleShow(OverlayFrame frame) {
         frame.toggleVisibility();
     }
-
 }

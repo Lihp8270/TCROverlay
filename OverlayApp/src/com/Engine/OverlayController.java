@@ -2,10 +2,7 @@ package com.Engine;
 
 import com.Model.Config;
 import com.Model.Driver;
-import com.Model.Overlay.AdvertPanel;
-import com.Model.Overlay.BottomPanel;
-import com.Model.Overlay.DriversPanel;
-import com.Model.Overlay.OverlayFrame;
+import com.Model.Overlay.*;
 import com.Util.ACParser;
 import com.Util.JSONParser;
 
@@ -29,11 +26,12 @@ public class OverlayController {
         drivers = new DriversPanel(config);
         AdvertPanel advert = new AdvertPanel(config);
         BottomPanel bottomPanel = new BottomPanel(config);
+        TopPanel topPanel = new TopPanel(config);
         driverACParser = new ACParser(config);
         acConnector = new SocketEngine(config.getListenPort());
         connected = false;
         running = false;
-        overlayFrame = new OverlayFrame("Overlay", false, drivers, advert, bottomPanel, config);
+        overlayFrame = new OverlayFrame("Overlay", false, drivers, advert, bottomPanel, topPanel, config);
         backgroundWorker = null;
     }
 
@@ -82,6 +80,7 @@ public class OverlayController {
 
         overlayFrame.updateDrivers(drivers);
         overlayFrame.updateLargeName(focussedDriver);
+        overlayFrame.updateLapGraphic();
     }
 
     /**

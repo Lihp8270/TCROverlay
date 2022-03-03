@@ -15,6 +15,7 @@ public class MenuFrame extends InitFrame {
     private OverlayFrame overlayFrame;
     private ArrayList<JButton> buttons;
     private OverlayController overlayController;
+    private JTextField lapTextField;
 
     public MenuFrame(String title, Boolean visibility) throws IOException {
         super(title, visibility);
@@ -24,11 +25,12 @@ public class MenuFrame extends InitFrame {
 
         initialiseFrame(overlayController.getOverlayFrame());
         createButtons();
+        createTextFields();
         showButtons();
     }
 
     private void initialiseFrame(OverlayFrame overlayFrame) {
-        this.frame.setSize(250,170);
+        this.frame.setSize(250,270);
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.frame.setLayout(null);
         this.overlayFrame = overlayFrame;
@@ -40,8 +42,14 @@ public class MenuFrame extends InitFrame {
     private void createButtons() {
         addButtons("Show Overlay", 40, 30, 150, 30);
         addButtons("Start Overlay", 40, 70, 150, 30);
+        addButtons("Set Laps", 40, 150, 150, 30);
 
         createButtonActions();
+    }
+
+    private void createTextFields() {
+        this.lapTextField = new JTextField("No. of Laps");
+        lapTextField.setBounds(40,110,150,30);
     }
 
     /**
@@ -101,6 +109,16 @@ public class MenuFrame extends InitFrame {
             }
         });
 
+        buttons.get(2).addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(!(lapTextField.getText().equals("No. of Laps"))) {
+                    overlayFrame.setMaxLaps(lapTextField.getText());
+                }
+            }
+        });
+
 
     }
 
@@ -111,6 +129,8 @@ public class MenuFrame extends InitFrame {
         for (JButton button : buttons) {
             this.frame.add(button);
         }
+
+        this.frame.add(lapTextField);
     }
 
 }
