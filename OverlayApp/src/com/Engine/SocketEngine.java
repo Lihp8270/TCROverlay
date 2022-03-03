@@ -13,17 +13,10 @@ public class SocketEngine {
     }
 
     /**
-     * Start connection to AC Server
-     * @throws IOException
-     */
-    public void startConnection() throws IOException {
-        serverSocket = new DatagramSocket(port);
-    }
-
-    /**
      * Retrieve from server
      */
     public String retrieveFromClient() throws IOException {
+        serverSocket = new DatagramSocket(port);
         byte[] buf = new byte[1024];
         DatagramPacket packet = new DatagramPacket(buf, buf.length);
 
@@ -31,13 +24,8 @@ public class SocketEngine {
 
         String UDPStream = new String(packet.getData(), 0, packet.getLength());
 
+        serverSocket.close();
         return UDPStream;
     }
-    /**
-     * Close connection to AC Server
-     * @throws IOException
-     */
-    public void stopConnection() throws IOException {
-        serverSocket.close();
-    }
+
 }

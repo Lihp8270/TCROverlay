@@ -83,7 +83,6 @@ public class OverlayController {
      */
     private void connectAC() throws IOException {
         if(!connected) {
-            acConnector.startConnection();
             connected = true;
         }
     }
@@ -92,7 +91,6 @@ public class OverlayController {
      * Disconnect from server
      */
     private void disconnectAC() throws IOException {
-        acConnector.stopConnection();
         connected = false;
     }
 
