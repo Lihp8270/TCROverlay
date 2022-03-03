@@ -44,7 +44,7 @@ public class OverlayFrame extends InitFrame {
         advertPanel = advert.getPanel();
 
         this.frame.add(driverPanel, BorderLayout.WEST);
-        this.frame.add(advertPanel, BorderLayout.SOUTH);
+        this.frame.add(advertPanel, BorderLayout.EAST);
     }
 
     /**

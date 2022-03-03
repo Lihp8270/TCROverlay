@@ -9,6 +9,9 @@
   "nameBannerPosUp": "assets/official/NameBannerPosChangeUp.png",
   "nameBannerPosSteady": "assets/official/NameBannerPosChangeSteady.png",
   "nameBannerPosDown": "assets/official/NameBannerPosChangeDown.png",
-  "bottomAdvertPadding": 10,
+  "timingTreeHeader": "assets/official/TimingTreeHeader.png",
+  "broadcastLogo": "assets/official/BroadcastLogo.png",
+  "rightBroadcastLogoPadding": -5,
+  "topBroadcastLogoPadding": 10,
   "driverListLeftPadding": 15
 }

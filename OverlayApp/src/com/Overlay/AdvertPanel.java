@@ -11,8 +11,8 @@ public class AdvertPanel extends InitPanel {
 
     public AdvertPanel(Config config) {
         super();
-        logo = new ImageIcon(config.getBottomAdvert());
-        this.panel.setBorder(new EmptyBorder(0, 0, config.getBottomAdvertPadding(), 0));
+        logo = new ImageIcon(config.getBroadcastLogo());
+        this.panel.setBorder(new EmptyBorder(config.getTopBroadcastLogoPadding(), 0, 0, config.getRightBroadcastLogoPadding()));
     }
 
     /**

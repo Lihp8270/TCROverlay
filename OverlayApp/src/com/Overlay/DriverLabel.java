@@ -11,7 +11,7 @@ public class DriverLabel extends JLabel {
      * @param name String
      * @param icon Image Icon of driver banner
      */
-    public DriverLabel(String name, ImageIcon icon) {
+    public DriverLabel(String name, ImageIcon icon, Font font) {
         this.icon = icon;
         Dimension imageDims = new Dimension(icon.getIconWidth(), icon.getIconHeight());
         this.setText("  " + name);
@@ -19,6 +19,7 @@ public class DriverLabel extends JLabel {
         this.setMaximumSize(imageDims);
         this.setPreferredSize(imageDims);
         this.setForeground(Color.WHITE);
+        this.setFont(font);
     }
 
     @Override

@@ -11,16 +11,18 @@ public class TimingStackLabelEngine {
     private final ImageIcon nameBanner;
     private final ImageIcon posBanner;
     private final ImageIcon lapsIcon;
+    private final Font font;
 
     public TimingStackLabelEngine(Config config) {
         this.config = config;
         this.nameBanner = new ImageIcon(config.getNameBannerName());
         this.posBanner = new ImageIcon(config.getPositionIcon());
         this.lapsIcon = new ImageIcon(config.getNameBannerLaps());
+        this.font = new Font("Brother 1816", Font.BOLD, 15);
     }
 
     public JLabel getDriverLabel(String name) {
-        DriverLabel driverLabel = new DriverLabel(name, nameBanner);
+        DriverLabel driverLabel = new DriverLabel(name, nameBanner, font);
 
         return driverLabel;
     }
@@ -35,6 +37,7 @@ public class TimingStackLabelEngine {
         positionLabel.setIcon(posBanner);
         positionLabel.setHorizontalAlignment(SwingConstants.CENTER);
         positionLabel.setHorizontalTextPosition(SwingConstants.CENTER);
+        positionLabel.setFont(font);
 
         return positionLabel;
     }
@@ -58,6 +61,7 @@ public class TimingStackLabelEngine {
         positionChangeLabel.setIcon(posChangeIcon);
         positionChangeLabel.setHorizontalAlignment(SwingConstants.CENTER);
         positionChangeLabel.setHorizontalTextPosition(SwingConstants.CENTER);
+        positionChangeLabel.setFont(font);
 
         return positionChangeLabel;
     }
@@ -68,6 +72,7 @@ public class TimingStackLabelEngine {
         lapsLabel.setIcon(lapsIcon);
         lapsLabel.setHorizontalAlignment(SwingConstants.CENTER);
         lapsLabel.setHorizontalTextPosition(SwingConstants.CENTER);
+        lapsLabel.setFont(font);
 
         return lapsLabel;
     }

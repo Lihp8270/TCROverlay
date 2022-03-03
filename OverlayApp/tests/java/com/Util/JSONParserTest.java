@@ -14,6 +14,6 @@ class JSONParserTest {
 
         assertEquals(9090, config.getListenPort());
         assertEquals(0, config.getOverlayXOffset());
-        assertEquals(10, config.getBottomAdvertPadding());
+        assertEquals(10, config.getRightBroadcastLogoPadding());
     }
 }

@@ -11,10 +11,17 @@ import java.util.Collections;
 
 public class DriversPanel extends InitPanel {
     ArrayList<Driver> drivers;
+    private JLabel timingTreeHeader;
+    private Box headerBox;
 
     public DriversPanel(Config config) {
         super();
         drivers = new ArrayList<>();
+        headerBox = Box.createHorizontalBox();
+        timingTreeHeader = new JLabel();
+        timingTreeHeader.setIcon(new ImageIcon(config.getTimingTreeHeader()));
+        timingTreeHeader.setVisible(true);
+        headerBox.add(timingTreeHeader);
         this.panel.setLayout(new BoxLayout(this.panel, BoxLayout.Y_AXIS));
         this.panel.setBorder(new EmptyBorder(0, config.getDriverListLeftPadding(),0,0));
     }
@@ -29,6 +36,8 @@ public class DriversPanel extends InitPanel {
         Collections.sort(drivers, Driver.Comparators.currentPos);
 
         this.panel.add(Box.createVerticalGlue());
+        this.panel.add(headerBox);
+        this.panel.add(Box.createRigidArea(new Dimension(0,3)));
         for (Driver driver : drivers) {
             this.panel.add(driver.getBox());
             this.panel.add(Box.createRigidArea(new Dimension(0,3)));
