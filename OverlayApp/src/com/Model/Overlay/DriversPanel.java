@@ -32,7 +32,7 @@ public class DriversPanel extends InitPanel {
      */
     @Override
     public JPanel getPanel() {
-
+        int driverCount = 1;
         Collections.sort(drivers, Driver.Comparators.currentPos);
 
         this.panel.add(headerBox);
@@ -40,6 +40,10 @@ public class DriversPanel extends InitPanel {
         for (Driver driver : drivers) {
             this.panel.add(driver.getBox());
             this.panel.add(Box.createRigidArea(new Dimension(0,3)));
+            if (driverCount == 20) {
+                break;
+            }
+            driverCount++;
         }
 
         return this.panel;
