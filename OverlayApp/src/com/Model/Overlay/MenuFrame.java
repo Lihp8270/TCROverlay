@@ -1,4 +1,4 @@
-package com.Overlay;
+package com.Model.Overlay;
 
 import com.Engine.ButtonEngine;
 import com.Engine.OverlayController;

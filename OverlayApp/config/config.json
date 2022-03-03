@@ -11,6 +11,8 @@
   "nameBannerPosDown": "assets/official/NameBannerPosChangeDown.png",
   "timingTreeHeader": "assets/official/TimingTreeHeader.png",
   "broadcastLogo": "assets/official/BroadcastLogo.png",
+  "largeNameBanner": "assets/official/largeNameBanner.png",
+  "largeNameBannerIcon": "assets/official/largeNameBannerIcon.png",
   "rightBroadcastLogoPadding": -5,
   "topBroadcastLogoPadding": 10,
   "driverListLeftPadding": 15

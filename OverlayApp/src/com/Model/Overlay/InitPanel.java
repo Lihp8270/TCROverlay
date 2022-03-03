@@ -1,4 +1,4 @@
-package com.Overlay;
+package com.Model.Overlay;
 
 import javax.swing.JPanel;
 

@@ -15,7 +15,7 @@ class ACParserTest {
         ACParser driverACParser = new ACParser(new JSONParser().readConfig("config/config.json"));
         ArrayList<Driver> recvDrivers;
 
-        recvDrivers = driverACParser.parseDriverData("1;Sausage;1;3:2;Bacon;9;2:3;Missy;7;3");
+        recvDrivers = driverACParser.parseDriverData("1;Sausage;1;Thomas;3:2;Bacon;9;Thomas;2:3;Missy;7;Thomas;3");
 
         assertEquals(1, recvDrivers.get(0).getDriverID());
         assertEquals("Sausage", recvDrivers.get(0).getName());
@@ -28,6 +28,10 @@ class ACParserTest {
         assertEquals(1, recvDrivers.get(0).getCompletedLaps());
         assertEquals(9, recvDrivers.get(1).getCompletedLaps());
         assertEquals(7, recvDrivers.get(2).getCompletedLaps());
+
+        assertEquals("Thomas", recvDrivers.get(0).getFocussedDriver());
+        assertEquals("Thomas", recvDrivers.get(1).getFocussedDriver());
+        assertEquals("Thomas", recvDrivers.get(2).getFocussedDriver());
 
     }
 }

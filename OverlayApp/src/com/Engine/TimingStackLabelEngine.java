@@ -1,7 +1,7 @@
 package com.Engine;
 
 import com.Model.Config;
-import com.Overlay.DriverLabel;
+import com.Model.Overlay.DriverLabel;
 
 import javax.swing.*;
 import java.awt.*;

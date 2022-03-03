@@ -15,6 +15,8 @@ public class Config {
     private String nameBannerPosDown;
     private String timingTreeHeader;
     private String broadcastLogo;
+    private String largeNameBanner;
+    private String largeNameBannerIcon;
 
     public Config() {
 
@@ -76,6 +78,12 @@ public class Config {
         return broadcastLogo;
     }
 
+    public String getLargeNameBanner() {
+        return largeNameBanner;
+    }
 
+    public String getLargeNameBannerIcon() {
+        return largeNameBannerIcon;
+    }
 
 }

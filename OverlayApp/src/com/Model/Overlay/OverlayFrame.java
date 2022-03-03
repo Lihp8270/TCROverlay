@@ -1,4 +1,4 @@
-package com.Overlay;
+package com.Model.Overlay;
 
 import com.Model.Config;
 
@@ -9,21 +9,26 @@ public class OverlayFrame extends InitFrame {
     private final Dimension dim;
     private JPanel driverPanel;
     private JPanel advertPanel;
+    private JPanel driverNamePanel;
     private DriversPanel drivers;
     private AdvertPanel advert;
+    private BottomPanel bottomPanel;
     private final Config config;
+    private String currentFocussedDriver;
 
     /**
      * Constructor for overlay frame
      * @param title Title of frame
      * @param visibility default visibility of frame
      */
-    public OverlayFrame(String title, Boolean visibility, DriversPanel drivers, AdvertPanel advert, Config config) {
+    public OverlayFrame(String title, Boolean visibility, DriversPanel drivers, AdvertPanel advert, BottomPanel bottomPanel, Config config) {
         super(title, visibility);
         dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.drivers = drivers;
         this.advert = advert;
         this.config = config;
+        this.bottomPanel = bottomPanel;
+        this.currentFocussedDriver = "";
         initialiseFrame();
     }
 
@@ -42,9 +47,11 @@ public class OverlayFrame extends InitFrame {
 
         driverPanel = drivers.getPanel();
         advertPanel = advert.getPanel();
+        driverNamePanel = bottomPanel.getPanel();
 
         this.frame.add(driverPanel, BorderLayout.WEST);
         this.frame.add(advertPanel, BorderLayout.EAST);
+        this.frame.add(driverNamePanel, BorderLayout.SOUTH);
     }
 
     /**
@@ -70,5 +77,18 @@ public class OverlayFrame extends InitFrame {
         this.frame.add(driverPanel, BorderLayout.WEST);
         this.frame.repaint();
         this.frame.revalidate();
+    }
+
+    public void updateLargeName(String driverName) {
+        if(!(currentFocussedDriver.equals(driverName))) {
+            this.driverNamePanel.removeAll();
+            bottomPanel.setDriverName(driverName);
+            this.driverNamePanel = bottomPanel.getPanel();
+            this.frame.add(driverNamePanel, BorderLayout.SOUTH);
+            this.frame.repaint();
+            this.frame.revalidate();
+
+            currentFocussedDriver = driverName;
+        }
     }
 }

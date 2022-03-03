@@ -14,6 +14,7 @@ public class Driver implements Comparable<Driver> {
     private int completedLaps;
     private String changeDir;
     private final TimingStackLabelEngine tStackEngine;
+    private String focussedDriver;
 
     /**
      * Constructor
@@ -137,6 +138,14 @@ public class Driver implements Comparable<Driver> {
      */
     public int getPosDiff() {
         return posDiff;
+    }
+
+    public void setFocussedDriver(String focussedDriver) {
+        this.focussedDriver = focussedDriver;
+    }
+
+    public String getFocussedDriver() {
+        return focussedDriver;
     }
 
     @Override

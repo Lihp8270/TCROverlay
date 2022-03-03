@@ -1,4 +1,4 @@
-package com.Overlay;
+package com.Model.Overlay;
 
 import com.Model.Config;
 import com.Model.Driver;
@@ -57,7 +57,7 @@ public class DriversPanel extends InitPanel {
         drivers.add(driver);
     }
 
-    /**
+    /**t
      * Accessor for driver array list
      * @return ArrayList of Driver objects
      */

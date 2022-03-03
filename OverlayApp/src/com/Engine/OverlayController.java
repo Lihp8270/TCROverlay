@@ -2,9 +2,10 @@ package com.Engine;
 
 import com.Model.Config;
 import com.Model.Driver;
-import com.Overlay.AdvertPanel;
-import com.Overlay.DriversPanel;
-import com.Overlay.OverlayFrame;
+import com.Model.Overlay.AdvertPanel;
+import com.Model.Overlay.BottomPanel;
+import com.Model.Overlay.DriversPanel;
+import com.Model.Overlay.OverlayFrame;
 import com.Util.ACParser;
 import com.Util.JSONParser;
 
@@ -27,11 +28,12 @@ public class OverlayController {
         config = jsonParser.readConfig(configFile);
         drivers = new DriversPanel(config);
         AdvertPanel advert = new AdvertPanel(config);
+        BottomPanel bottomPanel = new BottomPanel(config);
         driverACParser = new ACParser(config);
         acConnector = new SocketEngine(config.getListenPort());
         connected = false;
         running = false;
-        overlayFrame = new OverlayFrame("Overlay", false, drivers, advert, config);
+        overlayFrame = new OverlayFrame("Overlay", false, drivers, advert, bottomPanel, config);
         backgroundWorker = null;
     }
 
@@ -48,6 +50,7 @@ public class OverlayController {
      */
     public void updateDrivers() throws IOException {
         ArrayList<Driver> updatedDrivers;
+        String focussedDriver;
         boolean driverFound = false;
         int driverFoundIndex = 0;
 
@@ -75,7 +78,10 @@ public class OverlayController {
             }
         }
 
+        focussedDriver = updatedDrivers.get(updatedDrivers.size() - 1).getFocussedDriver();
+
         overlayFrame.updateDrivers(drivers);
+        overlayFrame.updateLargeName(focussedDriver);
     }
 
     /**

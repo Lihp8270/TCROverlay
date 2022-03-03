@@ -1,6 +1,6 @@
 package com.Engine;
 
-import com.Overlay.OverlayFrame;
+import com.Model.Overlay.OverlayFrame;
 
 public class ButtonEngine {
     public ButtonEngine() {

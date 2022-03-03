@@ -1,6 +1,6 @@
 package com.Engine;
 
-import com.Overlay.MenuFrame;
+import com.Model.Overlay.MenuFrame;
 
 import javax.swing.*;
 import java.io.IOException;
