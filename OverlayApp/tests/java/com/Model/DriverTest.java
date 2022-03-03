@@ -3,12 +3,15 @@ package com.Model;
 import com.Util.JSONParser;
 import org.junit.jupiter.api.Test;
 
+import java.awt.*;
+import java.io.IOException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class DriverTest {
 
     @Test
-    void getPosDiff() {
+    void getPosDiff() throws IOException, FontFormatException {
         Driver testDriver = new Driver(1, "test", new JSONParser().readConfig("config/config.json"));
         testDriver.setCurrentPos(3);
         testDriver.setStartingPos(2);

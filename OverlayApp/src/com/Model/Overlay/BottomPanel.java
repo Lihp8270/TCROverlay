@@ -5,6 +5,8 @@ import com.Model.Config;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 
 public class BottomPanel extends  InitPanel {
     private Box driverNameBox;
@@ -14,13 +16,14 @@ public class BottomPanel extends  InitPanel {
     private final ImageIcon icon;
     private final ImageIcon driverNameBanner;
 
-    public BottomPanel(Config config) {
+    public BottomPanel(Config config) throws IOException, FontFormatException {
         super();
         icon = new ImageIcon(config.getLargeNameBannerIcon());
         driverNameBanner = new ImageIcon(config.getLargeNameBanner());
         this.panel.setLayout(new BoxLayout(this.panel, BoxLayout.X_AXIS));
         this.panel.setBorder(new EmptyBorder(0,config.getDriverNameLeftPadding(),config.getDriverNameBottomPadding(),0));
-        font = new Font("Brother 1816", Font.BOLD, 25);
+        font = Font.createFont(Font.TRUETYPE_FONT, new File("config/Brother1816Black.otf"));
+        font = font.deriveFont(Font.BOLD,25);
 
         createLogoLabel();
         createDriverLabel();

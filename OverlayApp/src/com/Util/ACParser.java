@@ -3,6 +3,8 @@ package com.Util;
 import com.Model.Config;
 import com.Model.Driver;
 
+import java.awt.*;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class ACParser {
@@ -12,7 +14,7 @@ public class ACParser {
         this.config = config;
     }
 
-    public ArrayList<Driver> parseDriverData(String data) {
+    public ArrayList<Driver> parseDriverData(String data) throws IOException, FontFormatException {
         ArrayList<Driver> newDrivers = new ArrayList<>();
 
         String[] splitStrings = data.split(":");

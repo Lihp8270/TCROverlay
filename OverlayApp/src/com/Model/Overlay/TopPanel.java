@@ -5,6 +5,8 @@ import com.Model.Config;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 
 public class TopPanel extends InitPanel {
     private Font font;
@@ -13,13 +15,13 @@ public class TopPanel extends InitPanel {
     private String lap;
     private String maxLaps;
 
-    public TopPanel(Config config) {
+    public TopPanel(Config config) throws IOException, FontFormatException {
         super();
         icon = new ImageIcon(config.getLapIcon());
         this.panel.setLayout(new BoxLayout(this.panel, BoxLayout.Y_AXIS));
         this.panel.setBorder(new EmptyBorder(config.getLapIconTopPadding(),config.getLapIconLeftPadding(),0,0));
-        font = new Font("Brother 1816", Font.BOLD, 20);
-
+        font = Font.createFont(Font.TRUETYPE_FONT, new File("config/Brother1816Black.otf"));
+        font = font.deriveFont(Font.BOLD,20);
         this.lap = "0";
         createLapLabel();
     }

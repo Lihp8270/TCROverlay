@@ -3,6 +3,8 @@ package com.Model;
 import com.Engine.TimingStackLabelEngine;
 
 import javax.swing.*;
+import java.awt.*;
+import java.io.IOException;
 import java.util.Comparator;
 
 public class Driver implements Comparable<Driver> {
@@ -21,7 +23,7 @@ public class Driver implements Comparable<Driver> {
      * @param driverID Driver ID from AC
      * @param name Driver name from AC
      */
-    public Driver(int driverID, String name, Config config) {
+    public Driver(int driverID, String name, Config config) throws IOException, FontFormatException {
         this.driverID = driverID;
         this.name = name;
         this.currentPos = 0;

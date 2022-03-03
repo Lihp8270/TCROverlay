@@ -3,6 +3,8 @@ package com.Util;
 import com.Model.Driver;
 import org.junit.jupiter.api.Test;
 
+import java.awt.*;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -11,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class ACParserTest {
 
     @Test
-    void parseDriverData() {
+    void parseDriverData() throws IOException, FontFormatException {
         ACParser driverACParser = new ACParser(new JSONParser().readConfig("config/config.json"));
         ArrayList<Driver> recvDrivers;
 

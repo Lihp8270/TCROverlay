@@ -4,6 +4,7 @@ import com.Engine.ButtonEngine;
 import com.Engine.OverlayController;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -17,7 +18,7 @@ public class MenuFrame extends InitFrame {
     private OverlayController overlayController;
     private JTextField lapTextField;
 
-    public MenuFrame(String title, Boolean visibility) throws IOException {
+    public MenuFrame(String title, Boolean visibility) throws IOException, FontFormatException {
         super(title, visibility);
         buttonController = new ButtonEngine();
         buttons = new ArrayList<>();

@@ -7,6 +7,7 @@ import com.Util.ACParser;
 import com.Util.JSONParser;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -20,7 +21,7 @@ public class OverlayController {
     private boolean running;
     private boolean connected;
 
-    public OverlayController(String configFile) throws IOException {
+    public OverlayController(String configFile) throws IOException, FontFormatException {
         JSONParser jsonParser = new JSONParser();
         config = jsonParser.readConfig(configFile);
         drivers = new DriversPanel(config);
@@ -46,7 +47,7 @@ public class OverlayController {
     /**
      * Update driver information
      */
-    public void updateDrivers() throws IOException {
+    public void updateDrivers() throws IOException, FontFormatException {
         ArrayList<Driver> updatedDrivers;
         String focussedDriver;
         boolean driverFound = false;
@@ -103,7 +104,7 @@ public class OverlayController {
      * Get updated driver info from server
      * @return Returns updated ArrayList of Drivers
      */
-    private ArrayList<Driver> getUpdate() throws IOException {
+    private ArrayList<Driver> getUpdate() throws IOException, FontFormatException {
         if (!connected) {
             return null;
         }

@@ -5,20 +5,23 @@ import com.Model.Overlay.DriverLabel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 
 public class TimingStackLabelEngine {
     private Config config;
     private final ImageIcon nameBanner;
     private final ImageIcon posBanner;
     private final ImageIcon lapsIcon;
-    private final Font font;
+    private Font font;
 
-    public TimingStackLabelEngine(Config config) {
+    public TimingStackLabelEngine(Config config) throws IOException, FontFormatException {
         this.config = config;
         this.nameBanner = new ImageIcon(config.getNameBannerName());
         this.posBanner = new ImageIcon(config.getPositionIcon());
         this.lapsIcon = new ImageIcon(config.getNameBannerLaps());
-        this.font = new Font("Brother 1816", Font.BOLD, 15);
+        font = Font.createFont(Font.TRUETYPE_FONT, new File("config/Brother1816Black.otf"));
+        font = font.deriveFont(Font.BOLD,15);
     }
 
     public JLabel getDriverLabel(String name) {

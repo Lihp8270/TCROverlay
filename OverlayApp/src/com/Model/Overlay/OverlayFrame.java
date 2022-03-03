@@ -110,8 +110,6 @@ public class OverlayFrame extends InitFrame {
             this.frame.revalidate();
             lastLapDisplayed = drivers.getDrivers().get(0).getCompletedLaps() + 1;
         }
-
-
     }
 
     public void setMaxLaps(String maxLaps) {
