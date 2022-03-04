@@ -14,6 +14,7 @@ public class TopPanel extends InitPanel {
     private final ImageIcon icon;
     private String lap;
     private String maxLaps;
+    private boolean finalLap;
 
     public TopPanel(Config config) throws IOException, FontFormatException {
         super();
@@ -23,6 +24,8 @@ public class TopPanel extends InitPanel {
         font = Font.createFont(Font.TRUETYPE_FONT, new File("config/Brother1816Black.otf"));
         font = font.deriveFont(Font.BOLD,20);
         this.lap = "0";
+        this.finalLap = false;
+
         createLapLabel();
     }
 
@@ -46,7 +49,13 @@ public class TopPanel extends InitPanel {
     }
 
     public void setLaps(String lap) {
-        this.lap = lap;
+        if(!finalLap) {
+            this.lap = lap;
+        }
+
+        if (this.lap.equals(maxLaps)) {
+            finalLap = true;
+        }
     }
 
     public void setMaxLaps(String maxLaps) {
