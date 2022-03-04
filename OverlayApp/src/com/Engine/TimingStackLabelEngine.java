@@ -13,6 +13,7 @@ public class TimingStackLabelEngine {
     private final ImageIcon nameBanner;
     private final ImageIcon posBanner;
     private final ImageIcon lapsIcon;
+    private final ImageIcon focussedDriverIcon;
     private Font font;
 
     public TimingStackLabelEngine(Config config) throws IOException, FontFormatException {
@@ -20,6 +21,7 @@ public class TimingStackLabelEngine {
         this.nameBanner = new ImageIcon(config.getNameBannerName());
         this.posBanner = new ImageIcon(config.getPositionIcon());
         this.lapsIcon = new ImageIcon(config.getNameBannerLaps());
+        this.focussedDriverIcon = new ImageIcon(config.getFocussedDriverIcon());
         font = Font.createFont(Font.TRUETYPE_FONT, new File("config/Brother1816Black.otf"));
         font = font.deriveFont(Font.BOLD,15);
     }
@@ -43,6 +45,17 @@ public class TimingStackLabelEngine {
         positionLabel.setFont(font);
 
         return positionLabel;
+    }
+
+    public JLabel getFocussedDriverLabel() {
+        JLabel focussedDriverLabel = new JLabel();
+        focussedDriverLabel.setForeground(Color.BLACK);
+        focussedDriverLabel.setIcon(focussedDriverIcon);
+        focussedDriverLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        focussedDriverLabel.setHorizontalTextPosition(SwingConstants.CENTER);
+        focussedDriverLabel.setFont(font);
+
+        return focussedDriverLabel;
     }
 
     public JLabel getPositionChangeLabel(String changeDir, String posDiff) {
@@ -79,4 +92,5 @@ public class TimingStackLabelEngine {
 
         return lapsLabel;
     }
+
 }

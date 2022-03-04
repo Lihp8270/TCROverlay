@@ -89,10 +89,15 @@ public class Driver implements Comparable<Driver> {
      * Get completed box for overlay panel
      * @return Box
      */
-    public Box getBox() {
+    public Box getBox(String focussedDriver) {
         Box driverBox = Box.createHorizontalBox();
 
-        driverBox.add(tStackEngine.getPositionLabel(String.valueOf(currentPos)));
+        if (focussedDriver.equals(name)) {
+            driverBox.add(tStackEngine.getFocussedDriverLabel());
+        } else {
+            driverBox.add(tStackEngine.getPositionLabel(String.valueOf(currentPos)));
+        }
+
         driverBox.add(tStackEngine.getDriverLabel(name));
         driverBox.add(tStackEngine.getLapsLabel("Laps : " + completedLaps));
         driverBox.add(tStackEngine.getPositionChangeLabel(changeDir,String.valueOf(posDiff)));

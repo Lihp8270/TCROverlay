@@ -30,15 +30,15 @@ public class DriversPanel extends InitPanel {
      * Build and return drivers panel
      * @return Returns completed Drivers panel
      */
-    @Override
-    public JPanel getPanel() {
+//    @Override
+    public JPanel getPanel(String focussedDriver) {
         int driverCount = 1;
         Collections.sort(drivers, Driver.Comparators.currentPos);
 
         this.panel.add(headerBox);
         this.panel.add(Box.createRigidArea(new Dimension(0,3)));
         for (Driver driver : drivers) {
-            this.panel.add(driver.getBox());
+            this.panel.add(driver.getBox(focussedDriver));
             this.panel.add(Box.createRigidArea(new Dimension(0,3)));
             if (driverCount == 20) {
                 break;

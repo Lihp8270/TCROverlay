@@ -41,9 +41,9 @@ public class MenuFrame extends InitFrame {
      * Create button objects
      */
     private void createButtons() {
-        addButtons("Show Overlay", 40, 30, 150, 30);
-        addButtons("Start Overlay", 40, 70, 150, 30);
-        addButtons("Set Laps", 40, 150, 150, 30);
+        addButtons("Show Overlay", 40, 30, 150, 30, false);
+        addButtons("Start Overlay", 40, 70, 150, 30, false);
+        addButtons("Set Laps", 40, 150, 150, 30, true);
 
         createButtonActions();
     }
@@ -61,10 +61,11 @@ public class MenuFrame extends InitFrame {
      * @param width pixels
      * @param height pixels
      */
-    private void addButtons(String label, int x, int y, int width, int height) {
+    private void addButtons(String label, int x, int y, int width, int height, boolean enabled) {
         JButton button = new JButton();
         button.setBounds(x, y, width, height);
         button.setText(label);
+        button.setEnabled(enabled);
 
         buttons.add(button);
     }
@@ -116,6 +117,9 @@ public class MenuFrame extends InitFrame {
             public void actionPerformed(ActionEvent e) {
                 if(!(lapTextField.getText().equals("No. of Laps"))) {
                     overlayFrame.setMaxLaps(lapTextField.getText());
+                    buttons.get(0).setEnabled(true);
+                    buttons.get(1).setEnabled(true);
+                    buttons.get(2).setEnabled(false);
                 }
             }
         });

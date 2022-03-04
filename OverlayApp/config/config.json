@@ -14,6 +14,7 @@
   "largeNameBanner": "assets/official/largeNameBanner.png",
   "largeNameBannerIcon": "assets/official/largeNameBannerIcon.png",
   "lapIcon": "assets/official/lapIcon.png",
+  "focussedDriverIcon": "assets/official/NameBannerPosFocussedDriver.png",
   "rightBroadcastLogoPadding": -5,
   "topBroadcastLogoPadding": 13,
   "driverListLeftPadding": 15,
