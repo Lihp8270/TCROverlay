@@ -21,5 +21,7 @@
   "lapIconTopPadding": 30,
   "lapIconLeftPadding": 432,
   "driverNameLeftPadding": 1385,
-  "driverNameBottomPadding": 30
+  "driverNameBottomPadding": 30,
+  "carList": ["lotus_exos_125", "bmw_1m"],
+  "carLogos": ["assets/official/carLogos/lotus.png", "assets/official/carLogos/bmw.png"]
 }

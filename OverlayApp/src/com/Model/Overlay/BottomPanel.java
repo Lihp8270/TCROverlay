@@ -15,9 +15,11 @@ public class BottomPanel extends  InitPanel {
     private Font font;
     private final ImageIcon icon;
     private final ImageIcon driverNameBanner;
+    private Config config;
 
     public BottomPanel(Config config) throws IOException, FontFormatException {
         super();
+        this.config = config;
         icon = new ImageIcon(config.getLargeNameBannerIcon());
         driverNameBanner = new ImageIcon(config.getLargeNameBanner());
         this.panel.setLayout(new BoxLayout(this.panel, BoxLayout.X_AXIS));
@@ -60,6 +62,20 @@ public class BottomPanel extends  InitPanel {
 
     public void setDriverName(String driverName) {
         driverNameBannerLabel.setText(driverName);
+    }
+
+    public void setCarLogo(String carName) {
+        String[] carList = config.getCarList();
+        String[] logoList = config.getCarLogo();
+        int carLogoIndex = 0;
+
+        for (int i = 0; i < carList.length; i++) {
+            if (carList[i].equals(carName)) {
+                carLogoIndex = i;
+            }
+        }
+
+        bannerIcon.setIcon(new ImageIcon(logoList[carLogoIndex]));
     }
 
 }

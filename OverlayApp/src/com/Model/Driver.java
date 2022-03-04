@@ -10,6 +10,7 @@ import java.util.Comparator;
 public class Driver implements Comparable<Driver> {
     private final String name;
     private final int driverID;
+    private String car;
     private int currentPos;
     private int startingPos;
     private int posDiff;
@@ -32,6 +33,7 @@ public class Driver implements Comparable<Driver> {
         this.changeDir = "";
         this.completedLaps = 0;
         this.tStackEngine = new TimingStackLabelEngine(config);
+        this.car = "";
     }
 
     /**
@@ -148,6 +150,14 @@ public class Driver implements Comparable<Driver> {
 
     public String getFocussedDriver() {
         return focussedDriver;
+    }
+
+    public String getCar() {
+        return car;
+    }
+
+    public void setCar(String car) {
+        this.car = car;
     }
 
     @Override

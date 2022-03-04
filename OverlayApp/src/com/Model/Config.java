@@ -23,6 +23,9 @@ public class Config {
     private String largeNameBanner;
     private String largeNameBannerIcon;
     private String lapIcon;
+    private String[] carList;
+    private String[] carLogos;
+
 
     public Config() {
 
@@ -114,6 +117,14 @@ public class Config {
 
     public String getLapIcon() {
         return lapIcon;
+    }
+
+    public String[] getCarList() {
+        return carList;
+    }
+
+    public String[] getCarLogo() {
+        return carLogos;
     }
 
 }

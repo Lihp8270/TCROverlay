@@ -91,6 +91,13 @@ public class OverlayFrame extends InitFrame {
         if(!(currentFocussedDriver.equals(driverName))) {
             this.driverNamePanel.removeAll();
             bottomPanel.setDriverName(driverName);
+
+            for (int i = 0; i < drivers.getDrivers().size(); i++) {
+                if (drivers.getDrivers().get(i).getName().equals(driverName)) {
+                    bottomPanel.setCarLogo(drivers.getDrivers().get(i).getCar());
+                }
+            }
+
             this.driverNamePanel = bottomPanel.getPanel();
             this.frame.add(driverNamePanel, BorderLayout.SOUTH);
             this.frame.repaint();
