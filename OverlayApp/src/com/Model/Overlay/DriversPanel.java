@@ -30,7 +30,7 @@ public class DriversPanel extends InitPanel {
      * Build and return drivers panel
      * @return Returns completed Drivers panel
      */
-//    @Override
+    // TODO Max drivers in config file
     public JPanel getPanel(String focussedDriver) {
         int driverCount = 1;
         Collections.sort(drivers, Driver.Comparators.currentPos);

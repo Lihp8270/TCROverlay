@@ -17,7 +17,8 @@ public class SocketEngine {
      */
     public String retrieveFromClient() throws IOException {
         serverSocket = new DatagramSocket(port);
-        byte[] buf = new byte[1024];
+        // TODO Buffer size in config file
+        byte[] buf = new byte[4096];
         DatagramPacket packet = new DatagramPacket(buf, buf.length);
 
         serverSocket.receive(packet);
