@@ -16,6 +16,12 @@ public class TimingStackLabelEngine {
     private final ImageIcon focussedDriverIcon;
     private Font font;
 
+    /**
+     * Constructor
+     * @param config Config file
+     * @throws IOException
+     * @throws FontFormatException
+     */
     public TimingStackLabelEngine(Config config) throws IOException, FontFormatException {
         this.config = config;
         this.nameBanner = new ImageIcon(config.getNameBannerName());
@@ -26,6 +32,11 @@ public class TimingStackLabelEngine {
         font = font.deriveFont(Font.BOLD,15);
     }
 
+    /**
+     * Create driver label for use on JPanel
+     * @param name Driver name
+     * @return
+     */
     public JLabel getDriverLabel(String name) {
         DriverLabel driverLabel = new DriverLabel(name, nameBanner, font);
 
@@ -47,6 +58,10 @@ public class TimingStackLabelEngine {
         return positionLabel;
     }
 
+    /**
+     * Get driver label for the driver which is the focussed driver
+     * @return JLabel
+     */
     public JLabel getFocussedDriverLabel() {
         JLabel focussedDriverLabel = new JLabel();
         focussedDriverLabel.setForeground(Color.BLACK);
@@ -58,6 +73,12 @@ public class TimingStackLabelEngine {
         return focussedDriverLabel;
     }
 
+    /**
+     * Position change label generation
+     * @param changeDir + or -
+     * @param posDiff Position change
+     * @return JLabel
+     */
     public JLabel getPositionChangeLabel(String changeDir, String posDiff) {
         ImageIcon posChangeIcon;
         JLabel positionChangeLabel = new JLabel();
@@ -82,6 +103,11 @@ public class TimingStackLabelEngine {
         return positionChangeLabel;
     }
 
+    /**
+     * Create label for laps
+     * @param laps laps string
+     * @return JLabel
+     */
     public JLabel getLapsLabel(String laps) {
         JLabel lapsLabel = new JLabel(String.valueOf(laps));
         lapsLabel.setForeground(Color.WHITE);

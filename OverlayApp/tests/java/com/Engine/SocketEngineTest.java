@@ -10,7 +10,7 @@ class SocketEngineTest {
 
     @Test
     void socketTest() throws IOException {
-        SocketEngine client = new SocketEngine(9090);
+        SocketEngine client = new SocketEngine(9090, 4096);
         String response = client.retrieveFromClient();
         System.out.println(response);
         assertEquals("test", response);

@@ -149,18 +149,34 @@ public class Driver implements Comparable<Driver> {
         return posDiff;
     }
 
+    /**
+     * Set the focussed driver for camera
+     * @param focussedDriver Driver name
+     */
     public void setFocussedDriver(String focussedDriver) {
         this.focussedDriver = focussedDriver;
     }
 
+    /**
+     * Accessor for focussed driver
+     * @return String
+     */
     public String getFocussedDriver() {
         return focussedDriver;
     }
 
+    /**
+     * Get a car
+     * @return
+     */
     public String getCar() {
         return car;
     }
 
+    /**
+     * Set the car
+     * @param car
+     */
     public void setCar(String car) {
         this.car = car;
     }

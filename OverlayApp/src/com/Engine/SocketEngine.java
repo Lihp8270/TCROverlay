@@ -1,5 +1,7 @@
 package com.Engine;
 
+import com.Model.Config;
+
 import java.io.*;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -7,9 +9,11 @@ import java.net.DatagramSocket;
 public class SocketEngine {
     private DatagramSocket serverSocket;
     private final int port;
+    private final int bufferSize;
 
-    public SocketEngine(int port) throws IOException {
+    public SocketEngine(int port, int bufferSize) {
         this.port = port;
+        this.bufferSize = bufferSize;
     }
 
     /**
@@ -17,8 +21,7 @@ public class SocketEngine {
      */
     public String retrieveFromClient() throws IOException {
         serverSocket = new DatagramSocket(port);
-        // TODO Buffer size in config file
-        byte[] buf = new byte[4096];
+        byte[] buf = new byte[bufferSize];
         DatagramPacket packet = new DatagramPacket(buf, buf.length);
 
         serverSocket.receive(packet);

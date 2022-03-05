@@ -37,6 +37,9 @@ public class TopPanel extends InitPanel {
         return this.panel;
     }
 
+    /**
+     * Create the lap counter label
+     */
     public void createLapLabel() {
         lapLabel = new JLabel();
         lapLabel.setForeground(Color.WHITE);
@@ -48,6 +51,10 @@ public class TopPanel extends InitPanel {
         lapLabel.setText(lapText());
     }
 
+    /**
+     * Set lap count
+     * @param lap current lap
+     */
     public void setLaps(String lap) {
         if(!finalLap) {
             this.lap = lap;
@@ -58,10 +65,18 @@ public class TopPanel extends InitPanel {
         }
     }
 
+    /**
+     * Set maximum laps on the label
+     * @param maxLaps maximum number of laps
+     */
     public void setMaxLaps(String maxLaps) {
         this.maxLaps = maxLaps;
     }
 
+    /**
+     * Build lap text label
+     * @return Concat of laps / max laps
+     */
     public String lapText() {
         return lap + " / " + maxLaps;
     }

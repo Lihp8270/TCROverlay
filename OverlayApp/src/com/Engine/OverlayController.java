@@ -29,7 +29,7 @@ public class OverlayController {
         BottomPanel bottomPanel = new BottomPanel(config);
         TopPanel topPanel = new TopPanel(config);
         driverACParser = new ACParser(config);
-        acConnector = new SocketEngine(config.getListenPort());
+        acConnector = new SocketEngine(config.getListenPort(), config.getBufferSize());
         connected = false;
         running = false;
         overlayFrame = new OverlayFrame("Overlay", false, drivers, advert, bottomPanel, topPanel, config);

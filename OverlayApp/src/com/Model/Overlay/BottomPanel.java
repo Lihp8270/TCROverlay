@@ -41,16 +41,25 @@ public class BottomPanel extends  InitPanel {
         return this.panel;
     }
 
+    /**
+     * Creates Box object
+     */
     public void createBox() {
         driverNameBox = Box.createHorizontalBox();
         driverNameBox.add(bannerIcon);
     }
 
+    /**
+     * Driver car logo
+     */
     public void createLogoLabel() {
         bannerIcon = new JLabel();
         bannerIcon.setIcon(icon);
     }
 
+    /**
+     * Driver label
+     */
     public void createDriverLabel() {
         driverNameBannerLabel = new JLabel();
         driverNameBannerLabel.setForeground(Color.WHITE);
@@ -60,10 +69,18 @@ public class BottomPanel extends  InitPanel {
         driverNameBannerLabel.setFont(font);
     }
 
+    /**
+     * Focussed driver name
+     * @param driverName String
+     */
     public void setDriverName(String driverName) {
         driverNameBannerLabel.setText(driverName);
     }
 
+    /**
+     * Get the car logo for given car name from config JSON
+     * @param carName AC Car name
+     */
     public void setCarLogo(String carName) {
         String[] carList = config.getCarList();
         String[] logoList = config.getCarLogo();

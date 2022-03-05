@@ -2,6 +2,8 @@
   "listenPort": 9090,
   "overlayXOffset": 0,
   "overlayYOffset": 0,
+  "bufferSize": 4096,
+  "maxDriversDisplay": 20,
   "bottomAdvert": "",
   "positionIcon": "assets/official/NameBannerPos.png",
   "nameBannerName": "assets/official/NameBannerName.png",

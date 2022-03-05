@@ -12,6 +12,8 @@ public class Config {
     private int lapIconLeftPadding;
     private int driverNameLeftPadding;
     private int driverNameBottomPadding;
+    private int bufferSize;
+    private int maxDriversDisplay;
     private String positionIcon;
     private String nameBannerName;
     private String nameBannerLaps;
@@ -73,6 +75,14 @@ public class Config {
 
     public int getDriverNameBottomPadding() {
         return driverNameBottomPadding;
+    }
+
+    public int getBufferSize() {
+        return bufferSize;
+    }
+
+    public int getMaxDriversDisplay() {
+        return maxDriversDisplay;
     }
 
     public String getPositionIcon() {

@@ -87,6 +87,10 @@ public class OverlayFrame extends InitFrame {
         this.frame.revalidate();
     }
 
+    /**
+     * Updates focussed driver name label
+     * @param driverName Driver name being focussed
+     */
     public void updateLargeName(String driverName) {
         if(!(currentFocussedDriver.equals(driverName))) {
             this.driverNamePanel.removeAll();
@@ -107,6 +111,9 @@ public class OverlayFrame extends InitFrame {
         }
     }
 
+    /**
+     * Update the graphic for current lap
+     */
     public void updateLapGraphic() {
         if(!(lastLapDisplayed == drivers.getDrivers().get(0).getCompletedLaps() + 1)) {
             this.lapPanel.removeAll();
@@ -119,6 +126,10 @@ public class OverlayFrame extends InitFrame {
         }
     }
 
+    /**
+     * Set the max number of laps from the menu
+     * @param maxLaps number of laps
+     */
     public void setMaxLaps(String maxLaps) {
         topPanel.setMaxLaps(maxLaps);
     }

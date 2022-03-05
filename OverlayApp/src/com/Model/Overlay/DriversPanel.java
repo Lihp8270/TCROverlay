@@ -13,6 +13,7 @@ public class DriversPanel extends InitPanel {
     ArrayList<Driver> drivers;
     private JLabel timingTreeHeader;
     private Box headerBox;
+    private int maxDrivers;
 
     public DriversPanel(Config config) {
         super();
@@ -24,13 +25,13 @@ public class DriversPanel extends InitPanel {
         headerBox.add(timingTreeHeader);
         this.panel.setLayout(new BoxLayout(this.panel, BoxLayout.Y_AXIS));
         this.panel.setBorder(new EmptyBorder(config.getDriverListTopPadding(), config.getDriverListLeftPadding(),0,0));
+        this.maxDrivers = config.getMaxDriversDisplay();
     }
 
     /**
      * Build and return drivers panel
      * @return Returns completed Drivers panel
      */
-    // TODO Max drivers in config file
     public JPanel getPanel(String focussedDriver) {
         int driverCount = 1;
         Collections.sort(drivers, Driver.Comparators.currentPos);
@@ -40,7 +41,7 @@ public class DriversPanel extends InitPanel {
         for (Driver driver : drivers) {
             this.panel.add(driver.getBox(focussedDriver));
             this.panel.add(Box.createRigidArea(new Dimension(0,3)));
-            if (driverCount == 20) {
+            if (driverCount == maxDrivers) {
                 break;
             }
             driverCount++;
