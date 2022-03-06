@@ -24,8 +24,8 @@ public class BottomPanel extends  InitPanel {
         driverNameBanner = new ImageIcon(config.getLargeNameBanner());
         this.panel.setLayout(new BoxLayout(this.panel, BoxLayout.X_AXIS));
         this.panel.setBorder(new EmptyBorder(0,config.getDriverNameLeftPadding(),config.getDriverNameBottomPadding(),0));
-        font = Font.createFont(Font.TRUETYPE_FONT, new File("config/Brother1816Black.otf"));
-        font = font.deriveFont(Font.BOLD,25);
+        font = Font.createFont(Font.TRUETYPE_FONT, new File(config.getFocussedDriverFont()));
+        font = font.deriveFont(Font.BOLD,config.getFocussedDriverFontSize());
 
         createLogoLabel();
         createDriverLabel();

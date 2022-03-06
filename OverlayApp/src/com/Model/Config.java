@@ -14,6 +14,12 @@ public class Config {
     private int driverNameBottomPadding;
     private int bufferSize;
     private int maxDriversDisplay;
+    private int lapCountFontSize;
+    private int focussedDriverFontSize;
+    private int timingStackFontSize;
+    private String lapCountFont;
+    private String focussedDriverFont;
+    private String timingStackFont;
     private String positionIcon;
     private String nameBannerName;
     private String nameBannerLaps;
@@ -84,6 +90,30 @@ public class Config {
 
     public int getMaxDriversDisplay() {
         return maxDriversDisplay;
+    }
+
+    public int getLapCountFontSize() {
+        return lapCountFontSize;
+    }
+
+    public int getFocussedDriverFontSize() {
+        return focussedDriverFontSize;
+    }
+
+    public int getTimingStackFontSize() {
+        return timingStackFontSize;
+    }
+
+    public String getLapCountFont() {
+        return lapCountFont;
+    }
+
+    public String getFocussedDriverFont() {
+        return focussedDriverFont;
+    }
+
+    public String getTimingStackFont() {
+        return timingStackFont;
     }
 
     public String getPositionIcon() {

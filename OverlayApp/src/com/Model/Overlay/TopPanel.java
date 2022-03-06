@@ -21,8 +21,8 @@ public class TopPanel extends InitPanel {
         icon = new ImageIcon(config.getLapIcon());
         this.panel.setLayout(new BoxLayout(this.panel, BoxLayout.Y_AXIS));
         this.panel.setBorder(new EmptyBorder(config.getLapIconTopPadding(),config.getLapIconLeftPadding(),0,0));
-        font = Font.createFont(Font.TRUETYPE_FONT, new File("config/Brother1816Black.otf"));
-        font = font.deriveFont(Font.BOLD,20);
+        font = Font.createFont(Font.TRUETYPE_FONT, new File(config.getLapCountFont()));
+        font = font.deriveFont(Font.BOLD,config.getLapCountFontSize());
         this.lap = "0";
         this.finalLap = false;
 

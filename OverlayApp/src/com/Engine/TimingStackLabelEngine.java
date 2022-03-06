@@ -28,8 +28,8 @@ public class TimingStackLabelEngine {
         this.posBanner = new ImageIcon(config.getPositionIcon());
         this.lapsIcon = new ImageIcon(config.getNameBannerLaps());
         this.focussedDriverIcon = new ImageIcon(config.getFocussedDriverIcon());
-        font = Font.createFont(Font.TRUETYPE_FONT, new File("config/Brother1816Black.otf"));
-        font = font.deriveFont(Font.BOLD,15);
+        font = Font.createFont(Font.TRUETYPE_FONT, new File(config.getTimingStackFont()));
+        font = font.deriveFont(Font.BOLD,config.getTimingStackFontSize());
     }
 
     /**
