@@ -31,7 +31,7 @@ public class MenuFrame extends InitFrame {
     }
 
     private void initialiseFrame(OverlayFrame overlayFrame) {
-        this.frame.setSize(250,270);
+        this.frame.setSize(250,310);
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.frame.setLayout(null);
         this.overlayFrame = overlayFrame;
@@ -41,16 +41,17 @@ public class MenuFrame extends InitFrame {
      * Create button objects
      */
     private void createButtons() {
-        addButtons("Show Overlay", 40, 30, 150, 30, false);
-        addButtons("Start Overlay", 40, 70, 150, 30, false);
-        addButtons("Set Laps", 40, 150, 150, 30, true);
+        addButtons("Show Overlay", 40, 150, 150, 30, false);
+        addButtons("Start Overlay", 40, 110, 150, 30, false);
+        addButtons("Set Laps", 40, 70, 150, 30, true);
+        addButtons("Delta to Lead", 40,190, 150, 30, false);
 
         createButtonActions();
     }
 
     private void createTextFields() {
         this.lapTextField = new JTextField("No. of Laps");
-        lapTextField.setBounds(40,110,150,30);
+        lapTextField.setBounds(40,30,150,30);
     }
 
     /**
@@ -94,6 +95,7 @@ public class MenuFrame extends InitFrame {
                 if (overlayController.getRunning()) {
                     toggleLabel[0] = "Start Overlay";
                     buttons.get(1).setText(toggleLabel[0]);
+                    buttons.get(3).setEnabled(false);
                     try {
                         overlayController.stop();
                     } catch (IOException ex) {
@@ -102,6 +104,8 @@ public class MenuFrame extends InitFrame {
                 } else {
                     toggleLabel[0] = "Stop Overlay";
                     buttons.get(1).setText(toggleLabel[0]);
+                    buttons.get(0).setEnabled(true);
+                    buttons.get(3).setEnabled(true);
                     try {
                         overlayController.run();
                     } catch (IOException ex) {
@@ -112,19 +116,33 @@ public class MenuFrame extends InitFrame {
         });
 
         buttons.get(2).addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(!(lapTextField.getText().equals("No. of Laps"))) {
                     overlayFrame.setMaxLaps(lapTextField.getText());
-                    buttons.get(0).setEnabled(true);
+                    buttons.get(0).setEnabled(false);
                     buttons.get(1).setEnabled(true);
                     buttons.get(2).setEnabled(false);
+                    lapTextField.setEnabled(false);
                 }
             }
         });
 
+        buttons.get(3).addActionListener(new ActionListener() {
+            final String[] toggleLabel = {"Delta to Lead"};
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                overlayFrame.toggleDeltaMode();
 
+                if (overlayFrame.getDeltaMode() == 0) {
+                    toggleLabel[0] = "Delta to Lead";
+                    buttons.get(3).setText(toggleLabel[0]);
+                } else {
+                    toggleLabel[0] = "Delta to car ahead";
+                    buttons.get(3).setText(toggleLabel[0]);
+                }
+            }
+        });
     }
 
     /**

@@ -34,10 +34,13 @@ public class DriversPanel extends InitPanel {
 
     /**
      * Build and return drivers panel
+     * @param focussedDriver Name of focussed Driver
+     * @param mode 0 = delta to leader, 1 = delta to car ahead
      * @return Returns completed Drivers panel
      */
-    public JPanel getPanel(String focussedDriver) {
+    public JPanel getPanel(String focussedDriver, int mode) {
         int driverCount = 1;
+        double carAheadDelta = 0.000;
         Collections.sort(drivers, Driver.Comparators.currentPos);
 
         this.panel.add(headerBox);
@@ -52,7 +55,8 @@ public class DriversPanel extends InitPanel {
             }
 
             if (!spectator) {
-                this.panel.add(driver.getBox(focussedDriver));
+                this.panel.add(driver.getBox(focussedDriver, drivers.get(0).getCompletedLaps(), carAheadDelta, mode));
+                carAheadDelta = Double.parseDouble(driver.getDelta());
                 this.panel.add(Box.createRigidArea(new Dimension(0,3)));
                 if (driverCount == maxDrivers) {
                     break;

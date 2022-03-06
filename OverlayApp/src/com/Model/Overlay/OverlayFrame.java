@@ -18,11 +18,18 @@ public class OverlayFrame extends InitFrame {
     private final Config config;
     private String currentFocussedDriver;
     private int lastLapDisplayed;
+    private int deltaMode;
 
     /**
-     * Constructor for overlay frame
-     * @param title Title of frame
-     * @param visibility default visibility of frame
+     * Constructor for overlay
+     *
+     * @param title
+     * @param visibility
+     * @param drivers
+     * @param advert
+     * @param bottomPanel
+     * @param topPanel
+     * @param config
      */
     public OverlayFrame(String title, Boolean visibility, DriversPanel drivers, AdvertPanel advert, BottomPanel bottomPanel, TopPanel topPanel, Config config) {
         super(title, visibility);
@@ -34,16 +41,17 @@ public class OverlayFrame extends InitFrame {
         this.topPanel = topPanel;
         this.currentFocussedDriver = "";
         this.lastLapDisplayed = 0;
+        this.deltaMode = 0;
         initialiseFrame();
     }
 
     private void initialiseFrame() {
-        this.frame.setLocation(config.getOverlayXOffset(),config.getOverlayYOffset());
+        this.frame.setLocation(config.getOverlayXOffset(), config.getOverlayYOffset());
         this.frame.setSize(dim);
         this.frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.frame.setLayout(new BorderLayout());
         this.frame.setUndecorated(true);
-        this.frame.setBackground(new Color(0,255,0,0));
+        this.frame.setBackground(new Color(0, 255, 0, 0));
         this.frame.setAlwaysOnTop(true);
 
         this.frame.setContentPane(new ContentPane());
@@ -77,11 +85,12 @@ public class OverlayFrame extends InitFrame {
 
     /**
      * Update Drivers panel
+     *
      * @param drivers new DriverPanel to use
      */
     public void updateDrivers(DriversPanel drivers) {
         this.driverPanel.removeAll();
-        this.driverPanel = drivers.getPanel(currentFocussedDriver);
+        this.driverPanel = drivers.getPanel(currentFocussedDriver, deltaMode);
         this.frame.add(driverPanel, BorderLayout.WEST);
         this.frame.repaint();
         this.frame.revalidate();
@@ -89,10 +98,11 @@ public class OverlayFrame extends InitFrame {
 
     /**
      * Updates focussed driver name label
+     *
      * @param driverName Driver name being focussed
      */
     public void updateLargeName(String driverName) {
-        if(!(currentFocussedDriver.equals(driverName))) {
+        if (!(currentFocussedDriver.equals(driverName))) {
             this.driverNamePanel.removeAll();
             bottomPanel.setDriverName(driverName);
 
@@ -115,7 +125,7 @@ public class OverlayFrame extends InitFrame {
      * Update the graphic for current lap
      */
     public void updateLapGraphic() {
-        if(!(lastLapDisplayed == drivers.getDrivers().get(0).getCompletedLaps() + 1)) {
+        if (!(lastLapDisplayed == drivers.getDrivers().get(0).getCompletedLaps() + 1)) {
             this.lapPanel.removeAll();
             topPanel.setLaps(String.valueOf(drivers.getDrivers().get(0).getCompletedLaps() + 1));
             this.lapPanel = topPanel.getPanel();
@@ -128,9 +138,30 @@ public class OverlayFrame extends InitFrame {
 
     /**
      * Set the max number of laps from the menu
+     *
      * @param maxLaps number of laps
      */
     public void setMaxLaps(String maxLaps) {
         topPanel.setMaxLaps(maxLaps);
     }
+
+    /**
+     * Toggle delta display mode
+     */
+    public void toggleDeltaMode() {
+        if (deltaMode == 0) {
+            deltaMode = 1;
+        } else {
+            deltaMode = 0;
+        }
+    }
+
+    /**
+     * Get delta mode
+     * @return 0 = Delta to leader, 1 = Delta to car ahead
+     */
+    public int getDeltaMode() {
+        return deltaMode;
+    }
+
 }
