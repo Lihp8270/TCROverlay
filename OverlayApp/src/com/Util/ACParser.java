@@ -26,8 +26,10 @@ public class ACParser {
             newDrivers.get(newDrivers.size() - 1).setCompletedLaps(Integer.valueOf(driverData[2]));
             newDrivers.get(newDrivers.size() - 1).setFocussedDriver(driverData[3]);
             newDrivers.get(newDrivers.size() - 1).setCar(driverData[4]);
-            newDrivers.get(newDrivers.size() - 1).setCurrentPos(Integer.valueOf(driverData[5]));
-            newDrivers.get(newDrivers.size() - 1).setStartingPos(Integer.valueOf(driverData[5]));
+            newDrivers.get(newDrivers.size() - 1).setDelta(driverData[5]);
+            newDrivers.get(newDrivers.size() - 1).setOnTrack(Integer.valueOf(driverData[6]));
+            newDrivers.get(newDrivers.size() - 1).setCurrentPos(Integer.valueOf(driverData[7]));
+            newDrivers.get(newDrivers.size() - 1).setStartingPos(Integer.valueOf(driverData[7]));
         }
 
         return newDrivers;

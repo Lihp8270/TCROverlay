@@ -18,6 +18,8 @@ public class Driver implements Comparable<Driver> {
     private String changeDir;
     private final TimingStackLabelEngine tStackEngine;
     private String focussedDriver;
+    private String delta;
+    private int onTrack;
 
     /**
      * Constructor
@@ -34,6 +36,8 @@ public class Driver implements Comparable<Driver> {
         this.completedLaps = 0;
         this.tStackEngine = new TimingStackLabelEngine(config);
         this.car = "";
+        this.delta = "+0.000";
+        this.onTrack = 1;
     }
 
     /**
@@ -99,7 +103,14 @@ public class Driver implements Comparable<Driver> {
         }
 
         driverBox.add(tStackEngine.getDriverLabel(name));
-        driverBox.add(tStackEngine.getLapsLabel("Laps : " + completedLaps));
+        if(onTrack == 0) {
+            driverBox.add(tStackEngine.getLapsLabel("IN PIT"));
+        } else if(currentPos == 1) {
+            driverBox.add(tStackEngine.getLapsLabel("Laps : " + completedLaps));
+        } else {
+            driverBox.add(tStackEngine.getLapsLabel("+" + delta));
+        }
+
         driverBox.add(tStackEngine.getPositionChangeLabel(changeDir,String.valueOf(posDiff)));
 
         return driverBox;
@@ -181,10 +192,40 @@ public class Driver implements Comparable<Driver> {
         this.car = car;
     }
 
+    /**
+     * Set delta to race leader
+     * @param delta #.###
+     */
+    public void setDelta(String delta) {
+        this.delta = delta;
+    }
+
+    /**
+     * Accessor for delta to race leader
+     * @return +#.###
+     */
+    public String getDelta() {
+        return delta;
+    }
+
+    /**
+     * 1 = on track
+     * 0 = in pit
+     * @param status int 1 or 0
+     */
+    public void setOnTrack(int status) {
+        this.onTrack = status;
+    }
+
+    public int getOnTrack() {
+        return onTrack;
+    }
+
     @Override
     public int compareTo(Driver o) {
         return 0;
     }
+
 
     public static class Comparators {
         public static Comparator<Driver> currentPos = Comparator.comparingInt(Driver::getCurrentPos);
