@@ -26,5 +26,6 @@
   "driverNameLeftPadding": 1385,
   "driverNameBottomPadding": 30,
   "carList": ["lotus_exos_125", "bmw_1m"],
-  "carLogos": ["assets/official/carLogos/lotus.png", "assets/official/carLogos/bmw.png"]
+  "carLogos": ["assets/official/carLogos/lotus.png", "assets/official/carLogos/bmw.png"],
+  "spectatorCars": ["Lihp8270"]
 }

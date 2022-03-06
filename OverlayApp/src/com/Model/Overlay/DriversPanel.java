@@ -14,6 +14,8 @@ public class DriversPanel extends InitPanel {
     private JLabel timingTreeHeader;
     private Box headerBox;
     private int maxDrivers;
+    private Boolean spectator;
+    private Config config;
 
     public DriversPanel(Config config) {
         super();
@@ -23,9 +25,11 @@ public class DriversPanel extends InitPanel {
         timingTreeHeader.setIcon(new ImageIcon(config.getTimingTreeHeader()));
         timingTreeHeader.setVisible(true);
         headerBox.add(timingTreeHeader);
+        this.config = config;
         this.panel.setLayout(new BoxLayout(this.panel, BoxLayout.Y_AXIS));
         this.panel.setBorder(new EmptyBorder(config.getDriverListTopPadding(), config.getDriverListLeftPadding(),0,0));
         this.maxDrivers = config.getMaxDriversDisplay();
+        this.spectator = false;
     }
 
     /**
@@ -39,12 +43,22 @@ public class DriversPanel extends InitPanel {
         this.panel.add(headerBox);
         this.panel.add(Box.createRigidArea(new Dimension(0,3)));
         for (Driver driver : drivers) {
-            this.panel.add(driver.getBox(focussedDriver));
-            this.panel.add(Box.createRigidArea(new Dimension(0,3)));
-            if (driverCount == maxDrivers) {
-                break;
+            for (String spectatorCar : config.getSpectatorCars()) {
+                if (driver.getName().equals(spectatorCar)) {
+                    spectator = true;
+                } else {
+                    spectator = false;
+                }
             }
-            driverCount++;
+
+            if (!spectator) {
+                this.panel.add(driver.getBox(focussedDriver));
+                this.panel.add(Box.createRigidArea(new Dimension(0,3)));
+                if (driverCount == maxDrivers) {
+                    break;
+                }
+                driverCount++;
+            }
         }
 
         return this.panel;

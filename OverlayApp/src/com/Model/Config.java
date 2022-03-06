@@ -28,6 +28,7 @@ public class Config {
     private String focussedDriverIcon;
     private String[] carList;
     private String[] carLogos;
+    private String[] spectatorCars;
 
     public Config() {
 
@@ -139,6 +140,10 @@ public class Config {
 
     public String[] getCarLogo() {
         return carLogos;
+    }
+
+    public String[] getSpectatorCars() {
+        return spectatorCars;
     }
 
 }
