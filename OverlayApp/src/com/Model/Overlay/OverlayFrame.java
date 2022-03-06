@@ -90,7 +90,7 @@ public class OverlayFrame extends InitFrame {
      */
     public void updateDrivers(DriversPanel drivers) {
         this.driverPanel.removeAll();
-        this.driverPanel = drivers.getPanel(currentFocussedDriver, deltaMode);
+        this.driverPanel = drivers.getPanel(currentFocussedDriver, deltaMode, topPanel);
         this.frame.add(driverPanel, BorderLayout.WEST);
         this.frame.repaint();
         this.frame.revalidate();

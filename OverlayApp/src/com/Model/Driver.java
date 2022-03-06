@@ -97,7 +97,7 @@ public class Driver implements Comparable<Driver> {
      * @param mode 0 = delta to lead, 1 = delta to car ahead
      * @return Box
      */
-    public Box getBox(String focussedDriver, int leaderLapCount, double carAheadDelta, int mode) {
+    public Box getBox(String focussedDriver, int leaderLapCount, double carAheadDelta, int mode, int maxLaps) {
         Box driverBox = Box.createHorizontalBox();
         double deltaToCarAhead = Double.parseDouble(delta) - carAheadDelta;
         int lapDifference = leaderLapCount - completedLaps;
@@ -105,7 +105,15 @@ public class Driver implements Comparable<Driver> {
         if (focussedDriver.equals(name)) {
             driverBox.add(tStackEngine.getFocussedDriverLabel());
         } else {
-            driverBox.add(tStackEngine.getPositionLabel(String.valueOf(currentPos)));
+            switch (onTrack) {
+                case 0:
+                    driverBox.add(tStackEngine.getPositionLabel(String.valueOf(currentPos - 1)));
+                    break;
+                default:
+                    driverBox.add(tStackEngine.getPositionLabel(String.valueOf(currentPos)));
+                    break;
+            }
+
         }
 
         driverBox.add(tStackEngine.getDriverLabel(name));
@@ -114,34 +122,37 @@ public class Driver implements Comparable<Driver> {
                 driverBox.add(tStackEngine.getLapsLabel("IN PIT"));
                 break;
             default:
-                if(currentPos == 1) {
-                    driverBox.add(tStackEngine.getLapsLabel("Laps : " + completedLaps));
-                } else if(lapDifference > 1) {
-                    if (lapDifference - 1 == 1) {
-                        driverBox.add(tStackEngine.getLapsLabel("+" + String.valueOf(lapDifference - 1) + " Lap"));
-                    } else {
-                        driverBox.add(tStackEngine.getLapsLabel("+" + String.valueOf(lapDifference - 1) + " Laps"));
-                    }
-                } else {
-                    switch (mode) {
-                        // Delta to lead
-                        case 0:
-                            driverBox.add(tStackEngine.getLapsLabel("+" + delta));
-                            break;
-                        // Delta to car ahead
-                        default:
-                            if (deltaToCarAhead < 0) {
-                                driverBox.add(tStackEngine.getLapsLabel("OVERTAKE"));
+                switch (mode) {
+                    // Delta to lead
+                    case 0:
+                        if (Integer.valueOf(completedLaps) >= maxLaps) {
+                            driverBox.add(tStackEngine.getLapsLabel("FINISHED"));
+                        } else if (currentPos == 1) {
+                            driverBox.add(tStackEngine.getLapsLabel("Laps : " + completedLaps));
+                        } else if (lapDifference > 1) {
+                            if (lapDifference - 1 == 1) {
+                                driverBox.add(tStackEngine.getLapsLabel("+" + String.valueOf(lapDifference - 1) + " Lap"));
                             } else {
-                                driverBox.add(tStackEngine.getLapsLabel("+" + String.format("%.3f", deltaToCarAhead)));
+                                driverBox.add(tStackEngine.getLapsLabel("+" + String.valueOf(lapDifference - 1) + " Laps"));
                             }
-                            break;
-                    }
+                        } else {
+                            driverBox.add(tStackEngine.getLapsLabel("+" + delta));
+                        }
+                        break;
+                    // Delta to car ahead
+                    default:
+                        if (Integer.valueOf(completedLaps) >= maxLaps) {
+                            driverBox.add(tStackEngine.getLapsLabel("FINISHED"));
+                        } else if (currentPos == 1) {
+                            driverBox.add(tStackEngine.getLapsLabel("Laps : " + completedLaps));
+                        } else if (deltaToCarAhead < 0) {
+                            driverBox.add(tStackEngine.getLapsLabel("OVERTAKE"));
+                        } else {
+                            driverBox.add(tStackEngine.getLapsLabel("+" + String.format("%.3f", deltaToCarAhead)));
+                        }
+                        break;
                 }
-                break;
         }
-
-
         driverBox.add(tStackEngine.getPositionChangeLabel(changeDir,String.valueOf(posDiff)));
 
         return driverBox;

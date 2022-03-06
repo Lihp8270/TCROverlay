@@ -80,4 +80,12 @@ public class TopPanel extends InitPanel {
     public String lapText() {
         return lap + " / " + maxLaps;
     }
+
+    /**
+     * Gets max race laps as integer
+     * @return integer max laps
+     */
+    public int getMaxLaps() {
+        return Integer.valueOf(maxLaps);
+    }
 }
