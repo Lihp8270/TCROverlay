@@ -50,6 +50,7 @@ public class DriversPanel extends InitPanel {
             for (String spectatorCar : config.getSpectatorCars()) {
                 if (driver.getName().equals(spectatorCar)) {
                     spectator = true;
+                    break;
                 } else {
                     spectator = false;
                 }
