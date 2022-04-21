@@ -162,11 +162,4 @@ public class OverlayController {
             disconnectAC();
         }
     }
-
-    /**
-     * Reset panel
-     */
-    public void reset() {
-        drivers.clearPanel();
-    }
 }
