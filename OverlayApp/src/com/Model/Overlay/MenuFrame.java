@@ -2,6 +2,7 @@ package com.Model.Overlay;
 
 import com.Engine.ButtonEngine;
 import com.Engine.OverlayController;
+import com.Util.InputValidators;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,9 +18,11 @@ public class MenuFrame extends InitFrame {
     private ArrayList<JButton> buttons;
     private OverlayController overlayController;
     private JTextField lapTextField;
+    private InputValidators validator;
 
     public MenuFrame(String title, Boolean visibility) throws IOException, FontFormatException {
         super(title, visibility);
+        validator = new InputValidators();
         buttonController = new ButtonEngine();
         buttons = new ArrayList<>();
         overlayController = new OverlayController("config/config.json");
@@ -43,14 +46,15 @@ public class MenuFrame extends InitFrame {
     private void createButtons() {
         addButtons("Show Overlay", 40, 150, 150, 30, false);
         addButtons("Start Overlay", 40, 110, 150, 30, false);
-        addButtons("Set Laps", 40, 70, 150, 30, true);
+        addButtons("Laps", 40, 70, 70, 30, true);
         addButtons("Delta to Lead", 40,190, 150, 30, false);
+        addButtons("Mins", 120, 70, 70, 30, true);
 
         createButtonActions();
     }
 
     private void createTextFields() {
-        this.lapTextField = new JTextField("No. of Laps");
+        this.lapTextField = new JTextField("Laps / Minutes");
         lapTextField.setBounds(40,30,150,30);
     }
 
@@ -118,11 +122,12 @@ public class MenuFrame extends InitFrame {
         buttons.get(2).addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(!(lapTextField.getText().equals("No. of Laps"))) {
+                if(validator.checkCharactersForDigitsOnly(lapTextField.getText())) {
                     overlayFrame.setMaxLaps(lapTextField.getText());
                     buttons.get(0).setEnabled(false);
                     buttons.get(1).setEnabled(true);
                     buttons.get(2).setEnabled(false);
+                    buttons.get(4).setEnabled(false);
                     lapTextField.setEnabled(false);
                 }
             }
@@ -140,6 +145,22 @@ public class MenuFrame extends InitFrame {
                 } else {
                     toggleLabel[0] = "Delta to car ahead";
                     buttons.get(3).setText(toggleLabel[0]);
+                }
+            }
+        });
+
+        buttons.get(4).addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (validator.checkCharactersForDigitsOnly(lapTextField.getText())) {
+                    if(Integer.valueOf(lapTextField.getText()) <= 60) {
+                        overlayFrame.setSecondsRemaining(lapTextField.getText());
+                        buttons.get(0).setEnabled(false);
+                        buttons.get(1).setEnabled(true);
+                        buttons.get(2).setEnabled(false);
+                        buttons.get(4).setEnabled(false);
+                        lapTextField.setEnabled(false);
+                    }
                 }
             }
         });

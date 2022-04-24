@@ -138,11 +138,20 @@ public class OverlayFrame extends InitFrame {
 
     /**
      * Set the max number of laps from the menu
-     *
+     * Also sets session mode flag as 1
      * @param maxLaps number of laps
      */
     public void setMaxLaps(String maxLaps) {
         topPanel.setMaxLaps(maxLaps);
+    }
+
+    /**
+     * Set session length in minutes from the menu
+     * Also sets session mode flag as 2
+     * @param mins
+     */
+    public void setSecondsRemaining(String mins) {
+        topPanel.setSecondsRemaining(mins);
     }
 
     /**

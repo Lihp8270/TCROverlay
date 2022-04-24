@@ -1,6 +1,7 @@
 package com.Model.Overlay;
 
 import com.Model.Config;
+import com.Util.TimeParser;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -14,7 +15,10 @@ public class TopPanel extends InitPanel {
     private final ImageIcon icon;
     private String lap;
     private String maxLaps;
+    private int secondsRemaining;
     private boolean finalLap;
+    private TimeParser timeParser;
+    private int sessionMode;
 
     public TopPanel(Config config) throws IOException, FontFormatException {
         super();
@@ -24,14 +28,17 @@ public class TopPanel extends InitPanel {
         font = Font.createFont(Font.TRUETYPE_FONT, new File(config.getLapCountFont()));
         font = font.deriveFont(Font.BOLD,config.getLapCountFontSize());
         this.lap = "0";
+        this.secondsRemaining = 0;
         this.finalLap = false;
+        timeParser = new TimeParser();
+        this.sessionMode = 0;
 
         createLapLabel();
     }
 
     @Override
     public JPanel getPanel() {
-        lapLabel.setText(lapText());
+        lapLabel.setText(lapText(sessionMode));
         this.panel.add(lapLabel);
 
         return this.panel;
@@ -48,7 +55,7 @@ public class TopPanel extends InitPanel {
         lapLabel.setHorizontalTextPosition(SwingConstants.CENTER);
         lapLabel.setFont(font);
 
-        lapLabel.setText(lapText());
+        lapLabel.setText(lapText(sessionMode));
     }
 
     /**
@@ -70,15 +77,33 @@ public class TopPanel extends InitPanel {
      * @param maxLaps maximum number of laps
      */
     public void setMaxLaps(String maxLaps) {
+        setSessionMode(1);
         this.maxLaps = maxLaps;
     }
 
     /**
+     * Set seconds remaining from given minutes
+     * @param mins number of minutes for the session
+     */
+    public void setSecondsRemaining(String mins) {
+        setSessionMode(2);
+        this.secondsRemaining = timeParser.getSecondsFromMinutes(mins);
+    }
+
+    /**
      * Build lap text label
+     * @param mode 1 = laps, 2 = timed
      * @return Concat of laps / max laps
      */
-    public String lapText() {
-        return lap + " / " + maxLaps;
+    public String lapText(int mode) {
+        switch(mode) {
+            case 1:
+                return lap + " / " + maxLaps;
+            case 2:
+                return timeParser.getTimeRemainingFromSeconds(secondsRemaining);
+            default:
+                return "NOT SET";
+        }
     }
 
     /**
@@ -88,4 +113,13 @@ public class TopPanel extends InitPanel {
     public int getMaxLaps() {
         return Integer.valueOf(maxLaps);
     }
+
+    /**
+     * Sets session mode
+     * @param mode 1 = Laps, 2 = Timed
+     */
+    private void setSessionMode(int mode) {
+        this.sessionMode = mode;
+    }
+
 }
