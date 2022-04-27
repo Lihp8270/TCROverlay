@@ -20,6 +20,7 @@ public class Driver implements Comparable<Driver> {
     private String focussedDriver;
     private String delta;
     private int onTrack;
+    private int raceStarted;
 
     /**
      * Constructor
@@ -38,6 +39,7 @@ public class Driver implements Comparable<Driver> {
         this.car = "";
         this.delta = "+0.000";
         this.onTrack = 1;
+        this.raceStarted = 0;
     }
 
     /**
@@ -261,6 +263,14 @@ public class Driver implements Comparable<Driver> {
 
     public int getOnTrack() {
         return onTrack;
+    }
+
+    public int getRaceStarted() {
+        return raceStarted;
+    }
+
+    public void setRaceStarted(int status) {
+        raceStarted = status;
     }
 
     @Override

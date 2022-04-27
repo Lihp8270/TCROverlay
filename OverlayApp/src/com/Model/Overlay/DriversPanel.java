@@ -16,6 +16,7 @@ public class DriversPanel extends InitPanel {
     private int maxDrivers;
     private Boolean spectator;
     private Config config;
+    private Boolean raceStarted;
 
     public DriversPanel(Config config) {
         super();
@@ -30,6 +31,7 @@ public class DriversPanel extends InitPanel {
         this.panel.setBorder(new EmptyBorder(config.getDriverListTopPadding(), config.getDriverListLeftPadding(),0,0));
         this.maxDrivers = config.getMaxDriversDisplay();
         this.spectator = false;
+        this.raceStarted = false;
     }
 
     /**
@@ -43,6 +45,10 @@ public class DriversPanel extends InitPanel {
         double carAheadDelta = 0.000;
 
         Collections.sort(drivers, Driver.Comparators.currentPos);
+
+        if(drivers.get(0).getRaceStarted() == 1) {
+            raceStarted = true;
+        }
 
         this.panel.add(headerBox);
         this.panel.add(Box.createRigidArea(new Dimension(0,3)));
@@ -86,11 +92,9 @@ public class DriversPanel extends InitPanel {
         return drivers;
     }
 
-    /**
-     * Clear driver list
-     */
-    public void clearPanel() {
-        drivers.clear();
+    public Boolean getRaceStarted() {
+        return raceStarted;
     }
+
 
 }

@@ -135,7 +135,6 @@ public class TopPanel extends InitPanel {
                     while(true) {
                         Thread.sleep(1000);
                         tick();
-                        System.out.println(secondsRemaining);
                     }
                 }
             };
@@ -147,14 +146,18 @@ public class TopPanel extends InitPanel {
      * Start the timer
      */
     public void startTimer() {
-        timerWorker.execute();
+        if(timerWorker != null) {
+            timerWorker.execute();
+        }
     }
 
     /**
      * Reduce time remaining by 1 second
      */
     private void tick() {
-        secondsRemaining--;
+        if(secondsRemaining > 0) {
+            secondsRemaining--;
+        }
     }
 
     /**

@@ -21,6 +21,7 @@ public class OverlayFrame extends InitFrame {
     private int lastLapDisplayed;
     private int deltaMode;
     private int lastSecondsRemaining;
+    private boolean hasRaceStarted;
 
     /**
      * Constructor for overlay
@@ -45,6 +46,7 @@ public class OverlayFrame extends InitFrame {
         this.lastLapDisplayed = 0;
         this.lastSecondsRemaining = 0;
         this.deltaMode = 0;
+        this.hasRaceStarted = false;
         initialiseFrame();
     }
 
@@ -66,12 +68,8 @@ public class OverlayFrame extends InitFrame {
         driverNamePanel = bottomPanel.getPanel();
         lapPanel = topPanel.getPanel();
 
-        // TODO Sort timer properly
-        // Timer test code
-//        if(topPanel.getSessionMode() == 2) {
-            topPanel.createTimer();
-            topPanel.startTimer();
-//        }
+        topPanel.createTimer();
+//        topPanel.startTimer(); // Do this when car crosses line
 
         this.frame.add(driverPanel, BorderLayout.WEST);
         this.frame.add(advertPanel, BorderLayout.EAST);
@@ -93,14 +91,21 @@ public class OverlayFrame extends InitFrame {
     }
 
 
+    // TODO don't update drivers if race has finished
     /**
      * Update Drivers panel
-     *
      * @param drivers new DriverPanel to use
      */
     public void updateDrivers(DriversPanel drivers) {
         this.driverPanel.removeAll();
         this.driverPanel = drivers.getPanel(currentFocussedDriver, deltaMode, topPanel);
+
+        if(hasRaceStarted == false) {
+            if(drivers.getRaceStarted()) {
+                topPanel.startTimer();
+            }
+        }
+
         this.frame.add(driverPanel, BorderLayout.WEST);
         this.frame.repaint();
         this.frame.revalidate();
@@ -131,7 +136,6 @@ public class OverlayFrame extends InitFrame {
         }
     }
 
-    // TODO Lap graphic flickers with timer - Try removing removeAll()
     /**
      * Update the graphic for current lap
      */
@@ -147,7 +151,6 @@ public class OverlayFrame extends InitFrame {
                 break;
             case 2:
                 if(!(lastSecondsRemaining == topPanel.getSecondsRemaining())) {
-                    this.lapPanel.removeAll();
                     rebuildLapPanel();
                     lastSecondsRemaining = topPanel.getSecondsRemaining();
                 }

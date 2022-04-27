@@ -18,6 +18,7 @@ class TimeParserTest {
         assertEquals("01:30", timeParser.getTimeRemainingFromSeconds(90));
         assertEquals("60:00", timeParser.getTimeRemainingFromSeconds(3600));
         assertEquals("60:00", timeParser.getTimeRemainingFromSeconds(timeParser.getSecondsFromMinutes("60")));
+        assertEquals("00:00", timeParser.getTimeRemainingFromSeconds(0));
     }
 
 }
