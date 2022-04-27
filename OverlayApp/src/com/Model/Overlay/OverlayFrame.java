@@ -22,6 +22,7 @@ public class OverlayFrame extends InitFrame {
     private int deltaMode;
     private int lastSecondsRemaining;
     private boolean hasRaceStarted;
+    private boolean hasRaceFinished;
 
     /**
      * Constructor for overlay
@@ -47,6 +48,7 @@ public class OverlayFrame extends InitFrame {
         this.lastSecondsRemaining = 0;
         this.deltaMode = 0;
         this.hasRaceStarted = false;
+        this.hasRaceFinished = false;
         initialiseFrame();
     }
 
@@ -69,7 +71,6 @@ public class OverlayFrame extends InitFrame {
         lapPanel = topPanel.getPanel();
 
         topPanel.createTimer();
-//        topPanel.startTimer(); // Do this when car crosses line
 
         this.frame.add(driverPanel, BorderLayout.WEST);
         this.frame.add(advertPanel, BorderLayout.EAST);
@@ -90,30 +91,29 @@ public class OverlayFrame extends InitFrame {
         }
     }
 
-
-    // TODO don't update drivers if race has finished
     /**
      * Update Drivers panel
      * @param drivers new DriverPanel to use
      */
     public void updateDrivers(DriversPanel drivers) {
-        this.driverPanel.removeAll();
-        this.driverPanel = drivers.getPanel(currentFocussedDriver, deltaMode, topPanel);
+        if(!getHasRaceFinished()) {
+            this.driverPanel.removeAll();
+            this.driverPanel = drivers.getPanel(currentFocussedDriver, deltaMode, topPanel);
 
-        if(hasRaceStarted == false) {
-            if(drivers.getRaceStarted()) {
-                topPanel.startTimer();
+            if(hasRaceStarted == false) {
+                if(drivers.getRaceStarted()) {
+                    topPanel.startTimer();
+                }
             }
-        }
 
-        this.frame.add(driverPanel, BorderLayout.WEST);
-        this.frame.repaint();
-        this.frame.revalidate();
+            this.frame.add(driverPanel, BorderLayout.WEST);
+            this.frame.repaint();
+            this.frame.revalidate();
+        }
     }
 
     /**
      * Updates focussed driver name label
-     *
      * @param driverName Driver name being focussed
      */
     public void updateLargeName(String driverName) {
@@ -153,6 +153,9 @@ public class OverlayFrame extends InitFrame {
                 if(!(lastSecondsRemaining == topPanel.getSecondsRemaining())) {
                     rebuildLapPanel();
                     lastSecondsRemaining = topPanel.getSecondsRemaining();
+                    if (lastSecondsRemaining == 0) {
+                        hasRaceFinished = true;
+                    }
                 }
                 break;
             default:
@@ -202,6 +205,10 @@ public class OverlayFrame extends InitFrame {
      */
     public int getDeltaMode() {
         return deltaMode;
+    }
+
+    public boolean getHasRaceFinished() {
+        return hasRaceFinished;
     }
 
 }

@@ -102,6 +102,10 @@ public class TopPanel extends InitPanel {
             case 1:
                 return lap + " / " + maxLaps;
             case 2:
+                if (secondsRemaining == 0) {
+                    return "RACE END";
+                }
+
                 return timeParser.getTimeRemainingFromSeconds(secondsRemaining);
             default:
                 return "NOT SET";
