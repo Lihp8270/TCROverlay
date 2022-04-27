@@ -3,6 +3,7 @@ package com.Model.Overlay;
 import com.Model.Config;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 
 public class OverlayFrame extends InitFrame {
@@ -19,6 +20,7 @@ public class OverlayFrame extends InitFrame {
     private String currentFocussedDriver;
     private int lastLapDisplayed;
     private int deltaMode;
+    private int lastSecondsRemaining;
 
     /**
      * Constructor for overlay
@@ -41,6 +43,7 @@ public class OverlayFrame extends InitFrame {
         this.topPanel = topPanel;
         this.currentFocussedDriver = "";
         this.lastLapDisplayed = 0;
+        this.lastSecondsRemaining = 0;
         this.deltaMode = 0;
         initialiseFrame();
     }
@@ -62,6 +65,13 @@ public class OverlayFrame extends InitFrame {
         advertPanel = advert.getPanel();
         driverNamePanel = bottomPanel.getPanel();
         lapPanel = topPanel.getPanel();
+
+        // TODO Sort timer properly
+        // Timer test code
+//        if(topPanel.getSessionMode() == 2) {
+            topPanel.createTimer();
+            topPanel.startTimer();
+//        }
 
         this.frame.add(driverPanel, BorderLayout.WEST);
         this.frame.add(advertPanel, BorderLayout.EAST);
@@ -121,19 +131,37 @@ public class OverlayFrame extends InitFrame {
         }
     }
 
+    // TODO Lap graphic flickers with timer - Try removing removeAll()
     /**
      * Update the graphic for current lap
      */
     public void updateLapGraphic() {
-        if (!(lastLapDisplayed == drivers.getDrivers().get(0).getCompletedLaps() + 1)) {
-            this.lapPanel.removeAll();
-            topPanel.setLaps(String.valueOf(drivers.getDrivers().get(0).getCompletedLaps() + 1));
-            this.lapPanel = topPanel.getPanel();
-            this.frame.add(lapPanel, BorderLayout.CENTER);
-            this.frame.repaint();
-            this.frame.revalidate();
-            lastLapDisplayed = drivers.getDrivers().get(0).getCompletedLaps() + 1;
+        switch (topPanel.getSessionMode()) {
+            case 1:
+                if (!(lastLapDisplayed == drivers.getDrivers().get(0).getCompletedLaps() + 1)) {
+                    this.lapPanel.removeAll();
+                    topPanel.setLaps(String.valueOf(drivers.getDrivers().get(0).getCompletedLaps() + 1));
+                    rebuildLapPanel();
+                    lastLapDisplayed = drivers.getDrivers().get(0).getCompletedLaps() + 1;
+                }
+                break;
+            case 2:
+                if(!(lastSecondsRemaining == topPanel.getSecondsRemaining())) {
+                    this.lapPanel.removeAll();
+                    rebuildLapPanel();
+                    lastSecondsRemaining = topPanel.getSecondsRemaining();
+                }
+                break;
+            default:
+                break;
         }
+    }
+
+    private void rebuildLapPanel() {
+        this.lapPanel = topPanel.getPanel();
+        this.frame.add(lapPanel, BorderLayout.CENTER);
+        this.frame.repaint();
+        this.frame.revalidate();
     }
 
     /**

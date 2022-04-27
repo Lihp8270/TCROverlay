@@ -19,6 +19,7 @@ public class TopPanel extends InitPanel {
     private boolean finalLap;
     private TimeParser timeParser;
     private int sessionMode;
+    private SwingWorker timerWorker;
 
     public TopPanel(Config config) throws IOException, FontFormatException {
         super();
@@ -88,6 +89,7 @@ public class TopPanel extends InitPanel {
     public void setSecondsRemaining(String mins) {
         setSessionMode(2);
         this.secondsRemaining = timeParser.getSecondsFromMinutes(mins);
+        this.maxLaps = "99"; // Required to prevent application from crashing
     }
 
     /**
@@ -120,6 +122,55 @@ public class TopPanel extends InitPanel {
      */
     private void setSessionMode(int mode) {
         this.sessionMode = mode;
+    }
+
+    /**
+     * Create timer thread
+     */
+    public void createTimer() {
+        if(timerWorker == null) {
+            SwingWorker swTimer = new SwingWorker() {
+                @Override
+                protected Object doInBackground() throws Exception {
+                    while(true) {
+                        Thread.sleep(1000);
+                        tick();
+                        System.out.println(secondsRemaining);
+                    }
+                }
+            };
+            this.timerWorker = swTimer;
+        }
+    }
+
+    /**
+     * Start the timer
+     */
+    public void startTimer() {
+        timerWorker.execute();
+    }
+
+    /**
+     * Reduce time remaining by 1 second
+     */
+    private void tick() {
+        secondsRemaining--;
+    }
+
+    /**
+     * Get selected session mode
+     * @return 1 = Laps, 2 = Timed
+     */
+    public int getSessionMode() {
+        return sessionMode;
+    }
+
+    /**
+     * Seconds remainning in the session
+     * @return integer of seconds remaining
+     */
+    public int getSecondsRemaining() {
+        return secondsRemaining;
     }
 
 }

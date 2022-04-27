@@ -78,6 +78,7 @@ public class MenuFrame extends InitFrame {
     private void createButtonActions() {
         final String[] toggleLabel = {"Show Overlay"};
 
+        // Show / Hide Overlay Button
         buttons.get(0).addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -92,6 +93,7 @@ public class MenuFrame extends InitFrame {
             }
         });
 
+        // Start overlay button
         buttons.get(1).addActionListener(new ActionListener() {
             final String[] toggleLabel = {"Start Overlay"};
             @Override
@@ -119,6 +121,7 @@ public class MenuFrame extends InitFrame {
             }
         });
 
+        // Set laps button
         buttons.get(2).addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -133,6 +136,7 @@ public class MenuFrame extends InitFrame {
             }
         });
 
+        // Delta select button
         buttons.get(3).addActionListener(new ActionListener() {
             final String[] toggleLabel = {"Delta to Lead"};
             @Override
@@ -149,6 +153,7 @@ public class MenuFrame extends InitFrame {
             }
         });
 
+        // Mins Button
         buttons.get(4).addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
