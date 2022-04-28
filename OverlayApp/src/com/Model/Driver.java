@@ -7,6 +7,11 @@ import java.awt.*;
 import java.io.IOException;
 import java.util.Comparator;
 
+// TODO Practice and Qualifying.  Use session ended from AC to count session number to trigger a count in Python App
+// After Practice session reset times to 99999999
+// After qualifying change Display to laptime
+// Practice and qualifying start immediately
+// Reset python racestarted to 0 after each session
 public class Driver implements Comparable<Driver> {
     private final String name;
     private final int driverID;
