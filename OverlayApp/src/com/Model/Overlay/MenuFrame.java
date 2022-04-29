@@ -3,6 +3,7 @@ package com.Model.Overlay;
 import com.Engine.ButtonEngine;
 import com.Engine.OverlayController;
 import com.Util.InputValidators;
+import com.sun.jdi.request.MonitorContendedEnterRequest;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,6 +20,7 @@ public class MenuFrame extends InitFrame {
     private OverlayController overlayController;
     private JTextField lapTextField;
     private InputValidators validator;
+    private JLabel versionNumber;
 
     public MenuFrame(String title, Boolean visibility) throws IOException, FontFormatException {
         super(title, visibility);
@@ -26,6 +28,7 @@ public class MenuFrame extends InitFrame {
         buttonController = new ButtonEngine();
         buttons = new ArrayList<>();
         overlayController = new OverlayController("config/config.json");
+        versionNumber = new JLabel();
 
         initialiseFrame(overlayController.getOverlayFrame());
         createButtons();
@@ -38,6 +41,14 @@ public class MenuFrame extends InitFrame {
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.frame.setLayout(null);
         this.overlayFrame = overlayFrame;
+        addVersionNumber("v2.0.0");
+    }
+
+    private void addVersionNumber(String version) {
+        this.versionNumber.setText(version);
+        this.versionNumber.setHorizontalAlignment(SwingConstants.LEFT);
+        this.versionNumber.setVerticalAlignment(SwingConstants.TOP);
+        this.versionNumber.setSize(250,310);
     }
 
     /**
@@ -180,6 +191,7 @@ public class MenuFrame extends InitFrame {
         }
 
         this.frame.add(lapTextField);
+        this.frame.add(versionNumber);
     }
 
 }
