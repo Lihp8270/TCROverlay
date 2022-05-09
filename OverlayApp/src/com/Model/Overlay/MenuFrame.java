@@ -25,6 +25,7 @@ public class MenuFrame extends InitFrame {
     private JTextField qualifyTextField;
     private InputValidators validator;
     private JLabel versionNumber;
+    private int numberOfSessions;
 
     public MenuFrame(String title, Boolean visibility) throws IOException, FontFormatException {
         super(title, visibility);
@@ -33,6 +34,7 @@ public class MenuFrame extends InitFrame {
         buttons = new ArrayList<>();
         overlayController = new OverlayController("config/config.json");
         versionNumber = new JLabel();
+        this.numberOfSessions = 1;
 
         initialiseFrame(overlayController.getOverlayFrame());
         createButtons();
@@ -145,7 +147,9 @@ public class MenuFrame extends InitFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(validator.checkCharactersForDigitsOnly(lapTextField.getText())) {
+                    setSessionLengths();
                     overlayFrame.setMaxLaps(lapTextField.getText());
+                    overlayFrame.setNumberOfSessions(numberOfSessions);
                     buttons.get(0).setEnabled(false);
                     buttons.get(1).setEnabled(true);
                     buttons.get(2).setEnabled(false);
@@ -179,6 +183,8 @@ public class MenuFrame extends InitFrame {
                 if (validator.checkCharactersForDigitsOnly(lapTextField.getText())) {
                     if(Integer.valueOf(lapTextField.getText()) <= 60) {
                         overlayFrame.setSecondsRemaining(lapTextField.getText());
+                        setSessionLengths();
+                        overlayFrame.setNumberOfSessions(numberOfSessions);
                         buttons.get(0).setEnabled(false);
                         buttons.get(1).setEnabled(true);
                         buttons.get(2).setEnabled(false);
@@ -202,6 +208,31 @@ public class MenuFrame extends InitFrame {
         this.frame.add(practiceTextField);
         this.frame.add(qualifyTextField);
         this.frame.add(versionNumber);
+    }
+
+    private void setSessionLengths() {
+        if (practiceTextField.getText().equals("Practice Mins")) {
+            overlayFrame.setPracticeSessionMins("0");
+            practiceTextField.setText("NO PRACTICE");
+        } else {
+            if(validator.checkCharactersForDigitsOnly(practiceTextField.getText())) {
+                overlayFrame.setPracticeSessionMins(practiceTextField.getText());
+                numberOfSessions++;
+            } else {
+                practiceTextField.setText("ERROR, RETRY");
+            }
+        }
+        if (qualifyTextField.getText().equals("Qualifying Mins")) {
+            overlayFrame.setQualifySessionMins("0");
+            qualifyTextField.setText("NO QUALIFYING");
+        } else {
+            if (validator.checkCharactersForDigitsOnly(qualifyTextField.getText())) {
+                overlayFrame.setQualifySessionMins(qualifyTextField.getText());
+                numberOfSessions++;
+            } else {
+                qualifyTextField.setText("ERROR, RETRY");
+            }
+        }
     }
 
 }

@@ -23,6 +23,9 @@ public class OverlayFrame extends InitFrame {
     private int lastSecondsRemaining;
     private boolean hasRaceStarted;
     private boolean hasRaceFinished;
+    private String practiceSessionMins;
+    private String qualifySessionMins;
+    private int numberOfSessions;
 
     /**
      * Constructor for overlay
@@ -49,6 +52,9 @@ public class OverlayFrame extends InitFrame {
         this.deltaMode = 0;
         this.hasRaceStarted = false;
         this.hasRaceFinished = false;
+        this.qualifySessionMins = "";
+        this.practiceSessionMins = "";
+        this.numberOfSessions = 0;
         initialiseFrame();
     }
 
@@ -188,6 +194,14 @@ public class OverlayFrame extends InitFrame {
         topPanel.setSecondsRemaining(mins);
     }
 
+    public void setPracticeSessionMins(String mins) {
+        this.practiceSessionMins = mins;
+    }
+
+    public void setQualifySessionMins(String mins) {
+        this.qualifySessionMins = mins;
+    }
+
     /**
      * Toggle delta display mode
      */
@@ -209,6 +223,14 @@ public class OverlayFrame extends InitFrame {
 
     public boolean getHasRaceFinished() {
         return hasRaceFinished;
+    }
+
+    /**
+     * Set number of sessions
+     * @param numberOfSessions
+     */
+    public void setNumberOfSessions(int numberOfSessions) {
+        this.numberOfSessions = numberOfSessions;
     }
 
 }
