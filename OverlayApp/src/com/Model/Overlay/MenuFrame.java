@@ -1,4 +1,7 @@
-//TODO Get Race started from any driver not just leader
+//TODO Set triggers to change timer from 1 mode to the next, subtract 1 from number of sessions, and set the finished session to 0
+//TODO Python app needs to send a trigger to start Practice and Qualifying, and trigger to end
+//TODO Timed session restart flag from Plugin.  For Java to change, session end needs to be TRUE and have reset flag
+
 //TODO Qualifying needs to sort by BestLap
 
 package com.Model.Overlay;
@@ -61,10 +64,10 @@ public class MenuFrame extends InitFrame {
      * Create button objects
      */
     private void createButtons() {
-        addButtons("Show Overlay", 40, 240, 150, 30, false);
+        addButtons("Show Overlay", 40, 205, 150, 30, false);
         addButtons("Start Overlay", 40, 170, 150, 30, false);
         addButtons("Laps", 40, 135, 70, 30, true);
-        addButtons("Delta to Lead", 40,205, 150, 30, false);
+        addButtons("Delta to Lead", 40,240, 150, 30, false);
         addButtons("Mins", 120, 135, 70, 30, true);
 
         createButtonActions();

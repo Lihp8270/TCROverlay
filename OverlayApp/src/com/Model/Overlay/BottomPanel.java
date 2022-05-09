@@ -74,7 +74,9 @@ public class BottomPanel extends  InitPanel {
      * @param driverName String
      */
     public void setDriverName(String driverName) {
-        driverNameBannerLabel.setText(driverName);
+        // TODO Remove demonstration
+//        driverNameBannerLabel.setText(driverName);
+        driverNameBannerLabel.setText("DEMONSTRATION");
     }
 
     /**

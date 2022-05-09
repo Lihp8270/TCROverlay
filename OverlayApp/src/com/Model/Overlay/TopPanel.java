@@ -20,6 +20,7 @@ public class TopPanel extends InitPanel {
     private TimeParser timeParser;
     private int sessionMode;
     private SwingWorker timerWorker;
+    private String sessionIdentifier;
 
     public TopPanel(Config config) throws IOException, FontFormatException {
         super();
@@ -33,6 +34,7 @@ public class TopPanel extends InitPanel {
         this.finalLap = false;
         timeParser = new TimeParser();
         this.sessionMode = 0;
+        this.sessionIdentifier = "N/A";
 
         createLapLabel();
     }
@@ -100,13 +102,14 @@ public class TopPanel extends InitPanel {
     public String lapText(int mode) {
         switch(mode) {
             case 1:
-                return lap + " / " + maxLaps;
+                return sessionIdentifier + " " + lap + " / " + maxLaps;
             case 2:
+                // TODO If 0, and reset flag move to next session
                 if (secondsRemaining == 0) {
                     return "RACE END";
                 }
 
-                return timeParser.getTimeRemainingFromSeconds(secondsRemaining);
+                return sessionIdentifier + " " + timeParser.getTimeRemainingFromSeconds(secondsRemaining);
             default:
                 return "NOT SET";
         }
@@ -178,6 +181,10 @@ public class TopPanel extends InitPanel {
      */
     public int getSecondsRemaining() {
         return secondsRemaining;
+    }
+
+    public void setSessionIdentifier(String sessionIdentifier) {
+        this.sessionIdentifier = sessionIdentifier;
     }
 
 }

@@ -170,6 +170,17 @@ public class OverlayFrame extends InitFrame {
     }
 
     private void rebuildLapPanel() {
+        if (numberOfSessions == 1) {
+            topPanel.setSessionIdentifier("R");
+        } else if(numberOfSessions == 3) {
+            topPanel.setSessionIdentifier("P");
+        } else {
+            if (practiceSessionMins.equals("0")) {
+                topPanel.setSessionIdentifier("Q");
+            } else {
+                topPanel.setSessionIdentifier("P");
+            }
+        }
         this.lapPanel = topPanel.getPanel();
         this.frame.add(lapPanel, BorderLayout.CENTER);
         this.frame.repaint();
