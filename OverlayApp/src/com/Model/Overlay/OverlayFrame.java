@@ -26,6 +26,7 @@ public class OverlayFrame extends InitFrame {
     private String practiceSessionMins;
     private String qualifySessionMins;
     private int numberOfSessions;
+    private int sessionsRemaining;
 
     /**
      * Constructor for overlay
@@ -55,6 +56,7 @@ public class OverlayFrame extends InitFrame {
         this.qualifySessionMins = "";
         this.practiceSessionMins = "";
         this.numberOfSessions = 0;
+        this.sessionsRemaining = 0;
         initialiseFrame();
     }
 
@@ -145,19 +147,19 @@ public class OverlayFrame extends InitFrame {
     /**
      * Update the graphic for current lap
      */
-    public void updateLapGraphic() {
+    public void updateLapGraphic(boolean sessionReset) {
         switch (topPanel.getSessionMode()) {
             case 1:
                 if (!(lastLapDisplayed == drivers.getDrivers().get(0).getCompletedLaps() + 1)) {
                     this.lapPanel.removeAll();
                     topPanel.setLaps(String.valueOf(drivers.getDrivers().get(0).getCompletedLaps() + 1));
-                    rebuildLapPanel();
+                    rebuildLapPanel(false);
                     lastLapDisplayed = drivers.getDrivers().get(0).getCompletedLaps() + 1;
                 }
                 break;
             case 2:
                 if(!(lastSecondsRemaining == topPanel.getSecondsRemaining())) {
-                    rebuildLapPanel();
+                    rebuildLapPanel(sessionReset);
                     lastSecondsRemaining = topPanel.getSecondsRemaining();
                     if (lastSecondsRemaining == 0) {
                         hasRaceFinished = true;
@@ -169,7 +171,7 @@ public class OverlayFrame extends InitFrame {
         }
     }
 
-    private void rebuildLapPanel() {
+    private void rebuildLapPanel(boolean reset) {
         if (numberOfSessions == 1) {
             topPanel.setSessionIdentifier("R");
         } else if(numberOfSessions == 3) {
@@ -181,6 +183,13 @@ public class OverlayFrame extends InitFrame {
                 topPanel.setSessionIdentifier("P");
             }
         }
+
+        if (reset) {
+            topPanel.setSessionReset(true);
+            topPanel.setNextSessionMins("10"); // Test
+            // TODO Get the correct information for next session
+        }
+
         this.lapPanel = topPanel.getPanel();
         this.frame.add(lapPanel, BorderLayout.CENTER);
         this.frame.repaint();
@@ -202,7 +211,7 @@ public class OverlayFrame extends InitFrame {
      * @param mins
      */
     public void setSecondsRemaining(String mins) {
-        topPanel.setSecondsRemaining(mins);
+        topPanel.setSecondsRemaining(mins); // This is from the race tab in menu
     }
 
     public void setPracticeSessionMins(String mins) {
@@ -242,6 +251,7 @@ public class OverlayFrame extends InitFrame {
      */
     public void setNumberOfSessions(int numberOfSessions) {
         this.numberOfSessions = numberOfSessions;
+        this.sessionsRemaining = numberOfSessions;
     }
 
 }

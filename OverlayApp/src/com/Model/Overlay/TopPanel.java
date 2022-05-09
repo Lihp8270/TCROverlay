@@ -21,6 +21,9 @@ public class TopPanel extends InitPanel {
     private int sessionMode;
     private SwingWorker timerWorker;
     private String sessionIdentifier;
+    private boolean sessionReset;
+    private String nextSessionMaxLaps;
+    private String nextSessionMins;
 
     public TopPanel(Config config) throws IOException, FontFormatException {
         super();
@@ -105,8 +108,13 @@ public class TopPanel extends InitPanel {
                 return sessionIdentifier + " " + lap + " / " + maxLaps;
             case 2:
                 // TODO If 0, and reset flag move to next session
-                if (secondsRemaining == 0) {
-                    return "RACE END";
+                if (sessionReset) {
+                    setSecondsRemaining(nextSessionMins);
+                } else {
+                    if (secondsRemaining == 0) {
+                        return "END";
+                }
+
                 }
 
                 return sessionIdentifier + " " + timeParser.getTimeRemainingFromSeconds(secondsRemaining);
@@ -185,6 +193,18 @@ public class TopPanel extends InitPanel {
 
     public void setSessionIdentifier(String sessionIdentifier) {
         this.sessionIdentifier = sessionIdentifier;
+    }
+
+    public String getSessionIdentifier() {
+        return sessionIdentifier;
+    }
+
+    public void setSessionReset(boolean reset) {
+        this.sessionReset = reset;
+    }
+
+    public void setNextSessionMins(String mins) {
+        this.nextSessionMins = mins;
     }
 
 }

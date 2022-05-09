@@ -7,7 +7,6 @@ import java.awt.*;
 import java.io.IOException;
 import java.util.Comparator;
 
-// TODO Practice and Qualifying.  Use session ended from AC to count session number to trigger a count in Python App
 // After Practice session reset times to 99999999
 // After qualifying change Display to laptime
 // Practice and qualifying start immediately
@@ -306,5 +305,6 @@ public class Driver implements Comparable<Driver> {
 
     public static class Comparators {
         public static Comparator<Driver> currentPos = Comparator.comparingInt(Driver::getCurrentPos);
+        public static Comparator<Driver> lapTime = Comparator.comparingInt(Driver::getFastestLap);
     }
 }
