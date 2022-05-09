@@ -26,6 +26,8 @@ public class Driver implements Comparable<Driver> {
     private String delta;
     private int onTrack;
     private int raceStarted;
+    private int fastestLap;
+    private int timedSessionStarted;
 
     /**
      * Constructor
@@ -45,6 +47,24 @@ public class Driver implements Comparable<Driver> {
         this.delta = "+0.000";
         this.onTrack = 1;
         this.raceStarted = 0;
+        this.fastestLap = 0;
+        this.timedSessionStarted = 0;
+    }
+
+    public int getFastestLap() {
+        return fastestLap;
+    }
+
+    public void setFastestLap(int fastestLap) {
+        this.fastestLap = fastestLap;
+    }
+
+    public int getTimedSessionStarted() {
+        return timedSessionStarted;
+    }
+
+    public void setTimedSessionStarted(int timedSessionStarted) {
+        this.timedSessionStarted = timedSessionStarted;
     }
 
     /**

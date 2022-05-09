@@ -46,8 +46,11 @@ public class DriversPanel extends InitPanel {
 
         Collections.sort(drivers, Driver.Comparators.currentPos);
 
-        if(drivers.get(0).getRaceStarted() == 1) {
-            raceStarted = true;
+        // Check to see if any driver has started the race or not
+        for (Driver driver : drivers) {
+            if (driver.getRaceStarted() == 1) {
+                raceStarted = true;
+            }
         }
 
         this.panel.add(headerBox);

@@ -1,9 +1,11 @@
+//TODO Get Race started from any driver not just leader
+//TODO Qualifying needs to sort by BestLap
+
 package com.Model.Overlay;
 
 import com.Engine.ButtonEngine;
 import com.Engine.OverlayController;
 import com.Util.InputValidators;
-import com.sun.jdi.request.MonitorContendedEnterRequest;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,6 +21,8 @@ public class MenuFrame extends InitFrame {
     private ArrayList<JButton> buttons;
     private OverlayController overlayController;
     private JTextField lapTextField;
+    private JTextField practiceTextField;
+    private JTextField qualifyTextField;
     private InputValidators validator;
     private JLabel versionNumber;
 
@@ -37,36 +41,40 @@ public class MenuFrame extends InitFrame {
     }
 
     private void initialiseFrame(OverlayFrame overlayFrame) {
-        this.frame.setSize(250,310);
+        this.frame.setSize(250,330);
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.frame.setLayout(null);
         this.overlayFrame = overlayFrame;
-        addVersionNumber("v2.0.0");
+        addVersionNumber("v2.1.0");
     }
 
     private void addVersionNumber(String version) {
         this.versionNumber.setText(version);
         this.versionNumber.setHorizontalAlignment(SwingConstants.LEFT);
         this.versionNumber.setVerticalAlignment(SwingConstants.TOP);
-        this.versionNumber.setSize(250,310);
+        this.versionNumber.setSize(250,400);
     }
 
     /**
      * Create button objects
      */
     private void createButtons() {
-        addButtons("Show Overlay", 40, 150, 150, 30, false);
-        addButtons("Start Overlay", 40, 110, 150, 30, false);
-        addButtons("Laps", 40, 70, 70, 30, true);
-        addButtons("Delta to Lead", 40,190, 150, 30, false);
-        addButtons("Mins", 120, 70, 70, 30, true);
+        addButtons("Show Overlay", 40, 240, 150, 30, false);
+        addButtons("Start Overlay", 40, 170, 150, 30, false);
+        addButtons("Laps", 40, 135, 70, 30, true);
+        addButtons("Delta to Lead", 40,205, 150, 30, false);
+        addButtons("Mins", 120, 135, 70, 30, true);
 
         createButtonActions();
     }
 
     private void createTextFields() {
-        this.lapTextField = new JTextField("Laps / Minutes");
+        this.lapTextField = new JTextField("Race Laps / Minutes");
+        this.practiceTextField = new JTextField("Practice Mins");
+        this.qualifyTextField = new JTextField("Qualifying Mins");
         lapTextField.setBounds(40,30,150,30);
+        qualifyTextField.setBounds(40,65,150,30);
+        practiceTextField.setBounds(40,100, 150,30);
     }
 
     /**
@@ -191,6 +199,8 @@ public class MenuFrame extends InitFrame {
         }
 
         this.frame.add(lapTextField);
+        this.frame.add(practiceTextField);
+        this.frame.add(qualifyTextField);
         this.frame.add(versionNumber);
     }
 
