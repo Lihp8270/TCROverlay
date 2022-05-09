@@ -73,6 +73,7 @@ public class OverlayController {
                 drivers.getDrivers().get(driverFoundIndex).setDelta(driver.getDelta());
                 drivers.getDrivers().get(driverFoundIndex).setRaceStarted(driver.getRaceStarted());
                 drivers.getDrivers().get(driverFoundIndex).setOnTrack(driver.getOnTrack());
+                drivers.getDrivers().get(driverFoundIndex).setTimedSessionStarted(driver.getTimedSessionStarted());
                 driverFound = false;
                 driverFoundIndex = 0;
             } else {
