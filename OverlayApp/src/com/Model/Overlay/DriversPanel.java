@@ -8,6 +8,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 
 public class DriversPanel extends InitPanel {
     ArrayList<Driver> drivers;
@@ -44,7 +45,10 @@ public class DriversPanel extends InitPanel {
         int driverCount = 1;
         double carAheadDelta = 0.000;
 
+        // Remove spectator cars, sort them, then set position numbers without spec cars
+        removeSpectatorCars();
         Collections.sort(drivers, Driver.Comparators.currentPos);
+        resetPositions();
 
         // Check to see if any driver has started the race or not
         for (Driver driver : drivers) {
@@ -56,16 +60,6 @@ public class DriversPanel extends InitPanel {
         this.panel.add(headerBox);
         this.panel.add(Box.createRigidArea(new Dimension(0,3)));
         for (Driver driver : drivers) {
-            for (String spectatorCar : config.getSpectatorCars()) {
-                if (driver.getName().equals(spectatorCar)) {
-                    spectator = true;
-                    break;
-                } else {
-                    spectator = false;
-                }
-            }
-
-            if (!spectator) {
                 this.panel.add(driver.getBox(focussedDriver, drivers.get(0).getCompletedLaps(), carAheadDelta, mode, lapPanel.getMaxLaps()));
                 carAheadDelta = Double.parseDouble(driver.getDelta());
                 this.panel.add(Box.createRigidArea(new Dimension(0,3)));
@@ -73,10 +67,37 @@ public class DriversPanel extends InitPanel {
                     break;
                 }
                 driverCount++;
-            }
         }
 
         return this.panel;
+    }
+
+    private void resetPositions() {
+        int pos = 1;
+
+        for (Driver driver : drivers) {
+            driver.setCurrentPos(pos);
+            pos++;
+        }
+    }
+
+    private void removeSpectatorCars() {
+        int driverToRemove = 99;
+
+        for (String spectator : config.getSpectatorCars()) {
+            for (int i = 0; i < drivers.size(); i++) {
+                if (spectator.equals(drivers.get(i).getName())) {
+                    driverToRemove = i;
+                }
+
+                if (driverToRemove != 99) {
+                    drivers.remove(driverToRemove);
+                    driverToRemove = 99;
+                }
+
+            }
+
+        }
     }
 
     /**
