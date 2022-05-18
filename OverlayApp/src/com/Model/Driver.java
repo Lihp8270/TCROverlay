@@ -7,10 +7,6 @@ import java.awt.*;
 import java.io.IOException;
 import java.util.Comparator;
 
-// After Practice session reset times to 99999999
-// After qualifying change Display to laptime
-// Practice and qualifying start immediately
-// Reset python racestarted to 0 after each session
 public class Driver implements Comparable<Driver> {
     private final String name;
     private final int driverID;
@@ -27,6 +23,7 @@ public class Driver implements Comparable<Driver> {
     private int raceStarted;
     private int fastestLap;
     private int timedSessionStarted;
+    private boolean spectator;
 
     /**
      * Constructor
@@ -48,6 +45,15 @@ public class Driver implements Comparable<Driver> {
         this.raceStarted = 0;
         this.fastestLap = 0;
         this.timedSessionStarted = 0;
+        this.spectator = false;
+    }
+
+    public void setSpectator(boolean spectator) {
+        this.spectator = spectator;
+    }
+
+    public boolean isSpectator() {
+        return spectator;
     }
 
     public int getFastestLap() {
@@ -132,7 +138,7 @@ public class Driver implements Comparable<Driver> {
             driverBox.add(tStackEngine.getFocussedDriverLabel());
         } else {
             switch (onTrack) {
-                case 0:
+                case 9: // Set back to 0
                     driverBox.add(tStackEngine.getPositionLabel(String.valueOf(currentPos - 1)));
                     break;
                 default:

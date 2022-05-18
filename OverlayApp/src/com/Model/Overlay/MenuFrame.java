@@ -230,6 +230,7 @@ public class MenuFrame extends InitFrame {
         }
 
         sessions.addLast(new Session("Race", "R", raceSetting, Integer.valueOf(lapTextField.getText())));
+        passSessionsToOverlay();
     }
 
     private void passSessionsToOverlay() {

@@ -3,6 +3,7 @@ package com.Model.Overlay;
 import com.Model.Config;
 import com.Model.Session;
 import com.Model.SessionQueue;
+import com.Util.Constants;
 
 import javax.swing.*;
 import java.awt.*;
@@ -83,6 +84,15 @@ public class OverlayFrame extends InitFrame {
 
     public void setSessionQueue(LinkedList<Session> sessionsFromMenu) {
         this.sessionQueue = new SessionQueue(sessionsFromMenu);
+
+        sessionQueue.nextSession();
+
+        if (sessionQueue.getCurrentSession().getSessionType() == Constants.LAPS) {
+            setMaxLaps(String.valueOf(sessionQueue.getCurrentSession().getSessionLength()));
+        } else {
+            setSecondsRemaining(String.valueOf(sessionQueue.getCurrentSession().getSessionLength()));
+        }
+
     }
 
     /**
@@ -171,23 +181,13 @@ public class OverlayFrame extends InitFrame {
     }
 
     private void rebuildLapPanel(boolean reset) {
-        if (numberOfSessions == 1) {
-            topPanel.setSessionIdentifier("R");
-        } else if(numberOfSessions == 3) {
-            topPanel.setSessionIdentifier("P");
-        } else {
-            if (practiceSessionMins.equals("0")) {
-                topPanel.setSessionIdentifier("Q");
-            } else {
-                topPanel.setSessionIdentifier("P");
-            }
-        }
+        topPanel.setSessionIdentifier(sessionQueue.getCurrentSession().getSessionID());
 
-        if (reset) {
-            topPanel.setSessionReset(true);
-            topPanel.setNextSessionMins("10"); // Test
-            // TODO Get the correct information for next session
-        }
+//        if (reset) {
+//            topPanel.setSessionReset(true);
+//            topPanel.setNextSessionMins("10"); // Test
+//            // TODO Get the correct information for next session
+//        }
 
         this.lapPanel = topPanel.getPanel();
         this.frame.add(lapPanel, BorderLayout.CENTER);

@@ -46,7 +46,7 @@ public class DriversPanel extends InitPanel {
         double carAheadDelta = 0.000;
 
         // Remove spectator cars, sort them, then set position numbers without spec cars
-        removeSpectatorCars();
+        hideSpectatorCars();
         Collections.sort(drivers, Driver.Comparators.currentPos);
         resetPositions();
 
@@ -60,6 +60,7 @@ public class DriversPanel extends InitPanel {
         this.panel.add(headerBox);
         this.panel.add(Box.createRigidArea(new Dimension(0,3)));
         for (Driver driver : drivers) {
+            if (!driver.isSpectator()) {
                 this.panel.add(driver.getBox(focussedDriver, drivers.get(0).getCompletedLaps(), carAheadDelta, mode, lapPanel.getMaxLaps()));
                 carAheadDelta = Double.parseDouble(driver.getDelta());
                 this.panel.add(Box.createRigidArea(new Dimension(0,3)));
@@ -67,6 +68,8 @@ public class DriversPanel extends InitPanel {
                     break;
                 }
                 driverCount++;
+            }
+
         }
 
         return this.panel;
@@ -76,25 +79,21 @@ public class DriversPanel extends InitPanel {
         int pos = 1;
 
         for (Driver driver : drivers) {
-            driver.setCurrentPos(pos);
-            pos++;
+            if (driver.isSpectator()) {
+                driver.setCurrentPos(99);
+            } else {
+                driver.setCurrentPos(pos);
+                pos++;
+            }
         }
     }
 
-    private void removeSpectatorCars() {
-        int driverToRemove = 99;
-
+    private void hideSpectatorCars() {
         for (String spectator : config.getSpectatorCars()) {
             for (int i = 0; i < drivers.size(); i++) {
                 if (spectator.equals(drivers.get(i).getName())) {
-                    driverToRemove = i;
+                    drivers.get(i).setSpectator(true);
                 }
-
-                if (driverToRemove != 99) {
-                    drivers.remove(driverToRemove);
-                    driverToRemove = 99;
-                }
-
             }
 
         }
