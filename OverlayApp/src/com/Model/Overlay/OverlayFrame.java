@@ -1,10 +1,12 @@
 package com.Model.Overlay;
 
 import com.Model.Config;
+import com.Model.Session;
+import com.Model.SessionQueue;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
+import java.util.LinkedList;
 
 public class OverlayFrame extends InitFrame {
     private final Dimension dim;
@@ -23,10 +25,7 @@ public class OverlayFrame extends InitFrame {
     private int lastSecondsRemaining;
     private boolean hasRaceStarted;
     private boolean hasRaceFinished;
-    private String practiceSessionMins;
-    private String qualifySessionMins;
-    private int numberOfSessions;
-    private int sessionsRemaining;
+    private SessionQueue sessionQueue;
 
     /**
      * Constructor for overlay
@@ -53,10 +52,6 @@ public class OverlayFrame extends InitFrame {
         this.deltaMode = 0;
         this.hasRaceStarted = false;
         this.hasRaceFinished = false;
-        this.qualifySessionMins = "";
-        this.practiceSessionMins = "";
-        this.numberOfSessions = 0;
-        this.sessionsRemaining = 0;
         initialiseFrame();
     }
 
@@ -84,6 +79,10 @@ public class OverlayFrame extends InitFrame {
         this.frame.add(advertPanel, BorderLayout.EAST);
         this.frame.add(driverNamePanel, BorderLayout.SOUTH);
         this.frame.add(lapPanel, BorderLayout.CENTER);
+    }
+
+    public void setSessionQueue(LinkedList<Session> sessionsFromMenu) {
+        this.sessionQueue = new SessionQueue(sessionsFromMenu);
     }
 
     /**
@@ -214,14 +213,6 @@ public class OverlayFrame extends InitFrame {
         topPanel.setSecondsRemaining(mins); // This is from the race tab in menu
     }
 
-    public void setPracticeSessionMins(String mins) {
-        this.practiceSessionMins = mins;
-    }
-
-    public void setQualifySessionMins(String mins) {
-        this.qualifySessionMins = mins;
-    }
-
     /**
      * Toggle delta display mode
      */
@@ -243,15 +234,6 @@ public class OverlayFrame extends InitFrame {
 
     public boolean getHasRaceFinished() {
         return hasRaceFinished;
-    }
-
-    /**
-     * Set number of sessions
-     * @param numberOfSessions
-     */
-    public void setNumberOfSessions(int numberOfSessions) {
-        this.numberOfSessions = numberOfSessions;
-        this.sessionsRemaining = numberOfSessions;
     }
 
 }

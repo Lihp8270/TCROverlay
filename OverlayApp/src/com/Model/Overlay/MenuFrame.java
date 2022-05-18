@@ -1,13 +1,9 @@
-//TODO Set triggers to change timer from 1 mode to the next, subtract 1 from number of sessions, and set the finished session to 0
-//TODO Python app needs to send a trigger to start Practice and Qualifying, and trigger to end
-//TODO Timed session restart flag from Plugin.  For Java to change, session end needs to be TRUE and have reset flag
-
-//TODO Qualifying needs to sort by BestLap
-
 package com.Model.Overlay;
 
 import com.Engine.ButtonEngine;
 import com.Engine.OverlayController;
+import com.Model.Session;
+import com.Util.Constants;
 import com.Util.InputValidators;
 
 import javax.swing.*;
@@ -16,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 
 public class MenuFrame extends InitFrame {
@@ -28,7 +25,7 @@ public class MenuFrame extends InitFrame {
     private JTextField qualifyTextField;
     private InputValidators validator;
     private JLabel versionNumber;
-    private int numberOfSessions;
+    LinkedList<Session> sessions;
 
     public MenuFrame(String title, Boolean visibility) throws IOException, FontFormatException {
         super(title, visibility);
@@ -37,7 +34,7 @@ public class MenuFrame extends InitFrame {
         buttons = new ArrayList<>();
         overlayController = new OverlayController("config/config.json");
         versionNumber = new JLabel();
-        this.numberOfSessions = 1;
+        sessions = new LinkedList<>();
 
         initialiseFrame(overlayController.getOverlayFrame());
         createButtons();
@@ -150,9 +147,8 @@ public class MenuFrame extends InitFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(validator.checkCharactersForDigitsOnly(lapTextField.getText())) {
-                    setSessionLengths();
-                    overlayFrame.setMaxLaps(lapTextField.getText());
-                    overlayFrame.setNumberOfSessions(numberOfSessions);
+                    createSessionList(Constants.LAPS);
+//                    overlayFrame.setMaxLaps(lapTextField.getText());
                     buttons.get(0).setEnabled(false);
                     buttons.get(1).setEnabled(true);
                     buttons.get(2).setEnabled(false);
@@ -185,9 +181,8 @@ public class MenuFrame extends InitFrame {
             public void actionPerformed(ActionEvent e) {
                 if (validator.checkCharactersForDigitsOnly(lapTextField.getText())) {
                     if(Integer.valueOf(lapTextField.getText()) <= 60) {
-                        overlayFrame.setSecondsRemaining(lapTextField.getText());
-                        setSessionLengths();
-                        overlayFrame.setNumberOfSessions(numberOfSessions);
+//                        overlayFrame.setSecondsRemaining(lapTextField.getText());
+                        createSessionList(Constants.MINS);
                         buttons.get(0).setEnabled(false);
                         buttons.get(1).setEnabled(true);
                         buttons.get(2).setEnabled(false);
@@ -213,29 +208,32 @@ public class MenuFrame extends InitFrame {
         this.frame.add(versionNumber);
     }
 
-    private void setSessionLengths() {
+    private void createSessionList(int raceSetting) {
         if (practiceTextField.getText().equals("Practice Mins")) {
-            overlayFrame.setPracticeSessionMins("0");
             practiceTextField.setText("NO PRACTICE");
         } else {
             if(validator.checkCharactersForDigitsOnly(practiceTextField.getText())) {
-                overlayFrame.setPracticeSessionMins(practiceTextField.getText());
-                numberOfSessions++;
+                sessions.addFirst(new Session("Practice", "P", Constants.MINS, Integer.valueOf(practiceTextField.getText())));
             } else {
                 practiceTextField.setText("ERROR, RETRY");
             }
         }
+
         if (qualifyTextField.getText().equals("Qualifying Mins")) {
-            overlayFrame.setQualifySessionMins("0");
             qualifyTextField.setText("NO QUALIFYING");
         } else {
             if (validator.checkCharactersForDigitsOnly(qualifyTextField.getText())) {
-                overlayFrame.setQualifySessionMins(qualifyTextField.getText());
-                numberOfSessions++;
+                sessions.addLast(new Session("Qualifying", "Q", Constants.MINS, Integer.valueOf(qualifyTextField.getText())));
             } else {
                 qualifyTextField.setText("ERROR, RETRY");
             }
         }
+
+        sessions.addLast(new Session("Race", "R", raceSetting, Integer.valueOf(lapTextField.getText())));
+    }
+
+    private void passSessionsToOverlay() {
+        overlayFrame.setSessionQueue(sessions);
     }
 
 }
