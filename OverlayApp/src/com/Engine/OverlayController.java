@@ -50,6 +50,7 @@ public class OverlayController {
     public void updateDrivers() throws IOException, FontFormatException {
         ArrayList<Driver> updatedDrivers;
         String focussedDriver;
+        boolean sessionReset = false;
         boolean driverFound = false;
         int driverFoundIndex = 0;
 
@@ -73,7 +74,7 @@ public class OverlayController {
                 drivers.getDrivers().get(driverFoundIndex).setDelta(driver.getDelta());
                 drivers.getDrivers().get(driverFoundIndex).setRaceStarted(driver.getRaceStarted());
                 drivers.getDrivers().get(driverFoundIndex).setOnTrack(driver.getOnTrack());
-                drivers.getDrivers().get(driverFoundIndex).setTimedSessionStarted(driver.getTimedSessionStarted());
+                drivers.getDrivers().get(driverFoundIndex).setSessionReset(driver.getSessionReset());
                 driverFound = false;
                 driverFoundIndex = 0;
             } else {
@@ -83,7 +84,13 @@ public class OverlayController {
 
         focussedDriver = updatedDrivers.get(updatedDrivers.size() - 1).getFocussedDriver();
 
-        overlayFrame.updateDrivers(drivers);
+        for (Driver driver : updatedDrivers) {
+            if (driver.getSessionReset() == 1) {
+                sessionReset = true;
+            }
+        }
+
+        overlayFrame.updateDrivers(drivers, sessionReset);
         overlayFrame.updateLargeName(focussedDriver);
         overlayFrame.updateLapGraphic();
     }

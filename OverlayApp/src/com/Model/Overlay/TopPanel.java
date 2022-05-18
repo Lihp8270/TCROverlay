@@ -24,6 +24,8 @@ public class TopPanel extends InitPanel {
     private boolean sessionReset;
     private String nextSessionMaxLaps;
     private String nextSessionMins;
+    private boolean timerPause;
+    private boolean timerRunning;
 
     public TopPanel(Config config) throws IOException, FontFormatException {
         super();
@@ -38,6 +40,8 @@ public class TopPanel extends InitPanel {
         timeParser = new TimeParser();
         this.sessionMode = 0;
         this.sessionIdentifier = "N/A";
+        timerPause = false;
+        timerRunning = false;
 
         createLapLabel();
     }
@@ -107,16 +111,6 @@ public class TopPanel extends InitPanel {
             case 1:
                 return sessionIdentifier + " " + lap + " / " + maxLaps;
             case 2:
-                // TODO If 0, and reset flag move to next session
-                if (sessionReset) {
-                    setSecondsRemaining(nextSessionMins);
-                } else {
-                    if (secondsRemaining == 0) {
-                        return "END";
-                }
-
-                }
-
                 return sessionIdentifier + " " + timeParser.getTimeRemainingFromSeconds(secondsRemaining);
             default:
                 return "NOT SET";
@@ -163,6 +157,7 @@ public class TopPanel extends InitPanel {
     public void startTimer() {
         if(timerWorker != null) {
             timerWorker.execute();
+            timerRunning = true;
         }
     }
 
@@ -170,9 +165,13 @@ public class TopPanel extends InitPanel {
      * Reduce time remaining by 1 second
      */
     private void tick() {
-        if(secondsRemaining > 0) {
+        if(secondsRemaining > 0 && !timerPause) {
             secondsRemaining--;
         }
+    }
+
+    public boolean isTimerRunning() {
+        return timerRunning;
     }
 
     /**
@@ -205,6 +204,16 @@ public class TopPanel extends InitPanel {
 
     public void setNextSessionMins(String mins) {
         this.nextSessionMins = mins;
+    }
+
+    public void setTimerPause(boolean pause) {
+        timerPause = pause;
+
+        if (timerPause) {
+            timerRunning = false;
+        } else {
+            timerRunning = true;
+        }
     }
 
 }

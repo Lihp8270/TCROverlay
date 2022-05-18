@@ -86,13 +86,24 @@ public class OverlayFrame extends InitFrame {
         this.sessionQueue = new SessionQueue(sessionsFromMenu);
 
         sessionQueue.nextSession();
+        setSessionDuration();
+    }
 
+    private void setSessionDuration() {
         if (sessionQueue.getCurrentSession().getSessionType() == Constants.LAPS) {
             setMaxLaps(String.valueOf(sessionQueue.getCurrentSession().getSessionLength()));
         } else {
             setSecondsRemaining(String.valueOf(sessionQueue.getCurrentSession().getSessionLength()));
         }
+    }
 
+    private void endSession() {
+        if (sessionQueue.readNextSession().getSessionID().equals("R")) {
+            topPanel.setTimerPause(true);
+        }
+
+        sessionQueue.nextSession();
+        setSessionDuration();
     }
 
     /**
@@ -108,20 +119,41 @@ public class OverlayFrame extends InitFrame {
         }
     }
 
+    public void startStopSession() {
+        if (hasRaceStarted == false) {
+            if (sessionQueue.getCurrentSession().getSessionID().equals("R")) {
+                if(drivers.getRaceStarted()) {
+                    hasRaceStarted = true;
+                    if (!topPanel.isTimerRunning()) {
+                        topPanel.startTimer();
+                        topPanel.setTimerPause(false);
+                    } else {
+                        topPanel.setTimerPause(false);
+                    }
+                }
+            } else {
+                hasRaceStarted = true;
+                if (!topPanel.isTimerRunning()) {
+                    topPanel.startTimer();
+                }
+            }
+        }
+    }
+
     /**
      * Update Drivers panel
      * @param drivers new DriverPanel to use
      */
-    public void updateDrivers(DriversPanel drivers) {
+    public void updateDrivers(DriversPanel drivers, boolean sessionReset) {
         if(!getHasRaceFinished()) {
             this.driverPanel.removeAll();
             this.driverPanel = drivers.getPanel(currentFocussedDriver, deltaMode, topPanel, sessionQueue.getCurrentSession());
 
-            if(hasRaceStarted == false) {
-                if(drivers.getRaceStarted()) {
-                    topPanel.startTimer();
-                }
+            if (sessionReset) {
+                endSession();
             }
+
+            startStopSession();
 
             this.frame.add(driverPanel, BorderLayout.WEST);
             this.frame.repaint();

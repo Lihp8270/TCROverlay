@@ -16,7 +16,6 @@ public class DriversPanel extends InitPanel {
     private JLabel timingTreeHeader;
     private Box headerBox;
     private int maxDrivers;
-    private Boolean spectator;
     private Config config;
     private Boolean raceStarted;
 
@@ -32,7 +31,6 @@ public class DriversPanel extends InitPanel {
         this.panel.setLayout(new BoxLayout(this.panel, BoxLayout.Y_AXIS));
         this.panel.setBorder(new EmptyBorder(config.getDriverListTopPadding(), config.getDriverListLeftPadding(),0,0));
         this.maxDrivers = config.getMaxDriversDisplay();
-        this.spectator = false;
         this.raceStarted = false;
     }
 

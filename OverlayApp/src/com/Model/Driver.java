@@ -22,7 +22,7 @@ public class Driver implements Comparable<Driver> {
     private int onTrack;
     private int raceStarted;
     private int fastestLap;
-    private int timedSessionStarted;
+    private int sessionReset;
     private boolean spectator;
 
     /**
@@ -44,7 +44,7 @@ public class Driver implements Comparable<Driver> {
         this.onTrack = 1;
         this.raceStarted = 0;
         this.fastestLap = 0;
-        this.timedSessionStarted = 0;
+        this.sessionReset = 0;
         this.spectator = false;
     }
 
@@ -64,12 +64,12 @@ public class Driver implements Comparable<Driver> {
         this.fastestLap = fastestLap;
     }
 
-    public int getTimedSessionStarted() {
-        return timedSessionStarted;
+    public int getSessionReset() {
+        return sessionReset;
     }
 
-    public void setTimedSessionStarted(int timedSessionStarted) {
-        this.timedSessionStarted = timedSessionStarted;
+    public void setSessionReset(int reset) {
+        this.sessionReset = reset;
     }
 
     /**
