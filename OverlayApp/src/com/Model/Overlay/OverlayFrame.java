@@ -115,7 +115,7 @@ public class OverlayFrame extends InitFrame {
     public void updateDrivers(DriversPanel drivers) {
         if(!getHasRaceFinished()) {
             this.driverPanel.removeAll();
-            this.driverPanel = drivers.getPanel(currentFocussedDriver, deltaMode, topPanel);
+            this.driverPanel = drivers.getPanel(currentFocussedDriver, deltaMode, topPanel, sessionQueue.getCurrentSession());
 
             if(hasRaceStarted == false) {
                 if(drivers.getRaceStarted()) {
@@ -156,19 +156,19 @@ public class OverlayFrame extends InitFrame {
     /**
      * Update the graphic for current lap
      */
-    public void updateLapGraphic(boolean sessionReset) {
+    public void updateLapGraphic() {
         switch (topPanel.getSessionMode()) {
             case 1:
                 if (!(lastLapDisplayed == drivers.getDrivers().get(0).getCompletedLaps() + 1)) {
                     this.lapPanel.removeAll();
                     topPanel.setLaps(String.valueOf(drivers.getDrivers().get(0).getCompletedLaps() + 1));
-                    rebuildLapPanel(false);
+                    rebuildLapPanel();
                     lastLapDisplayed = drivers.getDrivers().get(0).getCompletedLaps() + 1;
                 }
                 break;
             case 2:
                 if(!(lastSecondsRemaining == topPanel.getSecondsRemaining())) {
-                    rebuildLapPanel(sessionReset);
+                    rebuildLapPanel();
                     lastSecondsRemaining = topPanel.getSecondsRemaining();
                     if (lastSecondsRemaining == 0) {
                         hasRaceFinished = true;
@@ -180,14 +180,8 @@ public class OverlayFrame extends InitFrame {
         }
     }
 
-    private void rebuildLapPanel(boolean reset) {
+    private void rebuildLapPanel() {
         topPanel.setSessionIdentifier(sessionQueue.getCurrentSession().getSessionID());
-
-//        if (reset) {
-//            topPanel.setSessionReset(true);
-//            topPanel.setNextSessionMins("10"); // Test
-//            // TODO Get the correct information for next session
-//        }
 
         this.lapPanel = topPanel.getPanel();
         this.frame.add(lapPanel, BorderLayout.CENTER);

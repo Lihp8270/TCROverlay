@@ -20,8 +20,6 @@ public class OverlayController {
     private SwingWorker backgroundWorker;
     private boolean running;
     private boolean connected;
-    private boolean timedSessionStarted;
-    private boolean timedSessionReset;
 
     public OverlayController(String configFile) throws IOException, FontFormatException {
         JSONParser jsonParser = new JSONParser();
@@ -36,7 +34,6 @@ public class OverlayController {
         running = false;
         overlayFrame = new OverlayFrame("Overlay", false, drivers, advert, bottomPanel, topPanel, config);
         backgroundWorker = null;
-        timedSessionReset = false;
     }
 
     /**
@@ -68,10 +65,6 @@ public class OverlayController {
                 }
             }
 
-            if (driver.getTimedSessionStarted() == 1) {
-                timedSessionReset = true;
-            }
-
             if(driverFound) {
                 drivers.getDrivers().get(driverFoundIndex).setCurrentPos(driver.getCurrentPos());
                 drivers.getDrivers().get(driverFoundIndex).setPosDiff();
@@ -92,7 +85,7 @@ public class OverlayController {
 
         overlayFrame.updateDrivers(drivers);
         overlayFrame.updateLargeName(focussedDriver);
-        overlayFrame.updateLapGraphic(timedSessionReset);
+        overlayFrame.updateLapGraphic();
     }
 
     /**
