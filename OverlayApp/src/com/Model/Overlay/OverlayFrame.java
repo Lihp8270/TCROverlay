@@ -104,6 +104,7 @@ public class OverlayFrame extends InitFrame {
 
         sessionQueue.nextSession();
         setSessionDuration();
+        topPanel.setResetReady(false);
     }
 
     /**
@@ -149,7 +150,7 @@ public class OverlayFrame extends InitFrame {
             this.driverPanel.removeAll();
             this.driverPanel = drivers.getPanel(currentFocussedDriver, deltaMode, topPanel, sessionQueue.getCurrentSession());
 
-            if (sessionReset) {
+            if (sessionReset && topPanel.isResetReady()) {
                 endSession();
             }
 

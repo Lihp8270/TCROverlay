@@ -21,11 +21,9 @@ public class TopPanel extends InitPanel {
     private int sessionMode;
     private SwingWorker timerWorker;
     private String sessionIdentifier;
-    private boolean sessionReset;
-    private String nextSessionMaxLaps;
-    private String nextSessionMins;
     private boolean timerPause;
     private boolean timerRunning;
+    private boolean resetReady;
 
     public TopPanel(Config config) throws IOException, FontFormatException {
         super();
@@ -52,6 +50,14 @@ public class TopPanel extends InitPanel {
         this.panel.add(lapLabel);
 
         return this.panel;
+    }
+
+    public void setResetReady(boolean resetReady) {
+        this.resetReady = resetReady;
+    }
+
+    public boolean isResetReady() {
+        return resetReady;
     }
 
     /**
@@ -111,6 +117,9 @@ public class TopPanel extends InitPanel {
             case 1:
                 return sessionIdentifier + " " + lap + " / " + maxLaps;
             case 2:
+                if (secondsRemaining < 45) {
+                    resetReady = true;
+                }
                 return sessionIdentifier + " " + timeParser.getTimeRemainingFromSeconds(secondsRemaining);
             default:
                 return "NOT SET";
@@ -196,14 +205,6 @@ public class TopPanel extends InitPanel {
 
     public String getSessionIdentifier() {
         return sessionIdentifier;
-    }
-
-    public void setSessionReset(boolean reset) {
-        this.sessionReset = reset;
-    }
-
-    public void setNextSessionMins(String mins) {
-        this.nextSessionMins = mins;
     }
 
     public void setTimerPause(boolean pause) {
