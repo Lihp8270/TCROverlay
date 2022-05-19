@@ -209,12 +209,10 @@ public class TopPanel extends InitPanel {
 
     public void setTimerPause(boolean pause) {
         timerPause = pause;
+    }
 
-        if (timerPause) {
-            timerRunning = false;
-        } else {
-            timerRunning = true;
-        }
+    public boolean isTimerPaused() {
+        return timerPause;
     }
 
 }

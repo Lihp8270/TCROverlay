@@ -150,6 +150,7 @@ public class OverlayFrame extends InitFrame {
             this.driverPanel.removeAll();
             this.driverPanel = drivers.getPanel(currentFocussedDriver, deltaMode, topPanel, sessionQueue.getCurrentSession());
 
+            // TODO Crashing when going to Race Mode
             if (sessionReset && topPanel.isResetReady()) {
                 endSession();
             }
