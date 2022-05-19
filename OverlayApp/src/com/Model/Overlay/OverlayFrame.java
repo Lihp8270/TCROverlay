@@ -98,9 +98,14 @@ public class OverlayFrame extends InitFrame {
     }
 
     private void endSession() {
-        if (sessionQueue.readNextSession().getSessionID().equals("R")) {
-            topPanel.setTimerPause(true);
+        try {
+            if (sessionQueue.readNextSession().getSessionID().equals("R")) {
+                topPanel.setTimerPause(true);
+            }
+        } catch (Exception e) {
+            System.out.println("Error with endSession");
         }
+
 
         sessionQueue.nextSession();
         setSessionDuration();
@@ -121,23 +126,19 @@ public class OverlayFrame extends InitFrame {
     }
 
     public void startStopSession() {
-        if (hasRaceStarted == false) {
-            if (sessionQueue.getCurrentSession().getSessionID().equals("R")) {
-                if(drivers.getRaceStarted()) {
-                    hasRaceStarted = true;
-                    if (!topPanel.isTimerRunning()) {
-                        topPanel.startTimer();
-                        topPanel.setTimerPause(false);
-                    } else {
-                        topPanel.setTimerPause(false);
-                    }
-                }
-            } else {
+        // Wait for driver to start race before starting
+        if (sessionQueue.getCurrentSession().getSessionID().equals("R")) {
+            // If Race has started, then start the timer else set timer to pause
+            // TODO Race timer starts automatically
+            if (drivers.getRaceStarted()) {
                 hasRaceStarted = true;
-                if (!topPanel.isTimerRunning()) {
-                    topPanel.startTimer();
-                }
+                topPanel.startTimer();
+            } else {
+                topPanel.setTimerPause(false);
             }
+        } else {
+            hasRaceStarted = true;
+            topPanel.startTimer();
         }
     }
 
@@ -150,7 +151,6 @@ public class OverlayFrame extends InitFrame {
             this.driverPanel.removeAll();
             this.driverPanel = drivers.getPanel(currentFocussedDriver, deltaMode, topPanel, sessionQueue.getCurrentSession());
 
-            // TODO Crashing when going to Race Mode
             if (sessionReset && topPanel.isResetReady()) {
                 endSession();
             }
@@ -204,7 +204,7 @@ public class OverlayFrame extends InitFrame {
                 if(!(lastSecondsRemaining == topPanel.getSecondsRemaining())) {
                     rebuildLapPanel();
                     lastSecondsRemaining = topPanel.getSecondsRemaining();
-                    if (lastSecondsRemaining == 0) {
+                    if (lastSecondsRemaining == 0 && topPanel.getSessionIdentifier().equals("R")) {
                         hasRaceFinished = true;
                     }
                 }

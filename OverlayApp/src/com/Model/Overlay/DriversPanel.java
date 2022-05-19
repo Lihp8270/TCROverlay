@@ -44,10 +44,14 @@ public class DriversPanel extends InitPanel {
         int driverCount = 1;
         double carAheadDelta = 0.000;
 
+        // TODO posDiff stays 0 through P and Q
+        // TODO startingPos is not set during P and Q
+
         // Remove spectator cars, sort them, then set position numbers without spec cars
         hideSpectatorCars();
         Collections.sort(drivers, Driver.Comparators.currentPos);
         resetPositions();
+        raceStarted = false;
 
         // If not a race session start immediately (ie. if qualifying or practice)
         // If it is a Race session, check to see if anybody has started
@@ -124,5 +128,7 @@ public class DriversPanel extends InitPanel {
         return raceStarted;
     }
 
-
+    public void setRaceStarted(Boolean started) {
+        this.raceStarted = started;
+    }
 }

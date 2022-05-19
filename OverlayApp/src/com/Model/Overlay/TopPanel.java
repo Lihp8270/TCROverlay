@@ -38,7 +38,7 @@ public class TopPanel extends InitPanel {
         timeParser = new TimeParser();
         this.sessionMode = 0;
         this.sessionIdentifier = "N/A";
-        timerPause = false;
+        timerPause = true;
         timerRunning = false;
 
         createLapLabel();
@@ -152,7 +152,9 @@ public class TopPanel extends InitPanel {
                 protected Object doInBackground() throws Exception {
                     while(true) {
                         Thread.sleep(1000);
-                        tick();
+                        if (!timerPause) {
+                            tick();
+                        }
                     }
                 }
             };
@@ -165,8 +167,11 @@ public class TopPanel extends InitPanel {
      */
     public void startTimer() {
         if(timerWorker != null) {
-            timerWorker.execute();
-            timerRunning = true;
+            if (timerRunning != true) {
+                timerWorker.execute();
+                timerRunning = true;
+            }
+            timerPause = false;
         }
     }
 
@@ -174,13 +179,9 @@ public class TopPanel extends InitPanel {
      * Reduce time remaining by 1 second
      */
     private void tick() {
-        if(secondsRemaining > 0 && !timerPause) {
+        if(secondsRemaining > 0) {
             secondsRemaining--;
         }
-    }
-
-    public boolean isTimerRunning() {
-        return timerRunning;
     }
 
     /**
@@ -209,10 +210,6 @@ public class TopPanel extends InitPanel {
 
     public void setTimerPause(boolean pause) {
         timerPause = pause;
-    }
-
-    public boolean isTimerPaused() {
-        return timerPause;
     }
 
 }
