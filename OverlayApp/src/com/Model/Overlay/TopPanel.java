@@ -120,6 +120,9 @@ public class TopPanel extends InitPanel {
                 if (secondsRemaining < 45) {
                     resetReady = true;
                 }
+                if (secondsRemaining == 0) {
+                    setTimerPause(true);
+                }
                 return sessionIdentifier + " " + timeParser.getTimeRemainingFromSeconds(secondsRemaining);
             default:
                 return "NOT SET";
@@ -170,8 +173,9 @@ public class TopPanel extends InitPanel {
             if (timerRunning != true) {
                 timerWorker.execute();
                 timerRunning = true;
+                timerPause = false;
             }
-            timerPause = false;
+//            timerPause = false;
         }
     }
 

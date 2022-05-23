@@ -110,6 +110,7 @@ public class OverlayFrame extends InitFrame {
         sessionQueue.nextSession();
         setSessionDuration();
         topPanel.setResetReady(false);
+        drivers.setRaceStarted(false);
     }
 
     /**
@@ -129,12 +130,13 @@ public class OverlayFrame extends InitFrame {
         // Wait for driver to start race before starting
         if (sessionQueue.getCurrentSession().getSessionID().equals("R")) {
             // If Race has started, then start the timer else set timer to pause
-            // TODO Race timer starts automatically
             if (drivers.getRaceStarted()) {
                 hasRaceStarted = true;
                 topPanel.startTimer();
-            } else {
+
                 topPanel.setTimerPause(false);
+            } else {
+                topPanel.setTimerPause(true);
             }
         } else {
             hasRaceStarted = true;

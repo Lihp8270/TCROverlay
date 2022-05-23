@@ -51,9 +51,5 @@ class ACParserTest {
         assertEquals(0, recvDrivers.get(1).getRaceStarted());
         assertEquals(1, recvDrivers.get(2).getRaceStarted());
 
-        assertEquals(0, recvDrivers.get(0).getTimedSessionStarted());
-        assertEquals(1, recvDrivers.get(1).getTimedSessionStarted());
-        assertEquals(1, recvDrivers.get(2).getTimedSessionStarted());
-
     }
 }
