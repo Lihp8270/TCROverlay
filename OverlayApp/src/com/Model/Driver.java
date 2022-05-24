@@ -1,6 +1,7 @@
 package com.Model;
 
 import com.Engine.TimingStackLabelEngine;
+import com.Util.TimeParser;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,9 +22,10 @@ public class Driver implements Comparable<Driver> {
     private String delta;
     private int onTrack;
     private int raceStarted;
-    private int fastestLap;
+    private Long fastestLap;
     private int sessionReset;
     private boolean spectator;
+    private TimeParser timeParser;
 
     /**
      * Constructor
@@ -39,11 +41,12 @@ public class Driver implements Comparable<Driver> {
         this.changeDir = "";
         this.completedLaps = 0;
         this.tStackEngine = new TimingStackLabelEngine(config);
+        this.timeParser = new TimeParser();
         this.car = "";
         this.delta = "+0.000";
         this.onTrack = 1;
         this.raceStarted = 0;
-        this.fastestLap = 0;
+        this.fastestLap = 0L;
         this.sessionReset = 0;
         this.spectator = false;
     }
@@ -56,11 +59,11 @@ public class Driver implements Comparable<Driver> {
         return spectator;
     }
 
-    public int getFastestLap() {
+    public Long getFastestLap() {
         return fastestLap;
     }
 
-    public void setFastestLap(int fastestLap) {
+    public void setFastestLap(Long fastestLap) {
         this.fastestLap = fastestLap;
     }
 
@@ -129,7 +132,7 @@ public class Driver implements Comparable<Driver> {
      * @param mode 0 = delta to lead, 1 = delta to car ahead
      * @return Box
      */
-    public Box getBox(String focussedDriver, int leaderLapCount, double carAheadDelta, int mode, int maxLaps) {
+    public Box getBox(String focussedDriver, int leaderLapCount, double carAheadDelta, int mode, int maxLaps, String sessionID) {
         Box driverBox = Box.createHorizontalBox();
         double deltaToCarAhead = Double.parseDouble(delta) - carAheadDelta;
         int lapDifference = leaderLapCount - completedLaps;
@@ -138,7 +141,7 @@ public class Driver implements Comparable<Driver> {
             driverBox.add(tStackEngine.getFocussedDriverLabel());
         } else {
             switch (onTrack) {
-                case 9: // Set back to 0
+                case 0: // TODO Was set to 9  Check for errors
                     driverBox.add(tStackEngine.getPositionLabel(String.valueOf(currentPos - 1)));
                     break;
                 default:
@@ -154,36 +157,42 @@ public class Driver implements Comparable<Driver> {
                 driverBox.add(tStackEngine.getLapsLabel("IN PIT"));
                 break;
             default:
-                switch (mode) {
-                    // Delta to lead
-                    case 0:
-                        if (Integer.valueOf(completedLaps) >= maxLaps) {
-                            driverBox.add(tStackEngine.getLapsLabel("FINISHED"));
-                        } else if (currentPos == 1) {
-                            driverBox.add(tStackEngine.getLapsLabel("Laps : " + completedLaps));
-                        } else if (lapDifference > 1) {
-                            if (lapDifference - 1 == 1) {
-                                driverBox.add(tStackEngine.getLapsLabel("+" + String.valueOf(lapDifference - 1) + " Lap"));
+                if (sessionID == "R") {
+                    switch (mode) {
+                        // Delta to lead
+                        case 0:
+                            if (Integer.valueOf(completedLaps) >= maxLaps) {
+                                driverBox.add(tStackEngine.getLapsLabel("FINISHED"));
+                            } else if (currentPos == 1) {
+                                driverBox.add(tStackEngine.getLapsLabel("Laps : " + completedLaps));
+                            } else if (lapDifference > 1) {
+                                if (lapDifference - 1 == 1) {
+                                    driverBox.add(tStackEngine.getLapsLabel("+" + String.valueOf(lapDifference - 1) + " Lap"));
+                                } else {
+                                    driverBox.add(tStackEngine.getLapsLabel("+" + String.valueOf(lapDifference - 1) + " Laps"));
+                                }
                             } else {
-                                driverBox.add(tStackEngine.getLapsLabel("+" + String.valueOf(lapDifference - 1) + " Laps"));
+                                driverBox.add(tStackEngine.getLapsLabel("+" + delta));
                             }
-                        } else {
-                            driverBox.add(tStackEngine.getLapsLabel("+" + delta));
-                        }
-                        break;
-                    // Delta to car ahead
-                    default:
-                        if (Integer.valueOf(completedLaps) >= maxLaps) {
-                            driverBox.add(tStackEngine.getLapsLabel("FINISHED"));
-                        } else if (currentPos == 1) {
-                            driverBox.add(tStackEngine.getLapsLabel("Laps : " + completedLaps));
-                        } else if (deltaToCarAhead < 0) {
-                            driverBox.add(tStackEngine.getLapsLabel("OVERTAKE"));
-                        } else {
-                            driverBox.add(tStackEngine.getLapsLabel("+" + String.format("%.3f", deltaToCarAhead)));
-                        }
-                        break;
+                            break;
+                        // Delta to car ahead
+                        default:
+                            if (Integer.valueOf(completedLaps) >= maxLaps) {
+                                driverBox.add(tStackEngine.getLapsLabel("FINISHED"));
+                            } else if (currentPos == 1) {
+                                driverBox.add(tStackEngine.getLapsLabel("Laps : " + completedLaps));
+                            } else if (deltaToCarAhead < 0) {
+                                driverBox.add(tStackEngine.getLapsLabel("OVERTAKE"));
+                            } else {
+                                driverBox.add(tStackEngine.getLapsLabel("+" + String.format("%.3f", deltaToCarAhead)));
+                            }
+                            break;
+                    }
+                } else {
+                    driverBox.add(tStackEngine.getLapsLabel(timeParser.getLapTime(fastestLap)));
                 }
+
+
         }
         driverBox.add(tStackEngine.getPositionChangeLabel(changeDir,String.valueOf(posDiff)));
 
@@ -195,6 +204,10 @@ public class Driver implements Comparable<Driver> {
      */
     public void setPosDiff() {
         posDiff = Math.abs(startingPos - currentPos);
+    }
+
+    public void setPosDiff(int diff) {
+        posDiff = diff;
     }
 
     /**
@@ -209,6 +222,7 @@ public class Driver implements Comparable<Driver> {
             changeDir = "";
         }
     }
+
 
     /**
      * Set number of completed laps
@@ -311,6 +325,6 @@ public class Driver implements Comparable<Driver> {
 
     public static class Comparators {
         public static Comparator<Driver> currentPos = Comparator.comparingInt(Driver::getCurrentPos);
-        public static Comparator<Driver> lapTime = Comparator.comparingInt(Driver::getFastestLap);
+        public static Comparator<Driver> lapTime = Comparator.comparingLong(Driver::getFastestLap);
     }
 }

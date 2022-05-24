@@ -44,12 +44,16 @@ public class DriversPanel extends InitPanel {
         int driverCount = 1;
         double carAheadDelta = 0.000;
 
-        // TODO posDiff stays 0 through P and Q
-        // TODO startingPos is not set during P and Q
-
         // Remove spectator cars, sort them, then set position numbers without spec cars
         hideSpectatorCars();
-        Collections.sort(drivers, Driver.Comparators.currentPos);
+
+        // Sort by position for Race mode, and by lap Time for others
+        if (currentSession.getSessionID() == "R") {
+            Collections.sort(drivers, Driver.Comparators.currentPos);
+        } else {
+            Collections.sort(drivers, Driver.Comparators.lapTime);
+        }
+
         resetPositions();
         raceStarted = false;
 
@@ -70,7 +74,7 @@ public class DriversPanel extends InitPanel {
         this.panel.add(Box.createRigidArea(new Dimension(0,3)));
         for (Driver driver : drivers) {
             if (!driver.isSpectator()) {
-                this.panel.add(driver.getBox(focussedDriver, drivers.get(0).getCompletedLaps(), carAheadDelta, mode, lapPanel.getMaxLaps()));
+                this.panel.add(driver.getBox(focussedDriver, drivers.get(0).getCompletedLaps(), carAheadDelta, mode, lapPanel.getMaxLaps(), currentSession.getSessionID()));
                 carAheadDelta = Double.parseDouble(driver.getDelta());
                 this.panel.add(Box.createRigidArea(new Dimension(0,3)));
                 if (driverCount == maxDrivers) {
@@ -94,6 +98,16 @@ public class DriversPanel extends InitPanel {
                 driver.setCurrentPos(pos);
                 pos++;
             }
+        }
+    }
+
+    public void resetDrivers() {
+        for (Driver driver : drivers) {
+            driver.setStartingPos(driver.getCurrentPos());
+            driver.setPosDiff();
+            driver.setChangeDir();
+            driver.setCompletedLaps(0);
+            driver.setDelta("+0.000");
         }
     }
 

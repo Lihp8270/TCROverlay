@@ -21,4 +21,11 @@ class TimeParserTest {
         assertEquals("00:00", timeParser.getTimeRemainingFromSeconds(0));
     }
 
+    @Test
+    void getLapTimeTest() {
+        assertEquals("1:30.000", timeParser.getLapTime(90000L));
+        assertEquals("1:30.001", timeParser.getLapTime(90001L));
+        assertEquals("1:30.123", timeParser.getLapTime(90123L));
+    }
+
 }

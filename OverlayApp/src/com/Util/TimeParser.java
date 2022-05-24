@@ -1,5 +1,7 @@
 package com.Util;
 
+import java.util.concurrent.TimeUnit;
+
 public class TimeParser {
 
     public TimeParser() {
@@ -32,6 +34,15 @@ public class TimeParser {
         secondsRemaining = seconds % 60;
 
         return String.format("%02d:%02d", minutesRemaining, secondsRemaining);
+    }
+
+    public String getLapTime(Long ms) {
+        long minutes = TimeUnit.MILLISECONDS.toMinutes(ms);
+        long seconds = TimeUnit.MILLISECONDS.toSeconds(ms) - (minutes * 60);
+        long afterDec = TimeUnit.MILLISECONDS.toMillis(ms) - (minutes * 60000) - (seconds * 1000);
+
+        return String.format("%01d:%02d.%03d", minutes, seconds, afterDec);
+
     }
 
 }
