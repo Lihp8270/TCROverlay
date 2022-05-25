@@ -35,6 +35,7 @@ public class Config {
     private String[] carList;
     private String[] carLogos;
     private String[] spectatorCars;
+    private String key;
 
     public Config() {
 
@@ -174,6 +175,10 @@ public class Config {
 
     public String[] getSpectatorCars() {
         return spectatorCars;
+    }
+
+    public String getKey() {
+        return key;
     }
 
 }
