@@ -52,6 +52,10 @@ public class DriversPanel extends InitPanel {
             Collections.sort(drivers, Driver.Comparators.currentPos);
         } else {
             Collections.sort(drivers, Driver.Comparators.lapTime);
+            for (Driver driver : drivers) {
+                driver.setStartingPos(driver.getCurrentPos());
+                driver.setCompletedLaps(0);
+            }
         }
 
         resetPositions();
@@ -65,6 +69,8 @@ public class DriversPanel extends InitPanel {
             for (Driver driver : drivers) {
                 if (driver.getRaceStarted() == 1) {
                     raceStarted = true;
+                } else {
+                    driver.setOnTrack(1);
                 }
             }
         }

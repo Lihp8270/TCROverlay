@@ -26,6 +26,7 @@ class TimeParserTest {
         assertEquals("1:30.000", timeParser.getLapTime(90000L));
         assertEquals("1:30.001", timeParser.getLapTime(90001L));
         assertEquals("1:30.123", timeParser.getLapTime(90123L));
+        assertEquals("NO TIME", timeParser.getLapTime(999999L));
     }
 
 }

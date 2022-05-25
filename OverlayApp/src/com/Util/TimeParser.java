@@ -37,6 +37,10 @@ public class TimeParser {
     }
 
     public String getLapTime(Long ms) {
+        if (ms == 999999) {
+            return "NO TIME";
+        }
+
         long minutes = TimeUnit.MILLISECONDS.toMinutes(ms);
         long seconds = TimeUnit.MILLISECONDS.toSeconds(ms) - (minutes * 60);
         long afterDec = TimeUnit.MILLISECONDS.toMillis(ms) - (minutes * 60000) - (seconds * 1000);
