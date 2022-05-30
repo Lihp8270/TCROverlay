@@ -26,6 +26,8 @@ public class TopPanel extends InitPanel {
     private boolean timerPause;
     private boolean timerRunning;
     private boolean resetReady;
+    private int correctedDelay;
+    private boolean correctRequired;
 
     public TopPanel(Config config) throws IOException, FontFormatException {
         super();
@@ -42,6 +44,8 @@ public class TopPanel extends InitPanel {
         this.sessionIdentifier = "N/A";
         timerPause = true;
         timerRunning = false;
+        correctedDelay = 1000;
+        correctRequired = false;
 
         createLapLabel();
     }
@@ -157,10 +161,23 @@ public class TopPanel extends InitPanel {
                 protected Object doInBackground() throws Exception {
                     while(true) {
                         Instant start = Instant.now();
-                        Thread.sleep(1000);
+
+                        if (correctRequired) {
+                            correctRequired = false;
+                            Thread.sleep(correctedDelay);
+                        } else {
+                            correctedDelay = 1000;
+                            Thread.sleep(1000);
+                        }
                         Instant finish = Instant.now();
                         Long elapsed = Duration.between(start, finish).toMillis();
-                        System.out.println(elapsed);
+                        Long overshoot = elapsed - correctedDelay;
+
+                        if (overshoot != 0) {
+                            correctRequired = true;
+                            correctedDelay = (int) (correctedDelay - overshoot);
+                        }
+
                         if (!timerPause) {
                             tick();
                         }
