@@ -178,6 +178,10 @@ public class Config {
     }
 
     public String getKey() {
+        if (key == null) {
+            return "NO KEY";
+        }
+
         return key;
     }
 

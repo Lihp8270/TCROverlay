@@ -210,7 +210,7 @@ public class MenuFrame extends InitFrame {
 
     private void createSessionList(int raceSetting) {
         if (practiceTextField.getText().equals("Practice Mins")) {
-            practiceTextField.setText("NO PRACTICE");
+            practiceTextField.setText("N PRACTICE");
         } else {
             if(validator.checkCharactersForDigitsOnly(practiceTextField.getText())) {
                 sessions.addFirst(new Session("Practice", "P", Constants.MINS, Integer.valueOf(practiceTextField.getText())));

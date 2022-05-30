@@ -66,13 +66,23 @@ public class DriversPanel extends InitPanel {
         if (!currentSession.getSessionID().equals("R")) {
             raceStarted = true;
         } else {
-            for (Driver driver : drivers) {
-                if (driver.getRaceStarted() == 1) {
-                    raceStarted = true;
-                } else {
+            if (drivers.get(0).getRaceStarted() == 1) {
+                raceStarted = true;
+            }
+
+            if (!raceStarted) {
+                for (Driver driver : drivers) {
                     driver.setOnTrack(1);
                 }
             }
+
+//            for (Driver driver : drivers) {
+//                if (driver.getRaceStarted() == 1) {
+//                    raceStarted = true;
+//                } else {
+//                    driver.setOnTrack(1);
+//                }
+//            }
         }
 
 

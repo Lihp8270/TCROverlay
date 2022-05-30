@@ -101,6 +101,8 @@ public class OverlayFrame extends InitFrame {
         try {
             if (sessionQueue.readNextSession().getSessionID().equals("R")) {
                 topPanel.setTimerPause(true);
+            } else {
+                topPanel.setTimerPause(false);
             }
         } catch (Exception e) {
             System.out.println("Error with endSession");
