@@ -8,6 +8,8 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.time.Duration;
+import java.time.Instant;
 
 public class TopPanel extends InitPanel {
     private Font font;
@@ -154,7 +156,11 @@ public class TopPanel extends InitPanel {
                 @Override
                 protected Object doInBackground() throws Exception {
                     while(true) {
+                        Instant start = Instant.now();
                         Thread.sleep(1000);
+                        Instant finish = Instant.now();
+                        Long elapsed = Duration.between(start, finish).toMillis();
+                        System.out.println(elapsed);
                         if (!timerPause) {
                             tick();
                         }

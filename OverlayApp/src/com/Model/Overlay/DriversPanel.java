@@ -75,15 +75,7 @@ public class DriversPanel extends InitPanel {
                     driver.setOnTrack(1);
                 }
             }
-
-//            for (Driver driver : drivers) {
-//                if (driver.getRaceStarted() == 1) {
-//                    raceStarted = true;
-//                } else {
-//                    driver.setOnTrack(1);
-//                }
-//            }
-        }
+                    }
 
 
         this.panel.add(headerBox);
@@ -117,15 +109,6 @@ public class DriversPanel extends InitPanel {
         }
     }
 
-    public void resetDrivers() {
-        for (Driver driver : drivers) {
-            driver.setStartingPos(driver.getCurrentPos());
-            driver.setPosDiff();
-            driver.setChangeDir();
-            driver.setCompletedLaps(0);
-            driver.setDelta("+0.000");
-        }
-    }
 
     private void hideSpectatorCars() {
         for (String spectator : config.getSpectatorCars()) {

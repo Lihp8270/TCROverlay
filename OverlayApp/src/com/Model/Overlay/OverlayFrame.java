@@ -111,7 +111,6 @@ public class OverlayFrame extends InitFrame {
 
         sessionQueue.nextSession();
         setSessionDuration();
-//        drivers.resetDrivers();
         topPanel.setResetReady(false);
         drivers.setRaceStarted(false);
     }
