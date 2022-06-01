@@ -18,6 +18,7 @@ public class DriversPanel extends InitPanel {
     private int maxDrivers;
     private Config config;
     private Boolean raceStarted;
+    private int firstDriverOnTrackIndex;
 
     public DriversPanel(Config config) {
         super();
@@ -32,6 +33,7 @@ public class DriversPanel extends InitPanel {
         this.panel.setBorder(new EmptyBorder(config.getDriverListTopPadding(), config.getDriverListLeftPadding(),0,0));
         this.maxDrivers = config.getMaxDriversDisplay();
         this.raceStarted = false;
+        firstDriverOnTrackIndex = 0;
     }
 
     /**
@@ -49,13 +51,9 @@ public class DriversPanel extends InitPanel {
 
         // Sort by position for Race mode, and by lap Time for others
         if (currentSession.getSessionID() == "R") {
-            Collections.sort(drivers, Driver.Comparators.currentPos);
+            sortByTrackPosition();
         } else {
-            Collections.sort(drivers, Driver.Comparators.lapTime);
-            for (Driver driver : drivers) {
-                driver.setStartingPos(driver.getCurrentPos());
-                driver.setCompletedLaps(0);
-            }
+            sortByLapTime();
         }
 
         resetPositions();
@@ -73,10 +71,13 @@ public class DriversPanel extends InitPanel {
             if (!raceStarted) {
                 for (Driver driver : drivers) {
                     driver.setOnTrack(1);
+//                    TODO Test this line
+//                    Starting positions are going wrong after qualifying
+                    driver.setStartingPos(driver.getCurrentPos());
+                    driver.setChangeDir();
                 }
             }
-                    }
-
+        }
 
         this.panel.add(headerBox);
         this.panel.add(Box.createRigidArea(new Dimension(0,3)));
@@ -94,6 +95,18 @@ public class DriversPanel extends InitPanel {
         }
 
         return this.panel;
+    }
+
+    private void sortByTrackPosition() {
+        Collections.sort(drivers, Driver.Comparators.currentPos);
+    }
+
+    private void sortByLapTime() {
+        Collections.sort(drivers, Driver.Comparators.lapTime);
+        for (Driver driver : drivers) {
+            driver.setStartingPos(driver.getCurrentPos());
+            driver.setCompletedLaps(0);
+        }
     }
 
     private void resetPositions() {

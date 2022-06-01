@@ -16,7 +16,7 @@ public class BottomPanel extends  InitPanel {
     private final ImageIcon icon;
     private final ImageIcon driverNameBanner;
     private Config config;
-    private String validKey;
+    private int validKey;
 
     public BottomPanel(Config config) throws IOException, FontFormatException {
         super();
@@ -27,7 +27,7 @@ public class BottomPanel extends  InitPanel {
         this.panel.setBorder(new EmptyBorder(0,config.getDriverNameLeftPadding(),config.getDriverNameBottomPadding(),0));
         font = Font.createFont(Font.TRUETYPE_FONT, new File(config.getFocussedDriverFont()));
         font = font.deriveFont(Font.BOLD,config.getFocussedDriverFontSize());
-        this.validKey = "Sausage";
+        this.validKey = -758003725;
 
         createLogoLabel();
         createDriverLabel();
@@ -76,7 +76,7 @@ public class BottomPanel extends  InitPanel {
      * @param driverName String
      */
     public void setDriverName(String driverName) {
-        if (config.getKey().equals(this.validKey)) {
+        if (config.getKey().hashCode() == this.validKey) {
             driverNameBannerLabel.setText(driverName);
         } else {
             driverNameBannerLabel.setText("DEMONSTRATION");

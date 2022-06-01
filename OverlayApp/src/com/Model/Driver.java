@@ -141,7 +141,7 @@ public class Driver implements Comparable<Driver> {
             driverBox.add(tStackEngine.getFocussedDriverLabel());
         } else {
             switch (onTrack) {
-                case 0: // TODO Was set to 9  Check for errors
+                case 0:
                     driverBox.add(tStackEngine.getPositionLabel(String.valueOf(currentPos - 1)));
                     break;
                 default:
@@ -321,7 +321,6 @@ public class Driver implements Comparable<Driver> {
     public int compareTo(Driver o) {
         return 0;
     }
-
 
     public static class Comparators {
         public static Comparator<Driver> currentPos = Comparator.comparingInt(Driver::getCurrentPos);

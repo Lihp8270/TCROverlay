@@ -35,7 +35,7 @@ public class ACParser {
             } else {
                 newDrivers.get(newDrivers.size() - 1).setFastestLap(Long.valueOf(driverData[9]));
             }
-            newDrivers.get(newDrivers.size() - 1).setCurrentPos(Integer.valueOf(driverData[10]));
+            newDrivers.get(newDrivers.size() - 1).setCurrentPos(Integer.valueOf(driverData[11]));
             newDrivers.get(newDrivers.size() - 1).setStartingPos(Integer.valueOf(driverData[10]));
         }
 
