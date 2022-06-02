@@ -2,6 +2,9 @@ package com.Model.Overlay;
 
 import com.Engine.ButtonEngine;
 import com.Engine.OverlayController;
+import com.Model.Session;
+import com.Util.Constants;
+import com.Util.InputValidators;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 
 public class MenuFrame extends InitFrame {
@@ -17,12 +21,20 @@ public class MenuFrame extends InitFrame {
     private ArrayList<JButton> buttons;
     private OverlayController overlayController;
     private JTextField lapTextField;
+    private JTextField practiceTextField;
+    private JTextField qualifyTextField;
+    private InputValidators validator;
+    private JLabel versionNumber;
+    LinkedList<Session> sessions;
 
     public MenuFrame(String title, Boolean visibility) throws IOException, FontFormatException {
         super(title, visibility);
+        validator = new InputValidators();
         buttonController = new ButtonEngine();
         buttons = new ArrayList<>();
         overlayController = new OverlayController("config/config.json");
+        versionNumber = new JLabel();
+        sessions = new LinkedList<>();
 
         initialiseFrame(overlayController.getOverlayFrame());
         createButtons();
@@ -31,27 +43,40 @@ public class MenuFrame extends InitFrame {
     }
 
     private void initialiseFrame(OverlayFrame overlayFrame) {
-        this.frame.setSize(250,310);
+        this.frame.setSize(250,330);
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.frame.setLayout(null);
         this.overlayFrame = overlayFrame;
+        addVersionNumber("v2.2.0");
+    }
+
+    private void addVersionNumber(String version) {
+        this.versionNumber.setText(version);
+        this.versionNumber.setHorizontalAlignment(SwingConstants.LEFT);
+        this.versionNumber.setVerticalAlignment(SwingConstants.TOP);
+        this.versionNumber.setSize(250,400);
     }
 
     /**
      * Create button objects
      */
     private void createButtons() {
-        addButtons("Show Overlay", 40, 150, 150, 30, false);
-        addButtons("Start Overlay", 40, 110, 150, 30, false);
-        addButtons("Set Laps", 40, 70, 150, 30, true);
-        addButtons("Delta to Lead", 40,190, 150, 30, false);
+        addButtons("Show Overlay", 40, 205, 150, 30, false);
+        addButtons("Start Overlay", 40, 170, 150, 30, false);
+        addButtons("Laps", 40, 135, 70, 30, true);
+        addButtons("Delta to Lead", 40,240, 150, 30, false);
+        addButtons("Mins", 120, 135, 70, 30, true);
 
         createButtonActions();
     }
 
     private void createTextFields() {
-        this.lapTextField = new JTextField("No. of Laps");
+        this.lapTextField = new JTextField("Race Laps / Minutes");
+        this.practiceTextField = new JTextField("Practice Mins");
+        this.qualifyTextField = new JTextField("Qualifying Mins");
         lapTextField.setBounds(40,30,150,30);
+        qualifyTextField.setBounds(40,65,150,30);
+        practiceTextField.setBounds(40,100, 150,30);
     }
 
     /**
@@ -74,6 +99,7 @@ public class MenuFrame extends InitFrame {
     private void createButtonActions() {
         final String[] toggleLabel = {"Show Overlay"};
 
+        // Show / Hide Overlay Button
         buttons.get(0).addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -88,6 +114,7 @@ public class MenuFrame extends InitFrame {
             }
         });
 
+        // Start overlay button
         buttons.get(1).addActionListener(new ActionListener() {
             final String[] toggleLabel = {"Start Overlay"};
             @Override
@@ -115,19 +142,23 @@ public class MenuFrame extends InitFrame {
             }
         });
 
+        // Set laps button
         buttons.get(2).addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(!(lapTextField.getText().equals("No. of Laps"))) {
-                    overlayFrame.setMaxLaps(lapTextField.getText());
+                if(validator.checkCharactersForDigitsOnly(lapTextField.getText())) {
+                    createSessionList(Constants.LAPS);
+//                    overlayFrame.setMaxLaps(lapTextField.getText());
                     buttons.get(0).setEnabled(false);
                     buttons.get(1).setEnabled(true);
                     buttons.get(2).setEnabled(false);
+                    buttons.get(4).setEnabled(false);
                     lapTextField.setEnabled(false);
                 }
             }
         });
 
+        // Delta select button
         buttons.get(3).addActionListener(new ActionListener() {
             final String[] toggleLabel = {"Delta to Lead"};
             @Override
@@ -143,6 +174,24 @@ public class MenuFrame extends InitFrame {
                 }
             }
         });
+
+        // Mins Button
+        buttons.get(4).addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (validator.checkCharactersForDigitsOnly(lapTextField.getText())) {
+                    if(Integer.valueOf(lapTextField.getText()) <= 60) {
+//                        overlayFrame.setSecondsRemaining(lapTextField.getText());
+                        createSessionList(Constants.MINS);
+                        buttons.get(0).setEnabled(false);
+                        buttons.get(1).setEnabled(true);
+                        buttons.get(2).setEnabled(false);
+                        buttons.get(4).setEnabled(false);
+                        lapTextField.setEnabled(false);
+                    }
+                }
+            }
+        });
     }
 
     /**
@@ -154,6 +203,38 @@ public class MenuFrame extends InitFrame {
         }
 
         this.frame.add(lapTextField);
+        this.frame.add(practiceTextField);
+        this.frame.add(qualifyTextField);
+        this.frame.add(versionNumber);
+    }
+
+    private void createSessionList(int raceSetting) {
+        if (practiceTextField.getText().equals("Practice Mins")) {
+            practiceTextField.setText("NO PRACTICE");
+        } else {
+            if(validator.checkCharactersForDigitsOnly(practiceTextField.getText())) {
+                sessions.addFirst(new Session("Practice", "P", Constants.MINS, Integer.valueOf(practiceTextField.getText())));
+            } else {
+                practiceTextField.setText("ERROR, RETRY");
+            }
+        }
+
+        if (qualifyTextField.getText().equals("Qualifying Mins")) {
+            qualifyTextField.setText("NO QUALIFYING");
+        } else {
+            if (validator.checkCharactersForDigitsOnly(qualifyTextField.getText())) {
+                sessions.addLast(new Session("Qualifying", "Q", Constants.MINS, Integer.valueOf(qualifyTextField.getText())));
+            } else {
+                qualifyTextField.setText("ERROR, RETRY");
+            }
+        }
+
+        sessions.addLast(new Session("Race", "R", raceSetting, Integer.valueOf(lapTextField.getText())));
+        passSessionsToOverlay();
+    }
+
+    private void passSessionsToOverlay() {
+        overlayFrame.setSessionQueue(sessions);
     }
 
 }

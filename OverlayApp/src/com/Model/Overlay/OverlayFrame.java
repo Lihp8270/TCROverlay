@@ -1,9 +1,13 @@
 package com.Model.Overlay;
 
 import com.Model.Config;
+import com.Model.Session;
+import com.Model.SessionQueue;
+import com.Util.Constants;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.LinkedList;
 
 public class OverlayFrame extends InitFrame {
     private final Dimension dim;
@@ -19,6 +23,10 @@ public class OverlayFrame extends InitFrame {
     private String currentFocussedDriver;
     private int lastLapDisplayed;
     private int deltaMode;
+    private int lastSecondsRemaining;
+    private boolean hasRaceStarted;
+    private boolean hasRaceFinished;
+    private SessionQueue sessionQueue;
 
     /**
      * Constructor for overlay
@@ -41,7 +49,10 @@ public class OverlayFrame extends InitFrame {
         this.topPanel = topPanel;
         this.currentFocussedDriver = "";
         this.lastLapDisplayed = 0;
+        this.lastSecondsRemaining = 0;
         this.deltaMode = 0;
+        this.hasRaceStarted = false;
+        this.hasRaceFinished = false;
         initialiseFrame();
     }
 
@@ -63,10 +74,45 @@ public class OverlayFrame extends InitFrame {
         driverNamePanel = bottomPanel.getPanel();
         lapPanel = topPanel.getPanel();
 
+        topPanel.createTimer();
+
         this.frame.add(driverPanel, BorderLayout.WEST);
         this.frame.add(advertPanel, BorderLayout.EAST);
         this.frame.add(driverNamePanel, BorderLayout.SOUTH);
         this.frame.add(lapPanel, BorderLayout.CENTER);
+    }
+
+    public void setSessionQueue(LinkedList<Session> sessionsFromMenu) {
+        this.sessionQueue = new SessionQueue(sessionsFromMenu);
+
+        sessionQueue.nextSession();
+        setSessionDuration();
+    }
+
+    private void setSessionDuration() {
+        if (sessionQueue.getCurrentSession().getSessionType() == Constants.LAPS) {
+            setMaxLaps(String.valueOf(sessionQueue.getCurrentSession().getSessionLength()));
+        } else {
+            setSecondsRemaining(String.valueOf(sessionQueue.getCurrentSession().getSessionLength()));
+        }
+    }
+
+    private void endSession() {
+        try {
+            if (sessionQueue.readNextSession().getSessionID().equals("R")) {
+                topPanel.setTimerPause(true);
+            } else {
+                topPanel.setTimerPause(false);
+            }
+        } catch (Exception e) {
+            System.out.println("Error with endSession");
+        }
+
+
+        sessionQueue.nextSession();
+        setSessionDuration();
+        topPanel.setResetReady(false);
+        drivers.setRaceStarted(false);
     }
 
     /**
@@ -82,23 +128,47 @@ public class OverlayFrame extends InitFrame {
         }
     }
 
+    public void startStopSession() {
+        // Wait for driver to start race before starting
+        if (sessionQueue.getCurrentSession().getSessionID().equals("R")) {
+            // If Race has started, then start the timer else set timer to pause
+            if (drivers.getRaceStarted()) {
+                hasRaceStarted = true;
+                topPanel.startTimer();
+
+                topPanel.setTimerPause(false);
+            } else {
+                topPanel.setTimerPause(true);
+            }
+        } else {
+            hasRaceStarted = true;
+            topPanel.startTimer();
+        }
+    }
 
     /**
      * Update Drivers panel
-     *
      * @param drivers new DriverPanel to use
      */
-    public void updateDrivers(DriversPanel drivers) {
-        this.driverPanel.removeAll();
-        this.driverPanel = drivers.getPanel(currentFocussedDriver, deltaMode, topPanel);
-        this.frame.add(driverPanel, BorderLayout.WEST);
-        this.frame.repaint();
-        this.frame.revalidate();
+    public void updateDrivers(DriversPanel drivers, boolean sessionReset) {
+        if(!getHasRaceFinished()) {
+            this.driverPanel.removeAll();
+            this.driverPanel = drivers.getPanel(currentFocussedDriver, deltaMode, topPanel, sessionQueue.getCurrentSession());
+
+            if (sessionReset && topPanel.isResetReady()) {
+                endSession();
+            }
+
+            startStopSession();
+
+            this.frame.add(driverPanel, BorderLayout.WEST);
+            this.frame.repaint();
+            this.frame.revalidate();
+        }
     }
 
     /**
      * Updates focussed driver name label
-     *
      * @param driverName Driver name being focussed
      */
     public void updateLargeName(String driverName) {
@@ -125,24 +195,54 @@ public class OverlayFrame extends InitFrame {
      * Update the graphic for current lap
      */
     public void updateLapGraphic() {
-        if (!(lastLapDisplayed == drivers.getDrivers().get(0).getCompletedLaps() + 1)) {
-            this.lapPanel.removeAll();
-            topPanel.setLaps(String.valueOf(drivers.getDrivers().get(0).getCompletedLaps() + 1));
-            this.lapPanel = topPanel.getPanel();
-            this.frame.add(lapPanel, BorderLayout.CENTER);
-            this.frame.repaint();
-            this.frame.revalidate();
-            lastLapDisplayed = drivers.getDrivers().get(0).getCompletedLaps() + 1;
+        switch (topPanel.getSessionMode()) {
+            case 1:
+                if (!(lastLapDisplayed == drivers.getDrivers().get(0).getCompletedLaps() + 1)) {
+                    this.lapPanel.removeAll();
+                    topPanel.setLaps(String.valueOf(drivers.getDrivers().get(0).getCompletedLaps() + 1));
+                    rebuildLapPanel();
+                    lastLapDisplayed = drivers.getDrivers().get(0).getCompletedLaps() + 1;
+                }
+                break;
+            case 2:
+                if(!(lastSecondsRemaining == topPanel.getSecondsRemaining())) {
+                    rebuildLapPanel();
+                    lastSecondsRemaining = topPanel.getSecondsRemaining();
+                    if (lastSecondsRemaining == 0 && topPanel.getSessionIdentifier().equals("R")) {
+                        hasRaceFinished = true;
+                    }
+                }
+                break;
+            default:
+                break;
         }
+    }
+
+    private void rebuildLapPanel() {
+        topPanel.setSessionIdentifier(sessionQueue.getCurrentSession().getSessionID());
+
+        this.lapPanel = topPanel.getPanel();
+        this.frame.add(lapPanel, BorderLayout.CENTER);
+        this.frame.repaint();
+        this.frame.revalidate();
     }
 
     /**
      * Set the max number of laps from the menu
-     *
+     * Also sets session mode flag as 1
      * @param maxLaps number of laps
      */
     public void setMaxLaps(String maxLaps) {
         topPanel.setMaxLaps(maxLaps);
+    }
+
+    /**
+     * Set session length in minutes from the menu
+     * Also sets session mode flag as 2
+     * @param mins
+     */
+    public void setSecondsRemaining(String mins) {
+        topPanel.setSecondsRemaining(mins); // This is from the race tab in menu
     }
 
     /**
@@ -162,6 +262,10 @@ public class OverlayFrame extends InitFrame {
      */
     public int getDeltaMode() {
         return deltaMode;
+    }
+
+    public boolean getHasRaceFinished() {
+        return hasRaceFinished;
     }
 
 }
