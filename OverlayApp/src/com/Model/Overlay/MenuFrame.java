@@ -47,7 +47,7 @@ public class MenuFrame extends InitFrame {
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.frame.setLayout(null);
         this.overlayFrame = overlayFrame;
-        addVersionNumber("v2.2.0");
+        addVersionNumber("v2.2.1");
     }
 
     private void addVersionNumber(String version) {
